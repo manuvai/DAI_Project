@@ -9,12 +9,13 @@
 	<version>0.0.1</version>
 	<packaging>war</packaging>
 
-	<name>TpRttEtd</name>
+	<name>ProjetDai</name>
   
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<servlet-api-version>2.5</servlet-api-version>
 	</properties>
 
 	<dependencies>
@@ -28,10 +29,34 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>5.6.4.Final</version>
 		</dependency>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.0.1</version>
+		    <scope>provided</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
-    	<finalName>TpRttEtd</finalName>
+    	<finalName>ProjetDai</finalName>
 		<pluginManagement>
   			<plugins>
     			<plugin>
