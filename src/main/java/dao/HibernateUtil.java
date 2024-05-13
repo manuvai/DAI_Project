@@ -1,5 +1,8 @@
 package dao;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -11,35 +14,36 @@ import org.hibernate.service.ServiceRegistry;
  * Chargement de la configuration et création de la SessionFactory.
  * (hibernate.cfg.xml)
  */
-public class HibernateUtil
-{
+public class HibernateUtil {
 	private static final SessionFactory SESSION_FACTORY;
 
-	static
-		{
+	static {
 		try	{
-            Configuration configuration = new Configuration();
-            configuration.configure("hibernate.cfg.xml");
-            System.out.println("Hibernate Configuration loaded");
+			final Configuration configuration = new Configuration();
+			configuration.configure("hibernate.cfg.xml");
+			System.out.println("Hibernate Configuration loaded");
 
-			/**
-			 * Entité.
-			 */
-//			configuration.addAnnotatedClass(metier.Employe.class);
-			
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-            System.out.println("Hibernate serviceRegistry created");
+			// Liste des classes à charger. TODO Penser à mettre dans cette liste les classes des entités
 
-            SESSION_FACTORY = configuration.buildSessionFactory(serviceRegistry);
-			}
-		catch (HibernateException ex)
-			{
+			final List<Class<?>> classList = Collections.emptyList();
+			classList.forEach(configuration::addAnnotatedClass);
+
+			final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+					.applySettings(configuration.getProperties())
+					.build();
+			System.out.println("Hibernate serviceRegistry created");
+
+			SESSION_FACTORY = configuration.buildSessionFactory(serviceRegistry);
+
+		} catch (final HibernateException ex) {
 			/*----- Exception -----*/
 			System.err.println("Initial SessionFactory creation failed.\n" + ex);
 			throw new ExceptionInInitializerError(ex);
-			}
 		}
+	}
 
-	public static SessionFactory getSessionFactory () { return SESSION_FACTORY; }
+	public static SessionFactory getSessionFactory () {
+		return SESSION_FACTORY;
+	}
 
 } /*----- Fin de la classe HibernateUtil -----*/
