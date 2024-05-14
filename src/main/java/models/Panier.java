@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -38,7 +40,7 @@ public class Panier {
 	@JoinColumn(name = "UtilisateurId")
 	private Utilisateur utilisateur;
 
-   @MapKeyJoinColumn(name = "IdArticle")
+    @MapKeyJoinColumn(name = "IdArticle")
     @OneToMany(mappedBy = "articleValidateur", cascade = CascadeType.ALL)
     private Map<Panier,Composer> validers;
 
@@ -46,9 +48,9 @@ public class Panier {
 
 	}
 
-	public Panier(final Integer id, final Date dateDebutPreparation, final Date dateFinPreparation, final Etat etat,
+	public Panier(final Integer idPanier, final Date dateDebutPreparation, final Date dateFinPreparation, final Etat etat,
 			final Utilisateur utilisateur) {
-		this.id = id;
+		this.idPanier = idPanier;
 		this.dateDebutPreparation = dateDebutPreparation;
 		this.dateFinPreparation = dateFinPreparation;
 		this.etat = etat;
