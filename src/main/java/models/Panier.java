@@ -41,8 +41,8 @@ public class Panier {
 	private Utilisateur utilisateur;
 
     @MapKeyJoinColumn(name = "IdArticle")
-    @OneToMany(mappedBy = "articleValidateur", cascade = CascadeType.ALL)
-    private Map<Panier,Composer> validers;
+    @OneToMany(mappedBy = "panierComposer", cascade = CascadeType.ALL)
+    private Map<Article,Composer> composers;
 
 	public Panier() {
 

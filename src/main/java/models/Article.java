@@ -70,8 +70,8 @@ public class Article {
     private float prixKilo; 
     
     @MapKeyJoinColumn(name = "IdPanier")
-    @OneToMany(mappedBy = "Panier", cascade = CascadeType.ALL)
-    private Map<Article,Composer> validers;
+    @OneToMany(mappedBy = "articleComposer", cascade = CascadeType.ALL)
+    private Map<Panier,Composer> composers;
     
     /**
      * Constructeur de l'article
