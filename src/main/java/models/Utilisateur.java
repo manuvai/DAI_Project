@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,27 +10,31 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "utilisateur")
+@Table(name = "Utilisateur")
 public class Utilisateur {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "nomUtilisateur")
+	@Column(name = "NomUtilisateur")
 	private String nom;
 
-	@Column(name = "prenomUtilisateur")
+	@Column(name = "PrenomUtilisateur")
 	private String prenom;
 
-	@Column(name = "adresseEmail")
+	@Column(name = "AdresseEmail")
 	private String email;
 
-	@Column(name = "motDePasse")
+	@Column(name = "MotDePasse")
 	private String motDePasse;
+
+	@OneToMany(mappedBy = "utilisateur")
+	private Set<Panier> paniers;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
@@ -133,9 +138,27 @@ public class Utilisateur {
 		this.role = role;
 	}
 
+	/**
+	 * Récupération des paniers de l'utilisateur.
+	 *
+	 * @return
+	 */
+	public Set<Panier> getPaniers() {
+		return paniers;
+	}
+
+	/**
+	 * MAJ des paniers de l'utilisateur.
+	 *
+	 * @param paniers the paniers to set
+	 */
+	public void setPaniers(final Set<Panier> paniers) {
+		this.paniers = paniers;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, id, motDePasse, nom, prenom, role);
+		return Objects.hash(email, id, motDePasse, nom, paniers, prenom, role);
 	}
 
 	@Override
@@ -143,16 +166,17 @@ public class Utilisateur {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 		final Utilisateur other = (Utilisateur) obj;
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
 				&& Objects.equals(motDePasse, other.motDePasse) && Objects.equals(nom, other.nom)
-				&& Objects.equals(prenom, other.prenom) && role == other.role;
+				&& Objects.equals(paniers, other.paniers) && Objects.equals(prenom, other.prenom) && role == other.role;
 	}
 
-	enum Role {
+
+	public enum Role {
 		CLIENT, PREPARATEUR, GESTIONNAIRE
 	}
 }

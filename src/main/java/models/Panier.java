@@ -12,8 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,18 +25,35 @@ public class Panier {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idPanier;
 
-	@Column(nullable = true)
+	@Column(name = "DateDebutPreparation", nullable = true)
 	private Date dateDebutPreparation;
 
-	@Column(nullable = true)
+	@Column(name = "DateFinPreparation", nullable = true)
 	private Date dateFinPreparation;
 
 	@Enumerated(EnumType.STRING)
 	private Etat etat;
 
-    @MapKeyJoinColumn(name = "IdArticle")
+	@ManyToOne
+	@JoinColumn(name = "UtilisateurId")
+	private Utilisateur utilisateur;
+
+   @MapKeyJoinColumn(name = "IdArticle")
     @OneToMany(mappedBy = "articleValidateur", cascade = CascadeType.ALL)
     private Map<Panier,Composer> validers;
+
+	public Panier() {
+
+	}
+
+	public Panier(final Integer id, final Date dateDebutPreparation, final Date dateFinPreparation, final Etat etat,
+			final Utilisateur utilisateur) {
+		this.id = id;
+		this.dateDebutPreparation = dateDebutPreparation;
+		this.dateFinPreparation = dateFinPreparation;
+		this.etat = etat;
+		this.utilisateur = utilisateur;
+	}
 
 	/**
 	 * Récupération de l'identifiant du panier.
@@ -101,9 +118,28 @@ public class Panier {
 		this.etat = etat;
 	}
 
+	/**
+	 * Récupération du propriétaire du panier.
+	 *
+	 * @return the utilisateur
+	 */
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	/**
+	 * MAJ du propriétaire du panier.
+	 *
+	 * @param utilisateur the utilisateur to set
+	 */
+	public void setUtilisateur(final Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(dateDebutPreparation, dateFinPreparation, etat, idPanier);
+
 	}
 
 	@Override
@@ -120,7 +156,7 @@ public class Panier {
 				&& Objects.equals(idPanier, other.idPanier);
 	}
 
-	enum Etat {
+	public enum Etat {
 		ATTENTE, VALIDEE, LIVRE
 	}
 
