@@ -38,10 +38,10 @@ public class HibernateUtil {
 			configuration.configure("hibernate.cfg.xml");
 			System.out.println("Hibernate Configuration loaded");
 
-			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class, Utilisateur.class, Panier.class,
-					Utilisateur.class, Panier.class, Recette.class,
+			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class, Utilisateur.class, 
+					Panier.class, Recette.class,
 					PostIt.class, ListeDeCourse.class, Concerner.class, ConcernerKey.class,
-          Magasin.class, Creneau.class, Article.class, Stocker.class);
+					Magasin.class, Creneau.class, Article.class, Stocker.class);
 
 			classList.forEach(configuration::addAnnotatedClass);
 
