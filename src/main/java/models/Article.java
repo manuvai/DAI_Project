@@ -1,15 +1,17 @@
 package models;
 
 import java.util.Map;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -57,13 +59,25 @@ public class Article {
 	@Enumerated(EnumType.STRING)
 	private Nutriscore nutriscore;
 	
+	/**
+	 * sous categorie de l'article
+	 */
+	@ManyToOne(fetch = FetchType.EAGER) 
+	@JoinColumn(name = "IdSousCat")  
+	private SousCategorie sousCategorie;
+	
     @Transient
     private float prixKilo; 
     
+
     //Mapping
     @MapKeyJoinColumn(name = "IdMagasin")
     @OneToMany(mappedBy = "articleStock", cascade = CascadeType.ALL)
     private Map<Magasin,Stocker> stockers;
+
+    @MapKeyJoinColumn(name = "IdPanier")
+    @OneToMany(mappedBy = "Panier", cascade = CascadeType.ALL)
+    private Map<Article,Composer> validers;
     
     /**
      * Constructeur de l'article
