@@ -1,7 +1,10 @@
 package models;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * Classe représentant une categorie
@@ -36,16 +40,51 @@ public class SousCategorie {
 	@JoinColumn(name = "IdCat")  
 	private Categorie categorie;
 
+	/**
+	 * articles
+	 */
+	@OneToMany(mappedBy = "sousCategorie", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+	private Set<Article> articles = new HashSet(0);
+	
+	/**
+	 * retourne l id de la sous categorie
+	 * @return id de la sous categorie
+	 */
 	public Integer getIdSousCat() {
 		return idSousCat;
 	}
+	/**
+	 * retourne le nom de la sous categorie
+	 * @return nom de la sous categorie
+	 */
 
 	public String getNomSousCategorie() {
 		return nomSousCategorie;
 	}
+	/**
+	 * retourne la categorie de la sous categorie
+	 * @return categorie de la sous categorie
+	 */
 
 	public Categorie getCategorie() {
 		return categorie;
+	}
+
+	/**
+	 * retourne les articles
+	 * @return article
+	 */
+	public Set<Article> getArticles() {
+		return articles;
+	}
+	
+	
+	/**
+	 * ajoute un article
+	 * @param article à ajouter
+	 */
+	public void addArticles(Article article) {
+		this.articles.add(article);
 	}
 
 	@Override
