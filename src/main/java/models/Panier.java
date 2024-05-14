@@ -1,8 +1,10 @@
 package models;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +33,10 @@ public class Panier {
 
 	@Enumerated(EnumType.STRING)
 	private Etat etat;
+
+    @MapKeyJoinColumn(name = "IdArticle")
+    @OneToMany(mappedBy = "articleValidateur", cascade = CascadeType.ALL)
+    private Map<Panier,Composer> validers;
 
 	/**
 	 * Récupération de l'identifiant du panier.
