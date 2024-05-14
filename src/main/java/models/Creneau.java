@@ -3,6 +3,7 @@ package models;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,18 +31,21 @@ public class Creneau {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int codeCreneau;
+    @Column(name="IdCreneau")
+    private int idCreneau;
 
     /**
      * La date du créneau.
      */
     @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name="DateCreneau")
     private Date dateCreneau;
 
     /**
      * L'heure du créneau.
      */
     @Enumerated(EnumType.STRING)
+    @Column(name="HeureCreneau")
     private HeureCreneau heureCreneau;
 
     /**
@@ -69,12 +74,13 @@ public class Creneau {
     /**
      * La capacité du créneau.
      */
+    @Column(name="Capacite")
     private int capacite;
 
     
     //Mapping
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="codeMagasin")
+    @ManyToOne(fetch = FetchType.EAGER) 
+    @JoinColumn(name="IdMagasin")
     private Magasin magasin;
   
     
@@ -95,7 +101,7 @@ public class Creneau {
      * @return Le code du créneau.
      */
     public int getCodeCreneau() {
-        return codeCreneau;
+        return idCreneau;
     }
 
 
@@ -163,7 +169,7 @@ public class Creneau {
      */
 	@Override
 	public int hashCode() {
-		return Objects.hash(capacite, codeCreneau, dateCreneau, heureCreneau);
+		return Objects.hash(capacite, idCreneau, dateCreneau, heureCreneau);
 	}
 
 	@Override
@@ -175,7 +181,7 @@ public class Creneau {
 		if (getClass() != obj.getClass())
 			return false;
 		Creneau other = (Creneau) obj;
-		return capacite == other.capacite && codeCreneau == other.codeCreneau
+		return capacite == other.capacite && idCreneau == other.idCreneau
 				&& Objects.equals(dateCreneau, other.dateCreneau) && heureCreneau == other.heureCreneau;
 	}
 }
