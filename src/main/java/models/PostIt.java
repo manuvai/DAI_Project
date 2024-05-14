@@ -6,13 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-	@Entity
-	@Table(name = "PostIt")
-	public class PostIt {
-		
-	public PostIt() {}
-	
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private Integer id;
+@Entity
+@Table(name = "PostIt")
+public class PostIt {
+
+	public PostIt() {
 	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+}
