@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +24,23 @@ public class ListeDeCourse {
 	 */
 	public Integer getIdListDeCourse() {
 		return idListDeCourse;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idListDeCourse);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (getClass() != obj.getClass())) {
+			return false;
+		}
+		final ListeDeCourse other = (ListeDeCourse) obj;
+		return Objects.equals(idListDeCourse, other.idListDeCourse);
 	}
 
 }

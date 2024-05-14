@@ -11,23 +11,17 @@ import org.hibernate.service.ServiceRegistry;
 
 import models.Article;
 import models.Categorie;
-import models.Concerner;
-import models.Rayon;
-import models.SousCategorie;
-import models.ListeDeCourse;
-import models.Panier;
-import models.PostIt;
-import models.Recette;
-import models.Utilisateur;
-import models.ConcernerKey;
 import models.Composer;
+import models.Concerner;
 import models.Contenir;
 import models.Creneau;
+import models.ListeDeCourse;
 import models.Magasin;
 import models.Panier;
+import models.PostIt;
 import models.Rayon;
+import models.Recette;
 import models.SousCategorie;
-import models.Utilisateur;
 import models.Stocker;
 import models.Utilisateur;
 
@@ -46,10 +40,10 @@ public class HibernateUtil {
 			configuration.configure("hibernate.cfg.xml");
 			System.out.println("Hibernate Configuration loaded");
 
-			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class, Utilisateur.class, 
+			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class, Utilisateur.class,
 					Panier.class, Recette.class,
-					PostIt.class, ListeDeCourse.class, Concerner.class, ConcernerKey.class,
-					Magasin.class, Creneau.class, Article.class, Stocker.class, Composer.class, Contenir.class);
+					PostIt.class, ListeDeCourse.class, Concerner.class, Magasin.class, Creneau.class, Article.class,
+					Stocker.class, Composer.class, Contenir.class);
 
 			classList.forEach(configuration::addAnnotatedClass);
 
