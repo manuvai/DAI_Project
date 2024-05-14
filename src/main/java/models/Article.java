@@ -1,6 +1,8 @@
 package models;
 
 import java.util.Map;
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +36,7 @@ public class Article {
 	 */
 	@Column(name = "LibArticle")
 	private String lib;
-	
+
 	/**
 	 * Description de l'article
 	 */
@@ -58,45 +60,44 @@ public class Article {
 	 */
 	@Enumerated(EnumType.STRING)
 	private Nutriscore nutriscore;
-	
+
 	/**
 	 * sous categorie de l'article
 	 */
-	@ManyToOne(fetch = FetchType.EAGER) 
-	@JoinColumn(name = "IdSousCat")  
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "IdSousCat")
 	private SousCategorie sousCategorie;
-	
-    @Transient
-    private float prixKilo; 
-    
 
-    //Mapping
-    @MapKeyJoinColumn(name = "IdMagasin")
-    @OneToMany(mappedBy = "articleStock", cascade = CascadeType.ALL)
-    private Map<Magasin,Stocker> stockers;
+	@Transient
+	private float prixKilo;
 
-    @MapKeyJoinColumn(name = "IdPanier")
-    @OneToMany(mappedBy = "articleComposer", cascade = CascadeType.ALL)
-    private Map<Panier,Composer> composers;
-    
-    /**
-     * Constructeur de l'article
-     * @param id identifiant de l'article
-     * @param lib libellé de l'article
-     * @param desc description de l'article
-     * @param prixUnitaire prix unitaire de l'article
-     * @param poids poids de l'article
-     * @param nutriscore nutriscore de l'article
-     */
-	public Article(Integer id, String lib, String desc, float prixUnitaire, int poids, Nutriscore nutriscore) {
-		super();
-		this.idArticle = id;
+
+	//Mapping
+	@MapKeyJoinColumn(name = "IdMagasin")
+	@OneToMany(mappedBy = "articleStock", cascade = CascadeType.ALL)
+	private Map<Magasin,Stocker> stockers;
+
+	@MapKeyJoinColumn(name = "IdPanier")
+	@OneToMany(mappedBy = "articleComposer", cascade = CascadeType.ALL)
+	private Map<Panier, Composer> composers;
+
+	/**
+	 * Constructeur de l'article
+	 * @param id identifiant de l'article
+	 * @param lib libellé de l'article
+	 * @param desc description de l'article
+	 * @param prixUnitaire prix unitaire de l'article
+	 * @param poids poids de l'article
+	 * @param nutriscore nutriscore de l'article
+	 */
+	public Article(final Integer id, final String lib, final String desc, final float prixUnitaire, final int poids, final Nutriscore nutriscore) {
+		idArticle = id;
 		this.lib = lib;
 		this.desc = desc;
 		this.prixUnitaire = prixUnitaire;
 		this.poids = poids;
 		this.nutriscore = nutriscore;
-		this.prixKilo = prixUnitaire*1000/poids;
+		prixKilo = prixUnitaire*1000/poids;
 	}
 
 	/**
@@ -146,50 +147,39 @@ public class Article {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((desc == null) ? 0 : desc.hashCode());
-		result = prime * result + ((idArticle == null) ? 0 : idArticle.hashCode());
-		result = prime * result + ((lib == null) ? 0 : lib.hashCode());
-		result = prime * result + ((nutriscore == null) ? 0 : nutriscore.hashCode());
-		result = prime * result + poids;
-		result = prime * result + Float.floatToIntBits(prixKilo);
-		result = prime * result + Float.floatToIntBits(prixUnitaire);
-		return result;
+		return Objects.hash(desc, idArticle, lib, nutriscore, poids, prixKilo, prixUnitaire);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if ((obj == null) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		final Article other = (Article) obj;
+		if (!Objects.equals(desc, other.desc)) {
 			return false;
-		Article other = (Article) obj;
-		if (desc == null) {
-			if (other.desc != null)
-				return false;
-		} else if (!desc.equals(other.desc))
+		}
+		if (!Objects.equals(idArticle, other.idArticle)) {
 			return false;
-		if (idArticle == null) {
-			if (other.idArticle != null)
-				return false;
-		} else if (!idArticle.equals(other.idArticle))
+		}
+		if (!Objects.equals(lib, other.lib)) {
 			return false;
-		if (lib == null) {
-			if (other.lib != null)
-				return false;
-		} else if (!lib.equals(other.lib))
+		}
+		if (nutriscore != other.nutriscore) {
 			return false;
-		if (nutriscore != other.nutriscore)
+		}
+		if (poids != other.poids) {
 			return false;
-		if (poids != other.poids)
+		}
+		if (Float.floatToIntBits(prixKilo) != Float.floatToIntBits(other.prixKilo)) {
 			return false;
-		if (Float.floatToIntBits(prixKilo) != Float.floatToIntBits(other.prixKilo))
+		}
+		if (Float.floatToIntBits(prixUnitaire) != Float.floatToIntBits(other.prixUnitaire)) {
 			return false;
-		if (Float.floatToIntBits(prixUnitaire) != Float.floatToIntBits(other.prixUnitaire))
-			return false;
+		}
 		return true;
 	}
 

@@ -54,11 +54,6 @@ public class Panier {
 	@ManyToOne
 	@JoinColumn(name = "UtilisateurId")
 	private Utilisateur utilisateur;
-
-
-   @MapKeyJoinColumn(name = "IdArticle")
-   @OneToMany(mappedBy = "panierComposer", cascade = CascadeType.ALL)
-   private Map<Article,Composer> composers;
 	/**
 	 * Créneau bloqué
 	 */
@@ -67,8 +62,8 @@ public class Panier {
 	private Creneau creneau;
 
 	@MapKeyJoinColumn(name = "IdArticle")
-	@OneToMany(mappedBy = "articleValidateur", cascade = CascadeType.ALL)
-	private Map<Panier,Composer> validers;
+	@OneToMany(mappedBy = "panierComposer", cascade = CascadeType.ALL)
+	private Map<Article, Composer> composers;
 
 
 	public Panier() {
@@ -76,14 +71,14 @@ public class Panier {
 	}
 
 	public Panier(final Integer idPanier, final Date dateDebutPreparation, final Date dateFinPreparation, final Etat etat,
-			final Utilisateur utilisateur, final Creneau creneau, final Map<Panier, Composer> validers) {
+			final Utilisateur utilisateur, final Creneau creneau, final Map<Article, Composer> composers) {
 		this.idPanier = idPanier;
 		this.dateDebutPreparation = dateDebutPreparation;
 		this.dateFinPreparation = dateFinPreparation;
 		this.etat = etat;
 		this.utilisateur = utilisateur;
 		this.creneau = creneau;
-		this.validers = validers;
+		this.composers = composers;
 	}
 
 	/**
@@ -186,12 +181,12 @@ public class Panier {
 	}
 
 	/**
-	 * Récupération du validers
+	 * Récupération du composers
 	 *
-	 * @return the validers
+	 * @return the composers
 	 */
-	public Map<Panier, Composer> getValiders() {
-		return validers;
+	public Map<Article, Composer> getComposers() {
+		return composers;
 	}
 
 	/**
@@ -199,13 +194,13 @@ public class Panier {
 	 *
 	 * @param validers the validers to set
 	 */
-	public void setValiders(final Map<Panier, Composer> validers) {
-		this.validers = validers;
+	public void setComposers(final Map<Article, Composer> composers) {
+		this.composers = composers;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(creneau, dateDebutPreparation, dateFinPreparation, etat, idPanier, utilisateur, validers);
+		return Objects.hash(creneau, dateDebutPreparation, dateFinPreparation, etat, idPanier, utilisateur, composers);
 	}
 
 	@Override
@@ -221,7 +216,7 @@ public class Panier {
 				&& Objects.equals(dateDebutPreparation, other.dateDebutPreparation)
 				&& Objects.equals(dateFinPreparation, other.dateFinPreparation) && etat == other.etat
 				&& Objects.equals(idPanier, other.idPanier) && Objects.equals(utilisateur, other.utilisateur)
-				&& Objects.equals(validers, other.validers);
+				&& Objects.equals(composers, other.composers);
 	}
 
 	public enum Etat {
