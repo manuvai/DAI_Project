@@ -13,12 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "panier")
+@Table(name = "Panier")
 public class Panier {
 
 	@Id
+	@Column(name = "IdPanier")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer idPanier;
 
 	@Column(nullable = true)
 	private Date dateDebutPreparation;
@@ -35,7 +36,7 @@ public class Panier {
 	 * @return
 	 */
 	public Integer getId() {
-		return id;
+		return idPanier;
 	}
 
 	/**
@@ -94,7 +95,7 @@ public class Panier {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateDebutPreparation, dateFinPreparation, etat, id);
+		return Objects.hash(dateDebutPreparation, dateFinPreparation, etat, idPanier);
 	}
 
 	@Override
@@ -108,7 +109,7 @@ public class Panier {
 		final Panier other = (Panier) obj;
 		return Objects.equals(dateDebutPreparation, other.dateDebutPreparation)
 				&& Objects.equals(dateFinPreparation, other.dateFinPreparation) && etat == other.etat
-				&& Objects.equals(id, other.id);
+				&& Objects.equals(idPanier, other.idPanier);
 	}
 
 	enum Etat {
