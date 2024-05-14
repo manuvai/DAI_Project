@@ -1,12 +1,15 @@
 package models;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +21,9 @@ import javax.persistence.Table;
 public class Utilisateur {
 
 	@Id
+	@Column(name = "IdUtilisateur")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer idUtilisateur;
 
 	@Column(name = "NomUtilisateur")
 	private String nom;
@@ -39,13 +43,16 @@ public class Utilisateur {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
+	@OneToMany(mappedBy = "utilisateur", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+	private Set<ListeDeCourse> listeDeCourse = new HashSet(0);
+
 	/**
 	 * Récupération de l'identifiant de l'utilisateur.
 	 *
 	 * @return
 	 */
 	public Integer getId() {
-		return id;
+		return idUtilisateur;
 	}
 
 	/**
@@ -147,6 +154,14 @@ public class Utilisateur {
 		return paniers;
 	}
 
+	public Set<ListeDeCourse> getListeDeCourse() {
+		return listeDeCourse;
+	}
+
+	public void addListeDeCourse(final ListeDeCourse listeDeCourse) {
+		this.listeDeCourse.add(listeDeCourse);
+	}
+
 	/**
 	 * MAJ des paniers de l'utilisateur.
 	 *
@@ -156,9 +171,10 @@ public class Utilisateur {
 		this.paniers = paniers;
 	}
 
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, id, motDePasse, nom, paniers, prenom, role);
+		return Objects.hash(email, idUtilisateur, listeDeCourse, motDePasse, nom, paniers, prenom, role);
 	}
 
 	@Override
@@ -166,14 +182,16 @@ public class Utilisateur {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null || getClass() != obj.getClass()) {
+		if ((obj == null) || (getClass() != obj.getClass())) {
 			return false;
 		}
 		final Utilisateur other = (Utilisateur) obj;
-		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
-				&& Objects.equals(motDePasse, other.motDePasse) && Objects.equals(nom, other.nom)
-				&& Objects.equals(paniers, other.paniers) && Objects.equals(prenom, other.prenom) && role == other.role;
+		return Objects.equals(email, other.email) && Objects.equals(idUtilisateur, other.idUtilisateur)
+				&& Objects.equals(listeDeCourse, other.listeDeCourse) && Objects.equals(motDePasse, other.motDePasse)
+				&& Objects.equals(nom, other.nom) && Objects.equals(paniers, other.paniers)
+				&& Objects.equals(prenom, other.prenom) && role == other.role;
 	}
+
 
 
 	public enum Role {
