@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -13,6 +12,9 @@ import org.hibernate.service.ServiceRegistry;
 import models.Categorie;
 import models.Rayon;
 import models.SousCategorie;
+import models.Panier;
+import models.Utilisateur;
+
 
 
 /**
@@ -28,7 +30,7 @@ public class HibernateUtil {
 			configuration.configure("hibernate.cfg.xml");
 			System.out.println("Hibernate Configuration loaded");
 
-			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class);
+			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class, Utilisateur.class, Panier.class);
 
 			classList.forEach(configuration::addAnnotatedClass);
 
