@@ -16,10 +16,10 @@ public class Composer {
 	
 	@ManyToOne
 	@JoinColumn(name = "IdArticle", insertable = false, updatable = false)
-	private Article article;
+	private Article articleComposer;
 	@ManyToOne
 	@JoinColumn(name = "IdPanier", insertable = false, updatable = false)
-	private Panier panier;
+	private Panier panierComposer;
 
 	public Composer() {}
 
@@ -48,9 +48,9 @@ public class Composer {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((article == null) ? 0 : article.hashCode());
+		result = prime * result + ((articleComposer == null) ? 0 : articleComposer.hashCode());
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
-		result = prime * result + ((panier == null) ? 0 : panier.hashCode());
+		result = prime * result + ((panierComposer == null) ? 0 : panierComposer.hashCode());
 		result = prime * result + qte;
 		return result;
 	}
@@ -64,20 +64,20 @@ public class Composer {
 		if (getClass() != obj.getClass())
 			return false;
 		Composer other = (Composer) obj;
-		if (article == null) {
-			if (other.article != null)
+		if (articleComposer == null) {
+			if (other.articleComposer != null)
 				return false;
-		} else if (!article.equals(other.article))
+		} else if (!articleComposer.equals(other.articleComposer))
 			return false;
 		if (key == null) {
 			if (other.key != null)
 				return false;
 		} else if (!key.equals(other.key))
 			return false;
-		if (panier == null) {
-			if (other.panier != null)
+		if (panierComposer == null) {
+			if (other.panierComposer != null)
 				return false;
-		} else if (!panier.equals(other.panier))
+		} else if (!panierComposer.equals(other.panierComposer))
 			return false;
 		if (qte != other.qte)
 			return false;
