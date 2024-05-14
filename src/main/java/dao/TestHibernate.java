@@ -16,6 +16,10 @@ public class TestHibernate {
 	 * Programme de test.
 	 */
 	public static void main(final String[] args) {
+	
+		HibernateUtil.getSessionFactory();
+		System.out.println("Test Hibernate!");
+
 		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		session.beginTransaction();
@@ -25,6 +29,8 @@ public class TestHibernate {
 
 		final List<Utilisateur> liste = session.createQuery(cq).getResultList();
 		System.out.println("Test Hibernate !");
+
 	}
+
 
 }
