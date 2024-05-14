@@ -12,7 +12,6 @@ public class TestHibernate {
 		HibernateUtil.getSessionFactory();
 
 		System.out.println("Test Hibernate !");
-		HibernateUtil.getSessionFactory();  
 	}
 
 }
