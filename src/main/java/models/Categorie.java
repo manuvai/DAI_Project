@@ -24,7 +24,7 @@ public class Categorie {
 	 * id d'une categorie
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)  
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IdCat")
 	private Integer idCat;
 	/**
@@ -32,28 +32,27 @@ public class Categorie {
 	 */
 	@Column(name = "NomCategorie")
 	private String nomCategorie;
-	
-	
+
+
 
 	/**
 	 * sous categories
 	 */
 	@OneToMany(mappedBy = "categorie", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	private Set<SousCategorie> sousCategories = new HashSet(0);
-	
+
 	/**
 	 * rayon de la categorie
 	 */
-	@ManyToOne(fetch = FetchType.EAGER) 
-	@JoinColumn(name = "IdRayon")  
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "IdRayon")
 	private Rayon rayon;
-	
+
 
 	public Categorie() {
 	}
-	
-	public Categorie(Integer idCat, String nomCategorie, Rayon rayon) {
-		super();
+
+	public Categorie(final Integer idCat, final String nomCategorie, final Rayon rayon) {
 		this.idCat = idCat;
 		this.nomCategorie = nomCategorie;
 		this.rayon = rayon;
@@ -82,9 +81,9 @@ public class Categorie {
 	public Rayon getRayon() {
 		return rayon;
 	}
-	
+
 	/**
-	 * recupere la liste des sousCategories 
+	 * recupere la liste des sousCategories
 	 * @return sousCategories
 	 */
 	public Set<SousCategorie> getSousCategories() {
@@ -93,24 +92,24 @@ public class Categorie {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idCat, nomCategorie, rayon, sousCategories);
+		return Objects.hash(idCat, nomCategorie, rayon);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Categorie other = (Categorie) obj;
+		}
+		final Categorie other = (Categorie) obj;
 		return Objects.equals(idCat, other.idCat) && Objects.equals(nomCategorie, other.nomCategorie)
-				&& Objects.equals(rayon, other.rayon) && Objects.equals(sousCategories, other.sousCategories);
+				&& Objects.equals(rayon, other.rayon);
 	}
-	
-	
-	
 
-	
+
+
+
+
 }

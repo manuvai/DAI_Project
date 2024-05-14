@@ -6,6 +6,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import models.keys.ComposerKey;
+
 @Entity
 @Table(name = "Composer")
 public class Composer {

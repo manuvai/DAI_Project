@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import models.keys.ConcernerKey;
+
 @Entity
 @Table(name = "Concerner")
 public class Concerner {

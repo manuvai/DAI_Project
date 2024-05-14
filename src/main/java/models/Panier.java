@@ -200,7 +200,7 @@ public class Panier {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(creneau, dateDebutPreparation, dateFinPreparation, etat, idPanier, utilisateur, composers);
+		return Objects.hash(creneau, dateDebutPreparation, dateFinPreparation, etat, idPanier, utilisateur);
 	}
 
 	@Override
@@ -215,8 +215,7 @@ public class Panier {
 		return Objects.equals(creneau, other.creneau)
 				&& Objects.equals(dateDebutPreparation, other.dateDebutPreparation)
 				&& Objects.equals(dateFinPreparation, other.dateFinPreparation) && etat == other.etat
-				&& Objects.equals(idPanier, other.idPanier) && Objects.equals(utilisateur, other.utilisateur)
-				&& Objects.equals(composers, other.composers);
+				&& Objects.equals(idPanier, other.idPanier) && Objects.equals(utilisateur, other.utilisateur);
 	}
 
 	public enum Etat {

@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -40,10 +40,22 @@ public class HibernateUtil {
 			configuration.configure("hibernate.cfg.xml");
 			System.out.println("Hibernate Configuration loaded");
 
-			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class, Utilisateur.class,
-					Panier.class, Recette.class,
-					PostIt.class, ListeDeCourse.class, Concerner.class, Magasin.class, Creneau.class, Article.class,
-					Stocker.class, Composer.class, Contenir.class);
+			final List<Class<?>> classList = new ArrayList<>();
+			classList.add(Rayon.class);
+			classList.add(Categorie.class);
+			classList.add(SousCategorie.class);
+			classList.add(Utilisateur.class);
+			classList.add(Panier.class);
+			classList.add(Recette.class);
+			classList.add(PostIt.class);
+			classList.add(ListeDeCourse.class);
+			classList.add(Concerner.class);
+			classList.add(Magasin.class);
+			classList.add(Creneau.class);
+			classList.add(Article.class);
+			classList.add(Stocker.class);
+			classList.add(Composer.class);
+			classList.add(Contenir.class);
 
 			classList.forEach(configuration::addAnnotatedClass);
 

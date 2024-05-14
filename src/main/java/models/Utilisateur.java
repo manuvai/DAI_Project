@@ -174,7 +174,7 @@ public class Utilisateur {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, idUtilisateur, listeDeCourse, motDePasse, nom, paniers, prenom, role);
+		return Objects.hash(email, idUtilisateur, motDePasse, nom, prenom, role);
 	}
 
 	@Override
@@ -182,13 +182,12 @@ public class Utilisateur {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 		final Utilisateur other = (Utilisateur) obj;
 		return Objects.equals(email, other.email) && Objects.equals(idUtilisateur, other.idUtilisateur)
-				&& Objects.equals(listeDeCourse, other.listeDeCourse) && Objects.equals(motDePasse, other.motDePasse)
-				&& Objects.equals(nom, other.nom) && Objects.equals(paniers, other.paniers)
+				&& Objects.equals(motDePasse, other.motDePasse) && Objects.equals(nom, other.nom)
 				&& Objects.equals(prenom, other.prenom) && role == other.role;
 	}
 

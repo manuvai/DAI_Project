@@ -211,7 +211,7 @@ public class Creneau {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(capacite, dateCreneau, heureCreneau, idCreneau, magasin, paniers);
+		return Objects.hash(capacite, dateCreneau, heureCreneau, idCreneau, magasin);
 	}
 
 	@Override
@@ -225,7 +225,7 @@ public class Creneau {
 		final Creneau other = (Creneau) obj;
 		return capacite == other.capacite && Objects.equals(dateCreneau, other.dateCreneau)
 				&& heureCreneau == other.heureCreneau && idCreneau == other.idCreneau
-				&& Objects.equals(magasin, other.magasin) && Objects.equals(paniers, other.paniers);
+				&& Objects.equals(magasin, other.magasin);
 	}
 
 }
