@@ -29,11 +29,11 @@ public class Recette {
 	/**
 	 * Constructeur avec tous les attributs
 	 *
-	 * @param id
+	 * @param idRecette
 	 * @param postIts
 	 */
-	public Recette(final Integer id, final Set<PostIt> postIts) {
-		this.id = id;
+	public Recette(final Integer idRecette, final Set<PostIt> postIts) {
+		this.idRecette = idRecette;
 		this.postIts = postIts;
 	}
 
@@ -43,7 +43,7 @@ public class Recette {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IdRecette")
-	private Integer id;
+	private Integer idRecette;
 
 	/**
 	 * Collection de post-its liés à une recette
