@@ -16,4 +16,14 @@ public class PostIt {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idPostIt;
+
+	/**
+	 * getter for postit id
+	 * @return id liste
+	 */
+	public Integer getIdPostIt() {
+		return idPostIt;
+	}
+	
+	
 }

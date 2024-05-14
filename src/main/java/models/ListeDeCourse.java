@@ -15,4 +15,13 @@ public class ListeDeCourse {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idListDeCourse;
+
+	/**
+	 * getter for liste de course id
+	 * @return id liste
+	 */
+	public Integer getIdListDeCourse() {
+		return idListDeCourse;
+	}
+
 }
