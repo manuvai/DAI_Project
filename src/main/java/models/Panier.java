@@ -55,6 +55,10 @@ public class Panier {
 	@JoinColumn(name = "UtilisateurId")
 	private Utilisateur utilisateur;
 
+
+   @MapKeyJoinColumn(name = "IdArticle")
+   @OneToMany(mappedBy = "panierComposer", cascade = CascadeType.ALL)
+   private Map<Article,Composer> composers;
 	/**
 	 * Créneau bloqué
 	 */
@@ -65,6 +69,7 @@ public class Panier {
 	@MapKeyJoinColumn(name = "IdArticle")
 	@OneToMany(mappedBy = "articleValidateur", cascade = CascadeType.ALL)
 	private Map<Panier,Composer> validers;
+
 
 	public Panier() {
 
