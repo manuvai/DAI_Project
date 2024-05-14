@@ -10,24 +10,43 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "panier")
+@Table(name = "Panier")
 public class Panier {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(nullable = true)
+	@Column(name = "DateDebutPreparation", nullable = true)
 	private Date dateDebutPreparation;
 
-	@Column(nullable = true)
+	@Column(name = "DateFinPreparation", nullable = true)
 	private Date dateFinPreparation;
 
 	@Enumerated(EnumType.STRING)
 	private Etat etat;
+
+	@ManyToOne
+	@JoinColumn(name = "UtilisateurId")
+	private Utilisateur utilisateur;
+
+	public Panier() {
+
+	}
+
+	public Panier(final Integer id, final Date dateDebutPreparation, final Date dateFinPreparation, final Etat etat,
+			final Utilisateur utilisateur) {
+		this.id = id;
+		this.dateDebutPreparation = dateDebutPreparation;
+		this.dateFinPreparation = dateFinPreparation;
+		this.etat = etat;
+		this.utilisateur = utilisateur;
+	}
 
 	/**
 	 * Récupération de l'identifiant du panier.
@@ -92,9 +111,27 @@ public class Panier {
 		this.etat = etat;
 	}
 
+	/**
+	 * Récupération du propriétaire du panier.
+	 *
+	 * @return the utilisateur
+	 */
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	/**
+	 * MAJ du propriétaire du panier.
+	 *
+	 * @param utilisateur the utilisateur to set
+	 */
+	public void setUtilisateur(final Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateDebutPreparation, dateFinPreparation, etat, id);
+		return Objects.hash(dateDebutPreparation, dateFinPreparation, etat, id, utilisateur);
 	}
 
 	@Override
@@ -108,10 +145,10 @@ public class Panier {
 		final Panier other = (Panier) obj;
 		return Objects.equals(dateDebutPreparation, other.dateDebutPreparation)
 				&& Objects.equals(dateFinPreparation, other.dateFinPreparation) && etat == other.etat
-				&& Objects.equals(id, other.id);
+				&& Objects.equals(id, other.id) && Objects.equals(utilisateur, other.utilisateur);
 	}
 
-	enum Etat {
+	public enum Etat {
 		ATTENTE, VALIDEE, LIVRE
 	}
 
