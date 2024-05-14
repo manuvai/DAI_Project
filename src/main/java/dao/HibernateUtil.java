@@ -9,8 +9,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import models.Categorie;
+import models.Rayon;
+import models.SousCategorie;
 import models.Panier;
 import models.Utilisateur;
+
 
 
 /**
@@ -26,9 +30,7 @@ public class HibernateUtil {
 			configuration.configure("hibernate.cfg.xml");
 			System.out.println("Hibernate Configuration loaded");
 
-			// Liste des classes à charger. TODO Penser à mettre dans cette liste les classes des entités
-
-			final List<Class<?>> classList = Arrays.asList(Utilisateur.class, Panier.class);
+			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class, Utilisateur.class, Panier.class);
 
 			classList.forEach(configuration::addAnnotatedClass);
 
