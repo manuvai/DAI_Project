@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+
+import models.Rayon;
 
 
 /**
@@ -23,9 +26,8 @@ public class HibernateUtil {
 			configuration.configure("hibernate.cfg.xml");
 			System.out.println("Hibernate Configuration loaded");
 
-			// Liste des classes à charger. TODO Penser à mettre dans cette liste les classes des entités
+			final List<Class<?>> classList = Arrays.asList(Rayon.class);
 
-			final List<Class<?>> classList = Collections.emptyList();
 			classList.forEach(configuration::addAnnotatedClass);
 
 			final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
