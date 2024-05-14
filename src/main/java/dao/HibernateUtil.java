@@ -10,6 +10,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import models.Categorie;
+import models.Rayon;
+import models.SousCategorie;
+import models.Panier;
+import models.Utilisateur;
+
+
 
 /**
  * Chargement de la configuration et création de la SessionFactory.
@@ -24,9 +31,7 @@ public class HibernateUtil {
 			configuration.configure("hibernate.cfg.xml");
 			System.out.println("Hibernate Configuration loaded");
 
-			// Liste des classes à charger. TODO Penser à mettre dans cette liste les classes des entités
-
-			final List<Class<?>> classList = Arrays.asList(Magasin.class, Creneau.class);
+			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class, Utilisateur.class, Panier.class,Magasin.class, Creneau.class);
 			classList.forEach(configuration::addAnnotatedClass);
 
 			final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
