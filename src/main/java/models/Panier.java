@@ -22,39 +22,68 @@ import javax.persistence.Table;
 @Table(name = "Panier")
 public class Panier {
 
+	/**
+	 * Identifiant du panier
+	 */
 	@Id
 	@Column(name = "IdPanier")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idPanier;
 
+	/**
+	 * Date de début de préparation du panier
+	 */
 	@Column(name = "DateDebutPreparation", nullable = true)
 	private Date dateDebutPreparation;
 
+	/**
+	 * Date de fin de préparation du panier
+	 */
 	@Column(name = "DateFinPreparation", nullable = true)
 	private Date dateFinPreparation;
 
+	/**
+	 * État du panier
+	 */
 	@Enumerated(EnumType.STRING)
 	private Etat etat;
 
+	/**
+	 * Utilisateur propriétaire du panier
+	 */
 	@ManyToOne
 	@JoinColumn(name = "UtilisateurId")
 	private Utilisateur utilisateur;
 
-    @MapKeyJoinColumn(name = "IdArticle")
-    @OneToMany(mappedBy = "panierComposer", cascade = CascadeType.ALL)
-    private Map<Article,Composer> composers;
+
+   @MapKeyJoinColumn(name = "IdArticle")
+   @OneToMany(mappedBy = "panierComposer", cascade = CascadeType.ALL)
+   private Map<Article,Composer> composers;
+	/**
+	 * Créneau bloqué
+	 */
+	@ManyToOne
+	@JoinColumn(name = "IdCreneau", nullable = true)
+	private Creneau creneau;
+
+	@MapKeyJoinColumn(name = "IdArticle")
+	@OneToMany(mappedBy = "articleValidateur", cascade = CascadeType.ALL)
+	private Map<Panier,Composer> validers;
+
 
 	public Panier() {
 
 	}
 
 	public Panier(final Integer idPanier, final Date dateDebutPreparation, final Date dateFinPreparation, final Etat etat,
-			final Utilisateur utilisateur) {
+			final Utilisateur utilisateur, final Creneau creneau, final Map<Panier, Composer> validers) {
 		this.idPanier = idPanier;
 		this.dateDebutPreparation = dateDebutPreparation;
 		this.dateFinPreparation = dateFinPreparation;
 		this.etat = etat;
 		this.utilisateur = utilisateur;
+		this.creneau = creneau;
+		this.validers = validers;
 	}
 
 	/**
@@ -138,10 +167,45 @@ public class Panier {
 		this.utilisateur = utilisateur;
 	}
 
+	/**
+	 * Récupération du creneau
+	 *
+	 * @return the creneau
+	 */
+	public Creneau getCreneau() {
+		return creneau;
+	}
+
+	/**
+	 * MAJ du creneau
+	 *
+	 * @param creneau the creneau to set
+	 */
+	public void setCreneau(final Creneau creneau) {
+		this.creneau = creneau;
+	}
+
+	/**
+	 * Récupération du validers
+	 *
+	 * @return the validers
+	 */
+	public Map<Panier, Composer> getValiders() {
+		return validers;
+	}
+
+	/**
+	 * MAJ des validers
+	 *
+	 * @param validers the validers to set
+	 */
+	public void setValiders(final Map<Panier, Composer> validers) {
+		this.validers = validers;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateDebutPreparation, dateFinPreparation, etat, idPanier);
-
+		return Objects.hash(creneau, dateDebutPreparation, dateFinPreparation, etat, idPanier, utilisateur, validers);
 	}
 
 	@Override
@@ -153,9 +217,11 @@ public class Panier {
 			return false;
 		}
 		final Panier other = (Panier) obj;
-		return Objects.equals(dateDebutPreparation, other.dateDebutPreparation)
+		return Objects.equals(creneau, other.creneau)
+				&& Objects.equals(dateDebutPreparation, other.dateDebutPreparation)
 				&& Objects.equals(dateFinPreparation, other.dateFinPreparation) && etat == other.etat
-				&& Objects.equals(idPanier, other.idPanier);
+				&& Objects.equals(idPanier, other.idPanier) && Objects.equals(utilisateur, other.utilisateur)
+				&& Objects.equals(validers, other.validers);
 	}
 
 	public enum Etat {

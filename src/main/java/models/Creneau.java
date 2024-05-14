@@ -2,7 +2,9 @@ package models;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,7 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -22,161 +25,208 @@ import javax.persistence.Temporal;
 @Table(name = "Creneau")
 public class Creneau {
 
-    // Propriétés
+	// Propriétés
 
-    /**
-     * Le code unique du créneau.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int codeCreneau;
+	/**
+	 * Le code unique du créneau.
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="IdCreneau")
+	private int idCreneau;
 
-    /**
-     * La date du créneau.
-     */
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateCreneau;
+	/**
+	 * La date du créneau.
+	 */
+	@Temporal(javax.persistence.TemporalType.DATE)
+	@Column(name="DateCreneau")
+	private Date dateCreneau;
 
-    /**
-     * L'heure du créneau.
-     */
-    @Enumerated(EnumType.STRING)
-    private HeureCreneau heureCreneau;
+	/**
+	 * L'heure du créneau.
+	 */
+	@Enumerated(EnumType.STRING)
+	@Column(name="HeureCreneau")
+	private HeureCreneau heureCreneau;
 
-    /**
-     * Enumération des créneaux horaires disponibles.
-     */
-    public enum HeureCreneau {
-        _08h00_08h30,
-        _08h30_09h00,
-        _09h00_09h30,
-        _09h30_10h00,
-        _10h00_10h30,
-        _10h30_11h00,
-        _11h00_11h30,
-        _11h30_12h00,
-        _12h00_12h30,
-        _14h30_15h00,
-        _15h00_15h30,
-        _15h30_16h00,
-        _16h00_16h30,
-        _16h30_17h00,
-        _17h00_17h30,
-        _17h30_18h00;
-    }
-
-
-    /**
-     * La capacité du créneau.
-     */
-    private int capacite;
-
-    
-    //Mapping
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="codeMagasin")
-    private Magasin magasin;
-  
-    
-    //Constructeurs
-    public Creneau() {}
-    public Creneau(Date dateCreneau, HeureCreneau heureCreneau, int capacite) {
-  		super();
-  		this.dateCreneau = dateCreneau;
-  		this.heureCreneau = heureCreneau;
-  		this.capacite = capacite;
-  	}
-    
-    // Getters et setters
-
-    /**
-     * Obtient le code du créneau.
-     *
-     * @return Le code du créneau.
-     */
-    public int getCodeCreneau() {
-        return codeCreneau;
-    }
+	/**
+	 * Enumération des créneaux horaires disponibles.
+	 */
+	public enum HeureCreneau {
+		_08h00_08h30,
+		_08h30_09h00,
+		_09h00_09h30,
+		_09h30_10h00,
+		_10h00_10h30,
+		_10h30_11h00,
+		_11h00_11h30,
+		_11h30_12h00,
+		_12h00_12h30,
+		_14h30_15h00,
+		_15h00_15h30,
+		_15h30_16h00,
+		_16h00_16h30,
+		_16h30_17h00,
+		_17h00_17h30,
+		_17h30_18h00;
+	}
 
 
 	/**
-     * Obtient la date du créneau.
-     *
-     * @return La date du créneau.
-     */
-    public Date getDateCreneau() {
-        return dateCreneau;
-    }
+	 * La capacité du créneau.
+	 */
+	@Column(name="Capacite")
+	private int capacite;
 
-    /**
-     * Définit la date du créneau.
-     *
-     * @param dateCreneau La nouvelle date du créneau.
-     */
-    public void setDateCreneau(Date dateCreneau) {
-        this.dateCreneau = dateCreneau;
-    }
 
-    /**
-     * Obtient l'heure du créneau.
-     *
-     * @return L'heure du créneau.
-     */
-    public HeureCreneau getHeureCreneau() {
-        return heureCreneau;
-    }
+	//Mapping
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="IdMagasin")
+	private Magasin magasin;
 
-    /**
-     * Définit l'heure du créneau.
-     *
-     * @param heureCreneau La nouvelle heure du créneau.
-     */
-    public void setHeureCreneau(HeureCreneau heureCreneau) {
-        this.heureCreneau = heureCreneau;
-    }
+	@OneToMany(mappedBy = "creneau")
+	private Set<Panier> paniers;
 
-    /**
-     * Obtient la capacité du créneau.
-     *
-     * @return La capacité du créneau.
-     */
-    public int getCapacite() {
-        return capacite;
-    }
+	//Constructeurs
+	public Creneau() {}
 
-    /**
-     * Définit la capacité du créneau.
-     *
-     * @param capacite La nouvelle capacité du créneau.
-     */
-    public void setCapacite(int capacite) {
-        this.capacite = capacite;
-    }
+	public Creneau(final Date dateCreneau, final HeureCreneau heureCreneau, final int capacite, final Magasin magasin,
+			final Set<Panier> paniers) {
+		this.dateCreneau = dateCreneau;
+		this.heureCreneau = heureCreneau;
+		this.capacite = capacite;
+		this.magasin = magasin;
+		this.paniers = paniers;
 
-    // hashCode et equals
+	}
 
-    /**
-     * Calcule le hashcode du créneau basé sur le code, la date, l'heure et la capacité.
-     *
-     * @return Le hashcode du créneau.
-     * 
-     */
+	// Getters et setters
+
+	/**
+	 * Obtient le code du créneau.
+	 *
+	 * @return Le code du créneau.
+	 */
+	public int getCodeCreneau() {
+		return idCreneau;
+	}
+
+
+	/**
+	 * Obtient la date du créneau.
+	 *
+	 * @return La date du créneau.
+	 */
+	public Date getDateCreneau() {
+		return dateCreneau;
+	}
+
+	/**
+	 * Définit la date du créneau.
+	 *
+	 * @param dateCreneau La nouvelle date du créneau.
+	 */
+	public void setDateCreneau(final Date dateCreneau) {
+		this.dateCreneau = dateCreneau;
+	}
+
+	/**
+	 * Obtient l'heure du créneau.
+	 *
+	 * @return L'heure du créneau.
+	 */
+	public HeureCreneau getHeureCreneau() {
+		return heureCreneau;
+	}
+
+	/**
+	 * Définit l'heure du créneau.
+	 *
+	 * @param heureCreneau La nouvelle heure du créneau.
+	 */
+	public void setHeureCreneau(final HeureCreneau heureCreneau) {
+		this.heureCreneau = heureCreneau;
+	}
+
+	/**
+	 * Obtient la capacité du créneau.
+	 *
+	 * @return La capacité du créneau.
+	 */
+	public int getCapacite() {
+		return capacite;
+	}
+
+	/**
+	 * Définit la capacité du créneau.
+	 *
+	 * @param capacite La nouvelle capacité du créneau.
+	 */
+	public void setCapacite(final int capacite) {
+		this.capacite = capacite;
+	}
+
+	/**
+	 * Récupération du magasin
+	 *
+	 * @return the magasin
+	 */
+	public Magasin getMagasin() {
+		return magasin;
+	}
+
+	/**
+	 * MAJ du magasin
+	 *
+	 * @param magasin the magasin to set
+	 */
+	public void setMagasin(final Magasin magasin) {
+		this.magasin = magasin;
+	}
+
+	/**
+	 * Récupération des paniers
+	 *
+	 * @return the paniers
+	 */
+	public Set<Panier> getPaniers() {
+		return paniers;
+	}
+
+	/**
+	 * MAJ des paniers
+	 *
+	 * @param paniers the paniers to set
+	 */
+	public void setPaniers(final Set<Panier> paniers) {
+		this.paniers = paniers;
+	}
+
+	// hashCode et equals
+	/**
+	 * Calcule le hashcode du créneau basé sur le code, la date, l'heure et la capacité.
+	 *
+	 * @return Le hashcode du créneau.
+	 *
+	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(capacite, codeCreneau, dateCreneau, heureCreneau);
+		return Objects.hash(capacite, dateCreneau, heureCreneau, idCreneau, magasin, paniers);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Creneau other = (Creneau) obj;
-		return capacite == other.capacite && codeCreneau == other.codeCreneau
-				&& Objects.equals(dateCreneau, other.dateCreneau) && heureCreneau == other.heureCreneau;
+		}
+		final Creneau other = (Creneau) obj;
+		return capacite == other.capacite && Objects.equals(dateCreneau, other.dateCreneau)
+				&& heureCreneau == other.heureCreneau && idCreneau == other.idCreneau
+				&& Objects.equals(magasin, other.magasin) && Objects.equals(paniers, other.paniers);
 	}
+
 }
-   
+

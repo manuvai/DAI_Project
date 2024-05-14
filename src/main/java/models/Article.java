@@ -69,6 +69,12 @@ public class Article {
     @Transient
     private float prixKilo; 
     
+
+    //Mapping
+    @MapKeyJoinColumn(name = "IdMagasin")
+    @OneToMany(mappedBy = "articleStock", cascade = CascadeType.ALL)
+    private Map<Magasin,Stocker> stockers;
+
     @MapKeyJoinColumn(name = "IdPanier")
     @OneToMany(mappedBy = "articleComposer", cascade = CascadeType.ALL)
     private Map<Panier,Composer> composers;
