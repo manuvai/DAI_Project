@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import models.Categorie;
+import models.Concerner;
 import models.Rayon;
 import models.SousCategorie;
 import models.ListeDeCourse;
@@ -17,6 +18,7 @@ import models.Panier;
 import models.PostIt;
 import models.Recette;
 import models.Utilisateur;
+import models.ConcernerKey;
 
 
 
@@ -35,7 +37,7 @@ public class HibernateUtil {
 
 			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class, SousCategorie.class, Utilisateur.class, Panier.class,
 					Utilisateur.class, Panier.class, Recette.class,
-					PostIt.class, ListeDeCourse.class);
+					PostIt.class, ListeDeCourse.class, Concerner.class, ConcernerKey.class);
 
 			classList.forEach(configuration::addAnnotatedClass);
 
