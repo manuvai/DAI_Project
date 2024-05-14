@@ -14,31 +14,59 @@ import javax.persistence.Transient;
 @Table(name = "Article")
 public class Article {
 
+	/**
+	 * Identifiant de l'article
+	 */
 	@Id
+	@Column(name = "IdArticle")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer idArticle;
 
+	/**
+	 * Libellé de l'article
+	 */
 	@Column(name = "LibArticle")
 	private String lib;
 	
+	/**
+	 * Description de l'article
+	 */
 	@Column(name = "DescArticle")
 	private String desc;
 
+	/**
+	 * Prix unitaire de l'article
+	 */
 	@Column(name = "PrixUnitaire")
 	private float prixUnitaire;
 
+	/**
+	 * Poids de l'article en grammes
+	 */
 	@Column(name = "Poids")
 	private int poids;
 
+	/**
+	 * Nutriscore de l'article
+	 */
 	@Enumerated(EnumType.STRING)
 	private Nutriscore nutriscore;
 	
     @Transient
     private float prixKilo; 
     
+    /**
+     * Constructeur de l'article
+     * @param id identifiant de l'article
+     * @param lib libellé de l'article
+     * @param desc description de l'article
+     * @param prixUnitaire prix unitaire de l'article
+     * @param poids poids de l'article
+     * @param nutriscore nutriscore de l'article
+     */
 	public Article(Integer id, String lib, String desc, float prixUnitaire, int poids, Nutriscore nutriscore) {
 		super();
-		this.id = id;
+		this.idArticle = id;
 		this.lib = lib;
 		this.desc = desc;
 		this.prixUnitaire = prixUnitaire;
@@ -53,7 +81,7 @@ public class Article {
 	 * @return id
 	 */
 	public Integer getId() {
-		return id;
+		return idArticle;
 	}
 
 	/**
@@ -77,7 +105,7 @@ public class Article {
 	/**
 	 * Récupération du nutriscore de l'article.
 	 *
-	 * @return
+	 * @return nutriscore
 	 */
 	public Nutriscore getRole() {
 		return nutriscore;
@@ -92,12 +120,16 @@ public class Article {
 		this.nutriscore = nutriscore;
 	}
 
+	/**
+	 * Hashcode
+	 * @return result
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((desc == null) ? 0 : desc.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idArticle == null) ? 0 : idArticle.hashCode());
 		result = prime * result + ((lib == null) ? 0 : lib.hashCode());
 		result = prime * result + ((nutriscore == null) ? 0 : nutriscore.hashCode());
 		result = prime * result + poids;
@@ -106,6 +138,11 @@ public class Article {
 		return result;
 	}
 
+	/**
+	 * equals
+	 * @param obj objet
+	 * @return boolean
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -120,10 +157,10 @@ public class Article {
 				return false;
 		} else if (!desc.equals(other.desc))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (idArticle == null) {
+			if (other.idArticle != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idArticle.equals(other.idArticle))
 			return false;
 		if (lib == null) {
 			if (other.lib != null)
@@ -141,6 +178,9 @@ public class Article {
 		return true;
 	}
 
+	/**
+	 * Nutriscore de A à E
+	 */
 	enum Nutriscore {
 		A, B, C, D, E
 	}
