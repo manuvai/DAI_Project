@@ -16,12 +16,8 @@ public class TestHibernate {
 	 * Programme de test.
 	 */
 	public static void main(final String[] args) {
+	
 		HibernateUtil.getSessionFactory();
-
-		System.out.println("Test Hibernate!");
-
-		HibernateUtil.getSessionFactory();
-
 		System.out.println("Test Hibernate!");
 
 		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
