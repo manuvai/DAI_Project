@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +23,7 @@ public class Rayon {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)  
-	@Column(name = "Id")
+	@Column(name = "IdRayon")
 	private Integer id;
 	/**
 	 * nom d'un rayon
@@ -30,7 +31,7 @@ public class Rayon {
 	@Column(name = "NomRayon")
 	private String nomRayon;
 	
-	@OneToMany(mappedBy = "rayon", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "rayon", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	private Set<Categorie> categories = new HashSet(0);
 
 	/**

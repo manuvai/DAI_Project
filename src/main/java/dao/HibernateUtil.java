@@ -10,6 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import models.Categorie;
 import models.Rayon;
 
 
@@ -26,7 +27,7 @@ public class HibernateUtil {
 			configuration.configure("hibernate.cfg.xml");
 			System.out.println("Hibernate Configuration loaded");
 
-			final List<Class<?>> classList = Arrays.asList(Rayon.class);
+			final List<Class<?>> classList = Arrays.asList(Rayon.class, Categorie.class);
 
 			classList.forEach(configuration::addAnnotatedClass);
 
