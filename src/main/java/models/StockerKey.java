@@ -12,10 +12,10 @@ import javax.persistence.Column;
 public class StockerKey implements Serializable {
 
     @Column(name = "IdMagasin")
-    private int IdMagasin;
+    private int idMagasin;
 
     @Column(name = "IdCreneau")
-    private int IdService;
+    private int idService;
 
     /**
      * Constructeur par défaut de StockerKey.
@@ -31,8 +31,8 @@ public class StockerKey implements Serializable {
      */
     public StockerKey(int idMagasin, int idService) {
         super();
-        this.IdMagasin = idMagasin;
-        this.IdService = idService;
+        this.idMagasin = idMagasin;
+        this.idService = idService;
     }
 
     /**
@@ -41,7 +41,7 @@ public class StockerKey implements Serializable {
      * @return l'IdMagasin.
      */
     public int getIdMagasin() {
-        return IdMagasin;
+        return idMagasin;
     }
 
     /**
@@ -50,7 +50,7 @@ public class StockerKey implements Serializable {
      * @param idMagasin le nouvel IdMagasin.
      */
     public void setIdMagasin(int idMagasin) {
-        IdMagasin = idMagasin;
+        idMagasin = idMagasin;
     }
 
     /**
@@ -59,7 +59,7 @@ public class StockerKey implements Serializable {
      * @return l'IdService.
      */
     public int getIdService() {
-        return IdService;
+        return idService;
     }
 
     /**
@@ -68,7 +68,7 @@ public class StockerKey implements Serializable {
      * @param idService le nouvel IdService.
      */
     public void setIdService(int idService) {
-        IdService = idService;
+        idService = idService;
     }
 
     /**
@@ -78,7 +78,7 @@ public class StockerKey implements Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(IdMagasin, IdService);
+        return Objects.hash(idMagasin, idService);
     }
 
     /**
@@ -96,6 +96,6 @@ public class StockerKey implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         StockerKey other = (StockerKey) obj;
-        return IdMagasin == other.IdMagasin && IdService == other.IdService;
+        return idMagasin == other.idMagasin && idService == other.idService;
     }
 }
