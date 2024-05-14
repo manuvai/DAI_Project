@@ -1,8 +1,9 @@
 package dao;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
-
+import models.Creneau;
+import models.Magasin;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -25,7 +26,7 @@ public class HibernateUtil {
 
 			// Liste des classes à charger. TODO Penser à mettre dans cette liste les classes des entités
 
-			final List<Class<?>> classList = Collections.emptyList();
+			final List<Class<?>> classList = Arrays.asList(Magasin.class, Creneau.class);
 			classList.forEach(configuration::addAnnotatedClass);
 
 			final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

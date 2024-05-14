@@ -1,17 +1,15 @@
-package dao;
+package models;
 
+import dao.HibernateUtil;
 
-/**
- * Classe de test pour Hibernate.
- */
-public class TestHibernate {
+public class Main {
 	/**
 	 * Programme de test.
 	 */
 	public static void main(final String[] args) {
 		HibernateUtil.getSessionFactory();
 
-		System.out.println("Test Hibernate!");
+		System.out.println("Test Hibernate!!!!!!!!!!!vcvvc !");
 	}
 
 
