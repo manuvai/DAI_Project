@@ -120,10 +120,6 @@ public class Article {
 		this.nutriscore = nutriscore;
 	}
 
-	/**
-	 * Hashcode
-	 * @return result
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -138,11 +134,6 @@ public class Article {
 		return result;
 	}
 
-	/**
-	 * equals
-	 * @param obj objet
-	 * @return boolean
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
