@@ -1,8 +1,10 @@
 package models;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,8 +23,9 @@ import javax.persistence.Table;
 public class Panier {
 
 	@Id
+	@Column(name = "IdPanier")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer idPanier;
 
 	@Column(name = "DateDebutPreparation", nullable = true)
 	private Date dateDebutPreparation;
@@ -35,13 +40,17 @@ public class Panier {
 	@JoinColumn(name = "UtilisateurId")
 	private Utilisateur utilisateur;
 
+    @MapKeyJoinColumn(name = "IdArticle")
+    @OneToMany(mappedBy = "articleValidateur", cascade = CascadeType.ALL)
+    private Map<Panier,Composer> validers;
+
 	public Panier() {
 
 	}
 
-	public Panier(final Integer id, final Date dateDebutPreparation, final Date dateFinPreparation, final Etat etat,
+	public Panier(final Integer idPanier, final Date dateDebutPreparation, final Date dateFinPreparation, final Etat etat,
 			final Utilisateur utilisateur) {
-		this.id = id;
+		this.idPanier = idPanier;
 		this.dateDebutPreparation = dateDebutPreparation;
 		this.dateFinPreparation = dateFinPreparation;
 		this.etat = etat;
@@ -54,7 +63,7 @@ public class Panier {
 	 * @return
 	 */
 	public Integer getId() {
-		return id;
+		return idPanier;
 	}
 
 	/**
@@ -131,7 +140,8 @@ public class Panier {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateDebutPreparation, dateFinPreparation, etat, id, utilisateur);
+		return Objects.hash(dateDebutPreparation, dateFinPreparation, etat, idPanier);
+
 	}
 
 	@Override
@@ -145,7 +155,7 @@ public class Panier {
 		final Panier other = (Panier) obj;
 		return Objects.equals(dateDebutPreparation, other.dateDebutPreparation)
 				&& Objects.equals(dateFinPreparation, other.dateFinPreparation) && etat == other.etat
-				&& Objects.equals(id, other.id) && Objects.equals(utilisateur, other.utilisateur);
+				&& Objects.equals(idPanier, other.idPanier);
 	}
 
 	public enum Etat {
