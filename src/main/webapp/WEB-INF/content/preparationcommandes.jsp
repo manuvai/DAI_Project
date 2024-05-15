@@ -15,24 +15,19 @@
 	<th>Date de collecte</th>
 	</tr>
 	</thead>
-	<tfoot>
-	<tr>
-	<td colspan="2">
-	<div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
-	</td>
-	</tr>
-	</tfoot>
 	<tbody>
 	    <% for (Panier panier : (List<Panier>) request.getAttribute("paniers")) {%>
 	    	<tr>
-		    	<td><a href="#"><%= panier.getId() %></a></td>
+		    	<td>
+			    	<form action="/test" method="get">
+	    				<input type="hidden" name="<%= panier.getId() %>" value="<%= panier.getId() %>">
+	    				<input type="submit" value="<%= panier.getId() %>">
+					</form>
+		    	</td>
 		    	<td><%= panier.getCreneau().getDateCreneau().toString() %> <br> <%= panier.getCreneau().getHeureCreneau().name().substring(1).replace("_", " à ") %> </td>
 	    	</tr>
 	    <% } %>
 	</tbody>
 	</table>
-	
-
-	
 	
 <%@ include file="../template/tail.jsp" %>
