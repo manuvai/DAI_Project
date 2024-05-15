@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -155,10 +156,10 @@ public abstract class AbstractServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void ajouterErreur(final String error,  final HttpServletRequest request) {
 		if (Objects.nonNull(error) && Objects.nonNull(request)) {
-			final List<String> erreurList = (List<String>) request.getAttribute(ERRORS_KEY);
+			final List<String> erreurList = (ArrayList<String>) request.getAttribute(ERRORS_KEY);
 
 			final List<String> nouvelleErreurList = Objects.isNull(erreurList)
-					? Collections.emptyList()
+					? new ArrayList<>()
 							: erreurList;
 
 			nouvelleErreurList.add(error);
