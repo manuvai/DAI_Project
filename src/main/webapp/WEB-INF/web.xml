@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-	<display-name>ProjetDai</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <display-name>ProjetDai</display-name>
+  <servlet>
+    <description></description>
+    <display-name>preparationcommandes</display-name>
+    <servlet-name>preparationcommandes</servlet-name>
+    <jsp-file>/WEB-INF/content/preparationcommandes.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>preparationcommandes</servlet-name>
+    <url-pattern>/preparationcommandes</url-pattern>
+  </servlet-mapping>
 </web-app>
