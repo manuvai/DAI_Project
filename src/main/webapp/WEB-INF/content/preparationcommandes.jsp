@@ -23,23 +23,16 @@
 	</tr>
 	</tfoot>
 	<tbody>
-	<tr>
-	<td><a href="#"> #18945849289</a></td>
-	<td>29/04/2024 <br> 10h30</td>
-	</tr>
-	<tr>
-	<td><a href="#"> #18945849289</a></td>
-	<td>29/04/2024 <br> 10h30</td>
-	</tr>
-	<tr>
-	<td><a href="#"> #18945849289</a></td>
-	<td>29/04/2024 <br> 10h30</td>
-	</tr>
-	<tr>
-	<td><a href="#"> #18945849289</a></td>
-	<td>29/04/2024 <br> 10h30</td>
-	</tr>
+	    <% for (Panier panier : (List<Panier>) request.getAttribute("paniers")) {%>
+	    	<tr>
+		    	<td><a href="#"><%= panier.getId() %></a></td>
+		    	<td><%= panier.getCreneau().getDateCreneau().toString() %> <br> <%= panier.getCreneau().getHeureCreneau().name().substring(1).replace("_", " à ") %> </td>
+	    	</tr>
+	    <% } %>
 	</tbody>
 	</table>
+	
+
+	
 	
 <%@ include file="../template/tail.jsp" %>
