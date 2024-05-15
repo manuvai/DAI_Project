@@ -71,7 +71,6 @@ public class Article {
 	@Transient
 	private float prixKilo;
 
-
 	//Mapping
 	@MapKeyJoinColumn(name = "IdMagasin")
 	@OneToMany(mappedBy = "articleStock", cascade = CascadeType.ALL)
@@ -80,6 +79,13 @@ public class Article {
 	@MapKeyJoinColumn(name = "IdPanier")
 	@OneToMany(mappedBy = "articleComposer", cascade = CascadeType.ALL)
 	private Map<Panier, Composer> composers;
+
+	/**
+	 * Constructeur vide de l'article.
+	 */
+	public Article() {
+
+	}
 
 	/**
 	 * Constructeur de l'article
@@ -147,41 +153,26 @@ public class Article {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(desc, idArticle, lib, nutriscore, poids, prixKilo, prixUnitaire);
+		return Objects.hash(desc, idArticle, lib, nutriscore, poids, prixKilo, prixUnitaire, sousCategorie);
 	}
+
 
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 		final Article other = (Article) obj;
-		if (!Objects.equals(desc, other.desc)) {
-			return false;
-		}
-		if (!Objects.equals(idArticle, other.idArticle)) {
-			return false;
-		}
-		if (!Objects.equals(lib, other.lib)) {
-			return false;
-		}
-		if (nutriscore != other.nutriscore) {
-			return false;
-		}
-		if (poids != other.poids) {
-			return false;
-		}
-		if (Float.floatToIntBits(prixKilo) != Float.floatToIntBits(other.prixKilo)) {
-			return false;
-		}
-		if (Float.floatToIntBits(prixUnitaire) != Float.floatToIntBits(other.prixUnitaire)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(desc, other.desc) && Objects.equals(idArticle, other.idArticle)
+				&& Objects.equals(lib, other.lib) && nutriscore == other.nutriscore && poids == other.poids
+				&& Float.floatToIntBits(prixKilo) == Float.floatToIntBits(other.prixKilo)
+				&& Float.floatToIntBits(prixUnitaire) == Float.floatToIntBits(other.prixUnitaire)
+				&& Objects.equals(sousCategorie, other.sousCategorie);
 	}
+
 
 	/**
 	 * Nutriscore de A à E

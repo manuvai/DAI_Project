@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import models.keys.StockerKey;
+
 /**
  * La classe Stocker représente l'entité de stockage des articles dans les magasins.
  * Cette classe est annotée avec JPA pour permettre sa persistance dans une base de données.
