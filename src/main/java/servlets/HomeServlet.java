@@ -7,7 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Rayon;
+import models.Article;
 import repositories.RayonRepository;
+import repositories.ArticleRepository;
 
 
 @WebServlet("/home")
@@ -16,12 +18,18 @@ public class HomeServlet extends AbstractServlet {
 	private static final long serialVersionUID = -2585229294607120381L;
 
 	RayonRepository rayonRepository = new RayonRepository();
+	ArticleRepository articlesEnPromotion = new ArticleRepository();
 	
 	@Override
 	protected void responseGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		final List<Rayon> rayons = rayonRepository.findAll();
+		//TODO 
+		//Articles uniquement en promotion
+		final List<Article> articles = articlesEnPromotion.findAll();
 		request.setAttribute("rayons", rayons);
+		request.setAttribute("articles", articles);
+		;
 		
 		view("home", request, response);
 		

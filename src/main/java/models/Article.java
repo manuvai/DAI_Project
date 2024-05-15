@@ -60,6 +60,9 @@ public class Article {
 	 */
 	@Enumerated(EnumType.STRING)
 	private Nutriscore nutriscore;
+	
+
+
 
 	/**
 	 * sous categorie de l'article
@@ -67,6 +70,7 @@ public class Article {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdSousCat")
 	private SousCategorie sousCategorie;
+
 
 	@Transient
 	private float prixKilo;
@@ -104,7 +108,9 @@ public class Article {
 		this.poids = poids;
 		this.nutriscore = nutriscore;
 		prixKilo = prixUnitaire*1000/poids;
+		
 	}
+
 
 	/**
 	 * Récupération de l'identifiant de l'article.
