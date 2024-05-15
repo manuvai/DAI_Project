@@ -21,6 +21,9 @@
                 <input type="text" id="prenom" name="prenom" required>
             </div>
             <div>
+            <%if(request.getAttribute("alreadyExist") != null){%>
+            <p id="mailExisted">Le mail existe déjà</p>
+            <%}%>
                 <label for="email">Email :</label>
                 <input type="email" id="email" name="email" required>
             </div>

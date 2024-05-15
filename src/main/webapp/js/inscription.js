@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	document.getElementById("mdp").addEventListener("change",validation);
 	document.getElementById("confirmMdp").addEventListener("change",validation);
 	document.getElementById("email").addEventListener("change",validation);
-	document.getElementById("emailConfirm").addEventListener("change",validation);
+	document.getElementById("confirmEmail").addEventListener("change",validation);
 
 });
 
@@ -20,7 +20,7 @@ function validation ()
                 submitButton.disabled = false;
             } else {
                 submitButton.disabled = true;
-            }
+            }ù
         } else {
             submitButton.disabled = true;
         }
