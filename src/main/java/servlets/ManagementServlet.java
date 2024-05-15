@@ -17,9 +17,7 @@ import javax.servlet.http.Part;
 
 import mappers.ArticleMapper;
 import models.Article;
-import models.Magasin;
 import repositories.ArticleRepository;
-import repositories.MagasinRepository;
 
 /**
  * Servlet implementation class ManagementServlet
@@ -35,15 +33,11 @@ public class ManagementServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
 	ArticleMapper articleMapper = ArticleMapper.INSTANCE;
-	MagasinRepository magasinRepository = new MagasinRepository();
 	ArticleRepository articleRepository = new ArticleRepository();
 
 	@Override
 	protected void responseGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-
-		final List<Magasin> magasins = magasinRepository.findAll();
-		request.setAttribute("magasins", magasins);
 
 		view("management/index", request, response);
 
@@ -126,20 +120,10 @@ public class ManagementServlet extends AbstractServlet {
 		final List<String> errors = new ArrayList<>();
 		try {
 			// vérifier que le magasin a été choisi
-			if (request.getParameter("magasin") == null || request.getParameter("magasin").isBlank()) {
-				errors.add("Vous devez choisir un magasin avant de continuer");
-
-			} else if (request.getPart("csv") == null || request.getPart("csv").getSize() <= 0) {
+			if (request.getPart("csv") == null || request.getPart("csv").getSize() <= 0) {
 				// vérifier que le fichier a été fourni
 				errors.add("Vous devez fournir un fichier avant de continuer");
 
-			} else {
-
-				// Vérifier que le magasin existe
-				final Magasin magasin = magasinRepository.findById(Integer.parseInt(request.getParameter("magasin")));
-				if (magasin == null) {
-					errors.add("Ce magasin n'existe pas");
-				}
 			}
 		} catch (IOException | ServletException e) {
 			errors.add("Une erreur est survenue, veuillez réessayer plus tard");
