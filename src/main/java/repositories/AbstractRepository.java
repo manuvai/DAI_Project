@@ -21,6 +21,11 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 
 	}
 
+	/**
+	 * Récupération de toutes les entités
+	 *
+	 * @return
+	 */
 	public List<T> findAll() {
 
 		final Session session = getSession();
@@ -34,6 +39,12 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 		return result;
 	}
 
+	/**
+	 * Récupération de toutes les entités avec une session donnée
+	 *
+	 * @param session
+	 * @return
+	 */
 	public List<T> findAll(final Session session) {
 
 		final CriteriaQuery<T> cq = session.getCriteriaBuilder().createQuery(clazz);
@@ -42,6 +53,12 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 		return session.createQuery(cq).getResultList();
 	}
 
+	/**
+	 * Récupération d'une entité à partir d'un identifiant donné
+	 *
+	 * @param id
+	 * @return
+	 */
 	public T findById(final K id) {
 		final Session session = getSession();
 
@@ -54,6 +71,13 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 		return result;
 	}
 
+	/**
+	 * Récupération d'une entité à partir d'un identifiant et une session donnée
+	 *
+	 * @param id
+	 * @param session
+	 * @return
+	 */
 	public T findById(final K id, final Session session) {
 		T result = null;
 
@@ -65,6 +89,11 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 		return result;
 	}
 
+	/**
+	 * MAJ d'une entité
+	 *
+	 * @param entity
+	 */
 	public void update(final T entity) {
 		final Session session = getSession();
 
@@ -75,14 +104,30 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 		transaction.commit();
 	}
 
+	/**
+	 * MAJ d'une entité à partir d'une session donnée.
+	 *
+	 * @param entity
+	 * @param session
+	 */
 	public void update(final T entity, final Session session) {
 		session.update(entity);
 	}
 
+	/**
+	 * Création d'une entité.
+	 *
+	 * @param entity
+	 */
 	public void create(final T entity) {
 		createAll(Collections.singletonList(entity));
 	}
 
+	/**
+	 * Création d'une liste d'entités.
+	 *
+	 * @param entities
+	 */
 	public void createAll(final List<T> entities) {
 		final Session session = getSession();
 
@@ -94,12 +139,23 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 
 	}
 
+	/**
+	 * Création d'une liste d'entités à partir d'une session donnée.
+	 *
+	 * @param entities
+	 * @param session
+	 */
 	public void createAll(final List<T> entities, final Session session) {
 		if (entities != null) {
 			entities.forEach(session::save);
 		}
 	}
 
+	/**
+	 * Suppression d'une entité.
+	 *
+	 * @param entity
+	 */
 	public void delete(final T entity) {
 		final Session session = getSession();
 
@@ -110,10 +166,21 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 		transaction.commit();
 	}
 
+	/**
+	 * Suppression d'une entité à partir d'une session donnée.
+	 *
+	 * @param entity
+	 * @param session
+	 */
 	public void delete(final T entity, final Session session) {
 		session.delete(entity);
 	}
 
+	/**
+	 * Récupération d'une session.
+	 *
+	 * @return
+	 */
 	protected Session getSession() {
 		return HibernateUtil.getSessionFactory().getCurrentSession();
 	}

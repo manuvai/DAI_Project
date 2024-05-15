@@ -5,10 +5,19 @@ import java.util.List;
 import models.Article;
 import models.SousCategorie;
 
+/**
+ * Mapper pour transformer une collection de string en article
+ */
 public class ArticleMapper {
 
 	public static final ArticleMapper INSTANCE = new ArticleMapper();
 
+	/**
+	 * Transformation d'une liste de valeur de colonne en Article
+	 *
+	 * @param colonnes
+	 * @return
+	 */
 	public Article listToArticle(final List<String> colonnes) {
 		Article article = null;
 

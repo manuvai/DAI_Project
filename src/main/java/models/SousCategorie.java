@@ -54,6 +54,11 @@ public class SousCategorie {
 		return idSousCat;
 	}
 
+	/**
+	 * MAJ de l'identifiant de la sous catégorie.
+	 *
+	 * @param id
+	 */
 	public void setIdSousCat(final Integer id) {
 		idSousCat = id;
 	}
