@@ -125,6 +125,15 @@ public class Article {
 	}
 
 	/**
+	 * MAJ de la description de l'article.
+	 *
+	 * @param inDesc
+	 */
+	public void setDesc(final String inDesc) {
+		desc = inDesc;
+	}
+
+	/**
 	 * MAJ du lib de l'article.
 	 *
 	 * @param lib
@@ -134,12 +143,84 @@ public class Article {
 	}
 
 	/**
+	 * Récupération du poids de l'article.
+	 *
+	 * @return
+	 */
+	public int getPoids() {
+		return poids;
+	}
+
+	/**
+	 * MAJ du poids de l'article.
+	 *
+	 * @param poids
+	 */
+	public void setPoids(final int poids) {
+		this.poids = poids;
+	}
+
+	/**
+	 * Récupération du prix unitaire de l'article.
+	 *
+	 * @return
+	 */
+	public float getPrixUnitaire() {
+		return prixUnitaire;
+	}
+
+	/**
+	 * MAJ du prix unitaire de l'article.
+	 *
+	 * @param prixUnitaire
+	 */
+	public void setPrixUnitaire(final float prixUnitaire) {
+		this.prixUnitaire = prixUnitaire;
+	}
+
+	/**
+	 * Récupération de la sous catégorie de l'article.
+	 *
+	 * @return the sousCategorie
+	 */
+	public SousCategorie getSousCategorie() {
+		return sousCategorie;
+	}
+
+	/**
+	 * MAJ de la sous catégorie de l'article.
+	 *
+	 * @param sousCategorie the sousCategorie to set
+	 */
+	public void setSousCategorie(final SousCategorie sousCategorie) {
+		this.sousCategorie = sousCategorie;
+	}
+
+	/**
 	 * Récupération du nutriscore de l'article.
 	 *
 	 * @return nutriscore
 	 */
-	public Nutriscore getRole() {
+	public Nutriscore getNutriscore() {
 		return nutriscore;
+	}
+
+	/**
+	 * MAJ du nutriscore à partir d'une string.
+	 *
+	 * @param nutriscoreLabel
+	 */
+	public void setNutriscore(final String nutriscoreLabel) {
+		final Nutriscore nutriscore = switch (nutriscoreLabel) {
+		case "A" -> Nutriscore.A;
+		case "B" -> Nutriscore.B;
+		case "C" -> Nutriscore.C;
+		case "D" -> Nutriscore.D;
+		case "E" -> Nutriscore.E;
+		default -> null;
+		};
+
+		setNutriscore(nutriscore);
 	}
 
 	/**
