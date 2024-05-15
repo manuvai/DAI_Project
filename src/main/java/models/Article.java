@@ -124,6 +124,10 @@ public class Article {
 		return desc;
 	}
 
+	public void setDesc(final String inDesc) {
+		desc = inDesc;
+	}
+
 	/**
 	 * MAJ du lib de l'article.
 	 *
@@ -134,12 +138,67 @@ public class Article {
 	}
 
 	/**
+	 * @return the poids
+	 */
+	public int getPoids() {
+		return poids;
+	}
+
+	/**
+	 * @param poids the poids to set
+	 */
+	public void setPoids(final int poids) {
+		this.poids = poids;
+	}
+
+	/**
+	 * @return the prixUnitaire
+	 */
+	public float getPrixUnitaire() {
+		return prixUnitaire;
+	}
+
+	/**
+	 * @param prixUnitaire the prixUnitaire to set
+	 */
+	public void setPrixUnitaire(final float prixUnitaire) {
+		this.prixUnitaire = prixUnitaire;
+	}
+
+	/**
+	 * @return the sousCategorie
+	 */
+	public SousCategorie getSousCategorie() {
+		return sousCategorie;
+	}
+
+	/**
+	 * @param sousCategorie the sousCategorie to set
+	 */
+	public void setSousCategorie(final SousCategorie sousCategorie) {
+		this.sousCategorie = sousCategorie;
+	}
+
+	/**
 	 * Récupération du nutriscore de l'article.
 	 *
 	 * @return nutriscore
 	 */
-	public Nutriscore getRole() {
+	public Nutriscore getNutriscore() {
 		return nutriscore;
+	}
+
+	public void setNutriscore(final String nutriscoreLabel) {
+		final Nutriscore nutriscore = switch (nutriscoreLabel) {
+		case "A" -> Nutriscore.A;
+		case "B" -> Nutriscore.B;
+		case "C" -> Nutriscore.C;
+		case "D" -> Nutriscore.D;
+		case "E" -> Nutriscore.E;
+		default -> null;
+		};
+
+		setNutriscore(nutriscore);
 	}
 
 	/**

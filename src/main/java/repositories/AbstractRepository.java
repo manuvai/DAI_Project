@@ -1,6 +1,7 @@
 package repositories;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -79,17 +80,24 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 	}
 
 	public void create(final T entity) {
+		createAll(Collections.singletonList(entity));
+	}
+
+	public void createAll(final List<T> entities) {
 		final Session session = getSession();
 
 		final Transaction transaction = session.beginTransaction();
 
-		create(entity, session);
+		createAll(entities, session);
 
 		transaction.commit();
+
 	}
 
-	public void create(final T entity, final Session session) {
-		session.save(entity);
+	public void createAll(final List<T> entities, final Session session) {
+		if (entities != null) {
+			entities.forEach(session::save);
+		}
 	}
 
 	public void delete(final T entity) {

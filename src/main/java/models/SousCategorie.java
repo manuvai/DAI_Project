@@ -24,7 +24,7 @@ public class SousCategorie {
 	 * id d'une sous-categorie
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)  
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IdSousCat")
 	private Integer idSousCat;
 	/**
@@ -32,12 +32,12 @@ public class SousCategorie {
 	 */
 	@Column(name = "NomSousCategorie")
 	private String nomSousCategorie;
-	
+
 	/**
 	 * categorie de la sous-categorie
 	 */
-	@ManyToOne(fetch = FetchType.EAGER) 
-	@JoinColumn(name = "IdCat")  
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "IdCat")
 	private Categorie categorie;
 
 	/**
@@ -45,7 +45,7 @@ public class SousCategorie {
 	 */
 	@OneToMany(mappedBy = "sousCategorie", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	private Set<Article> articles = new HashSet(0);
-	
+
 	/**
 	 * retourne l id de la sous categorie
 	 * @return id de la sous categorie
@@ -53,6 +53,11 @@ public class SousCategorie {
 	public Integer getIdSousCat() {
 		return idSousCat;
 	}
+
+	public void setIdSousCat(final Integer id) {
+		idSousCat = id;
+	}
+
 	/**
 	 * retourne le nom de la sous categorie
 	 * @return nom de la sous categorie
@@ -77,14 +82,13 @@ public class SousCategorie {
 	public Set<Article> getArticles() {
 		return articles;
 	}
-	
-	
+
 	/**
 	 * ajoute un article
 	 * @param article à ajouter
 	 */
-	public void addArticles(Article article) {
-		this.articles.add(article);
+	public void addArticles(final Article article) {
+		articles.add(article);
 	}
 
 	@Override
@@ -93,18 +97,18 @@ public class SousCategorie {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SousCategorie other = (SousCategorie) obj;
+		}
+		final SousCategorie other = (SousCategorie) obj;
 		return Objects.equals(categorie, other.categorie) && Objects.equals(idSousCat, other.idSousCat)
 				&& Objects.equals(nomSousCategorie, other.nomSousCategorie);
 	}
-	
-	
+
+
 
 }

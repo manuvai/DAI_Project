@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import mappers.ArticleMapper;
 import models.Article;
 import models.Magasin;
 import repositories.ArticleRepository;
@@ -33,6 +34,7 @@ public class ManagementServlet extends AbstractServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	ArticleMapper articleMapper = ArticleMapper.INSTANCE;
 	MagasinRepository magasinRepository = new MagasinRepository();
 	ArticleRepository articleRepository = new ArticleRepository();
 
@@ -51,33 +53,40 @@ public class ManagementServlet extends AbstractServlet {
 	protected void responsePost(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 
+		viderErreurs(request);
 		final List<String> errors = validate(request);
 
 		if (errors != null && !errors.isEmpty()) {
 			errors.forEach(error -> ajouterErreur(error, request));
-			forward("management/", request, response);
+			forward("/management/", request, response);
 			return;
 		}
 
-		// TODO charger les produits depuis le fichier
+		// Chargement des lignes de produits depuis le fichier
 		final Part csvPart = request.getPart("csv");
 		final List<List<String>> csvLines = extractLines(csvPart.getInputStream());
 
 		// Transformation des lignes en liste de produits
 		final List<Article> articles = transformArticles(csvLines);
 
-		// TODO Ajouter les produits
-		articles.forEach(articleRepository::create);
+		// Ajouter les produits
+		articleRepository.createAll(articles);
+
+		// Redirection vers page de gestion
+		doGet(request, response);
 
 	}
 
+	/**
+	 * Transformation d'une liste des lignes en liste d'articles.
+	 *
+	 * @param csvLines
+	 * @return
+	 */
 	private List<Article> transformArticles(final List<List<String>> csvLines) {
-		final List<Article> articles = new ArrayList<>();
-
-		// TODO
-		articles.add(null);
-
-		return articles;
+		return csvLines == null ? new ArrayList<>()
+				: csvLines.stream()
+						.map(articleMapper::listToArticle).toList();
 	}
 
 	/**
@@ -91,7 +100,9 @@ public class ManagementServlet extends AbstractServlet {
 
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
 
-			String line;
+			// On saute la première ligne qui contient les entêtes
+			String line = bufferedReader.readLine();
+
 			while ((line = bufferedReader.readLine()) != null) {
 				final String[] values = line.split(DELIMITER);
 				records.add(Arrays.asList(values));
@@ -104,11 +115,17 @@ public class ManagementServlet extends AbstractServlet {
 		return records;
 	}
 
+	/**
+	 * Validation du formulaire avec fichier.
+	 *
+	 * @param request
+	 * @return
+	 */
 	private List<String> validate(final HttpServletRequest request) {
 
 		final List<String> errors = new ArrayList<>();
 		// vérifier que le magasin a été choisi
-		if (request.getParameter("magasinId") == null || request.getParameter("magasinId").isBlank()) {
+		if (request.getParameter("magasin") == null || request.getParameter("magasin").isBlank()) {
 			errors.add("Vous devez choisir un magasin avant de continuer");
 
 		} else {
