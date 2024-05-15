@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  */
 public abstract class AbstractServlet extends HttpServlet {
 
-	private static final String ERRORS_KEY = "errors";
+	public static final String ERRORS_KEY = "errors";
 	private static final String UTF_8 = "UTF-8";
 
 	@Override

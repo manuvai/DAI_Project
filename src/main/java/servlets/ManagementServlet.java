@@ -25,10 +25,10 @@ import repositories.MagasinRepository;
  * Servlet implementation class ManagementServlet
  */
 @WebServlet("/management/")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
-maxFileSize = 1024 * 1024 * 10, // 10 MB
-maxRequestSize = 1024 * 1024 * 100 // 100 MB
-		)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1,
+maxFileSize = 1024 * 1024 * 10,
+maxRequestSize = 1024 * 1024 * 100
+)
 public class ManagementServlet extends AbstractServlet {
 	private static final String DELIMITER = ",";
 
@@ -58,7 +58,7 @@ public class ManagementServlet extends AbstractServlet {
 
 		if (errors != null && !errors.isEmpty()) {
 			errors.forEach(error -> ajouterErreur(error, request));
-			forward("/management/", request, response);
+			responseGet(request, response);
 			return;
 		}
 
@@ -124,20 +124,25 @@ public class ManagementServlet extends AbstractServlet {
 	private List<String> validate(final HttpServletRequest request) {
 
 		final List<String> errors = new ArrayList<>();
-		// vérifier que le magasin a été choisi
-		if (request.getParameter("magasin") == null || request.getParameter("magasin").isBlank()) {
-			errors.add("Vous devez choisir un magasin avant de continuer");
+		try {
+			// vérifier que le magasin a été choisi
+			if (request.getParameter("magasin") == null || request.getParameter("magasin").isBlank()) {
+				errors.add("Vous devez choisir un magasin avant de continuer");
 
-		} else {
-			try {
-				if (request.getPart("csv") == null) {
-					// vérifier que le fichier a été fourni
-					errors.add("Vous devez fournir un fichier avant de continuer");
+			} else if (request.getPart("csv") == null || request.getPart("csv").getSize() <= 0) {
+				// vérifier que le fichier a été fourni
+				errors.add("Vous devez fournir un fichier avant de continuer");
 
+			} else {
+
+				// Vérifier que le magasin existe
+				final Magasin magasin = magasinRepository.findById(Integer.parseInt(request.getParameter("magasin")));
+				if (magasin == null) {
+					errors.add("Ce magasin n'existe pas");
 				}
-			} catch (IOException | ServletException e) {
-				e.printStackTrace();
 			}
+		} catch (IOException | ServletException e) {
+			errors.add("Une erreur est survenue, veuillez réessayer plus tard");
 		}
 
 

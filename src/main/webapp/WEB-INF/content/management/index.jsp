@@ -9,6 +9,8 @@
 
 <h1>Gestion des articles</h1>
 
+<%@ include file="../../template/errors.jsp" %>
+
 <form action="" method="POST" enctype="multipart/form-data">
     
     <select name="magasin" id="magasin">
