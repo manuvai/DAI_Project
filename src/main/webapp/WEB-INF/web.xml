@@ -11,4 +11,40 @@
     <servlet-name>preparationcommandes</servlet-name>
     <url-pattern>/preparationcommandes</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>connexion</display-name>
+    <servlet-name>connexion</servlet-name>
+    <jsp-file>/WEB-INF/content/connexion.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>connexion</servlet-name>
+    <url-pattern>/connexion</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>inscription</display-name>
+    <servlet-name>inscription</servlet-name>
+    <jsp-file>/WEB-INF/content/inscription.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>inscription</servlet-name>
+    <url-pattern>/inscription</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>home</display-name>
+    <servlet-name>home</servlet-name>
+    <jsp-file>/WEB-INF/content/home.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <description></description>
+    <display-name>inscriptionReussie</display-name>
+    <servlet-name>inscriptionReussie</servlet-name>
+    <jsp-file>/WEB-INF/content/inscriptionReussie.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>inscriptionReussie</servlet-name>
+    <url-pattern>/inscriptionReussie</url-pattern>
+  </servlet-mapping>
 </web-app>

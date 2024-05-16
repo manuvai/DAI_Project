@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
  */
 public abstract class AbstractServlet extends HttpServlet {
 
-	private static final String ERRORS_KEY = "errors";
+	public static final String ERRORS_KEY = "errors";
 	private static final String UTF_8 = "UTF-8";
 
 	@Override
@@ -158,8 +159,8 @@ public abstract class AbstractServlet extends HttpServlet {
 			final List<String> erreurList = (List<String>) request.getAttribute(ERRORS_KEY);
 
 			final List<String> nouvelleErreurList = Objects.isNull(erreurList)
-					? Collections.emptyList()
-							: erreurList;
+					? new ArrayList<>()
+					: new ArrayList<>(erreurList);
 
 			nouvelleErreurList.add(error);
 
