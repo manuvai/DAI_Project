@@ -1,6 +1,6 @@
 
    <header class="main-header">
-   <img class="logo" src="images/logo-supermarket.png">
+   <a href="home"><img class="logo" src="images/logo-supermarket.png">
         <nav class="icon-nav">
          	<a href="#" class="icon" ><i class="fas fa-store" title="Choisis ton magasin"></i></a>
             <input id="search-input" type="text" class="search-input" placeholder="Search..">
