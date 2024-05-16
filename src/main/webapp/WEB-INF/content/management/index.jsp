@@ -12,8 +12,11 @@
 <%@ include file="../../template/errors.jsp" %>
 
 <form action="" method="POST" enctype="multipart/form-data">
-    
-    <label for="csv">Ajouter produit</label>
+
+	    
+    <label for="images">Ajouter images produit</label>
+    <input type="file" name="images" id="images" accept="image/png, image/jpeg" multiple/>
+    <label for="csv">Ajouter CSV</label>
     <input type="file" name="csv" id="csv" accept=".csv" />
     <button type="submit">Ajouter par fichier CSV</button>
 

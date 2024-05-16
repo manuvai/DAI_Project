@@ -33,6 +33,7 @@ public class ArticleMapper {
 			sousCategorie.setIdSousCat(Integer.parseInt(colonnes.get(5)));
 
 			article.setSousCategorie(sousCategorie);
+			article.setCheminImage(colonnes.get(6));
 		}
 
 		return article;
