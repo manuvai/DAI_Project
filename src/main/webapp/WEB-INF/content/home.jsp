@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% request.setAttribute("pageTitle", "HomePage"); %>
 <%@page import="java.util.Objects"%>
 <%! @SuppressWarnings("unchecked") %>
 
@@ -32,7 +31,7 @@
         if (rayons != null) {
             for (Rayon rayon : rayons) {
     %>
-                <button class="btn-rayon" id=<%= rayon.getId() %>> <%= rayon.getNomRayon() %></button>
+                <button onclick="window.location.href='Catalogue?nomRayon=<%=rayon.getNomRayon() %>';" class="btn-rayon" id=<%= rayon.getId() %>> <%= rayon.getNomRayon() %></button>
     <% 
             }
         } 
@@ -81,7 +80,6 @@
 
 
 
-<%@ include file="../template/tail.jsp" %>
 <%@ include file="../template/footer.jsp" %>
 
 <!-- jQuery and Bootstrap JS -->
