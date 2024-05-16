@@ -18,6 +18,7 @@ import javax.servlet.http.Part;
 import mappers.ArticleMapper;
 import models.Article;
 import repositories.ArticleRepository;
+import utils.ServletUtil;
 
 /**
  * Servlet implementation class ManagementServlet
@@ -28,6 +29,7 @@ maxFileSize = 1024 * 1024 * 10,
 maxRequestSize = 1024 * 1024 * 100
 )
 public class ManagementServlet extends AbstractServlet {
+
 	private static final String DELIMITER = ",";
 
 	private static final long serialVersionUID = 1L;
@@ -48,7 +50,7 @@ public class ManagementServlet extends AbstractServlet {
 			throws ServletException, IOException {
 
 		viderErreurs(request);
-		final List<String> errors = validate(request);
+		List<String> errors = validateRequest(request);
 
 		if (errors != null && !errors.isEmpty()) {
 			errors.forEach(error -> ajouterErreur(error, request));
@@ -56,12 +58,25 @@ public class ManagementServlet extends AbstractServlet {
 			return;
 		}
 
+		// Récupération du chemin des fichiers temporaires
+		final List<Part> imagesParts = extractImages(request);
+
 		// Chargement des lignes de produits depuis le fichier
 		final Part csvPart = request.getPart("csv");
 		final List<List<String>> csvLines = extractLines(csvPart.getInputStream());
 
 		// Transformation des lignes en liste de produits
 		final List<Article> articles = transformArticles(csvLines);
+
+		errors = validateImages(imagesParts, articles);
+		if (errors != null && !errors.isEmpty()) {
+			errors.forEach(error -> ajouterErreur(error, request));
+			responseGet(request, response);
+			return;
+		}
+
+		// Uploader les images
+		ServletUtil.uploadImages(imagesParts, getServletContext());
 
 		// Ajouter les produits
 		articleRepository.createAll(articles);
@@ -110,25 +125,78 @@ public class ManagementServlet extends AbstractServlet {
 	}
 
 	/**
+	 * Extraction des objets Part concernant les images.
+	 *
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private List<Part> extractImages(final HttpServletRequest request) throws IOException, ServletException {
+		return request == null ? new ArrayList<>()
+				: request.getParts().stream().filter(p -> "images".equals(p.getName())).toList();
+	}
+
+	/**
 	 * Validation du formulaire avec fichier.
 	 *
 	 * @param request
 	 * @return
 	 */
-	private List<String> validate(final HttpServletRequest request) {
-
+	private List<String> validateRequest(final HttpServletRequest request) {
 		final List<String> errors = new ArrayList<>();
 		try {
-			// vérifier que le magasin a été choisi
-			if (request.getPart("csv") == null || request.getPart("csv").getSize() <= 0) {
+			// vérifier que des images d'articles aient été fournies
+			final List<Part> parts = extractImages(request);
+			if (parts.isEmpty()) {
+				errors.add("Vous devez fournir les images correspondantes");
+
+			} else if (request.getPart("csv") == null || request.getPart("csv").getSize() <= 0) {
 				// vérifier que le fichier a été fourni
 				errors.add("Vous devez fournir un fichier avant de continuer");
-
 			}
+
 		} catch (IOException | ServletException e) {
 			errors.add("Une erreur est survenue, veuillez réessayer plus tard");
 		}
 
+
+		return errors;
+	}
+
+	/**
+	 * Validation des images à uploader.
+	 *
+	 * @param imagesParts
+	 * @param articles
+	 * @param request
+	 * @return
+	 */
+	private List<String> validateImages(final List<Part> imagesParts, final List<Article> articles) {
+
+		// Vérifier que les images fournies correspondent et les noms
+		final List<String> errors = new ArrayList<>();
+
+		if (imagesParts != null && articles != null) {
+			if (imagesParts.size() != articles.size()) {
+				errors.add("Le nombre d'images fourni ne correspond pas ");
+			}
+
+			final List<String> nomsImages = imagesParts.stream()
+					.map(ServletUtil::getSubmittedFileName)
+					.toList();
+
+			final List<String> nomsImagesArticles = articles.stream()
+					.map(Article::getCheminImage)
+					.toList();
+
+			final boolean isExact = nomsImages.containsAll(nomsImagesArticles)
+					&& nomsImagesArticles.containsAll(nomsImages);
+
+			if (!isExact) {
+				errors.add("Vous devez fournir les même nom pour les images ainsi que pour les lignes de fichier");
+			}
+		}
 
 		return errors;
 	}
