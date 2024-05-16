@@ -19,8 +19,8 @@
 	    <% for (Panier panier : (List<Panier>) request.getAttribute("paniers")) {%>
 	    	<tr>
 		    	<td>
-			    	<form action="/test" method="get">
-	    				<input type="hidden" name="<%= panier.getId() %>" value="<%= panier.getId() %>">
+			    	<form action="./PreparationCommandeDetailServlet" method="get">
+	    				<input type="hidden" name="idCommande" value="<%= panier.getId() %>">
 	    				<input type="submit" value="<%= panier.getId() %>">
 					</form>
 		    	</td>
