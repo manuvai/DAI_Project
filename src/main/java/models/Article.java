@@ -206,6 +206,15 @@ public class Article {
 	public Integer getId() {
 		return idArticle;
 	}
+	
+	/**
+	 * Récupération du libellé de l'article.
+	 *
+	 * @return lib
+	 */
+	public String getLib() {
+		return lib;
+	}
 
 	/**
 	 * Récupération de la description de l'article.

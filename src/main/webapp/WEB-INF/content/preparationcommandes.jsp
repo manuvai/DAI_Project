@@ -4,7 +4,10 @@
 <% request.setAttribute("pageTitle", "preparationcommandes"); %>
 
 <%@ include file="../template/head.jsp" %>
+<link rel="stylesheet" type="text/css" href="css/header.css">
+<link rel="stylesheet" type="text/css" href="css/footer.css">
 <link rel="stylesheet" type="text/css" href="css/preparationcommandes.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <h1>Page de préparation des commandes</h1>
  
@@ -30,4 +33,4 @@
 	</tbody>
 	</table>
 	
-<%@ include file="../template/tail.jsp" %>
+<%@ include file="../template/footer.jsp" %>
