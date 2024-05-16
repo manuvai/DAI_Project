@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Inscription</title>
 <link rel="stylesheet" type="text/css" href="css/inscription.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <div class="container">
@@ -50,3 +51,4 @@
     <script src="js/inscription.js"></script>
 </body>
 </html>
+<%@ include file="../template/footer.jsp" %>
