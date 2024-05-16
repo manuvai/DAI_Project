@@ -6,6 +6,7 @@
 <%@ page import="models.Rayon" %>
 <%@ page import="models.Article" %>
 <%@ page import="java.util.List" %>
+<%@ page import="repositories.ArticleRepository" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,20 +25,21 @@
 <body>
 <%@ include file="../template/head.jsp" %>
 <div>
-Bonjour, voici votre panier
-Vous avez actuellement <%= session.getAttribute("nbrArticleTotal") %> article(s)
+<h1>Bonjour, voici votre panier</h1>
+<h2>Vous avez actuellement une quantité totale de <%= session.getAttribute("nbrArticleTotal") %> article(s)</h2>
 
-<h1>Liste des Articles Ajoutés</h1>
+<h3>Liste des Articles Ajoutés</h1>
     
     <% 
         List<String> numeros = (List<String>) session.getAttribute("numeros");
+    	ArticleRepository articleR = new ArticleRepository();
     %>
     
     <% if (numeros != null && !numeros.isEmpty()) { %>
         <ul>
             <% for (String numero : numeros) { %>
             <% if ((int) session.getAttribute(numero)>0) { %>
-                <li>Id de l'article : <%= numero %>- Quantité : <%= session.getAttribute(numero) %></li>
+                <li><%= articleR.findById(Integer.parseInt(numero)).getDesc() %> - Quantité : <%= session.getAttribute(numero) %></li>
             <% }} %>
         </ul>
     <% } else { %>

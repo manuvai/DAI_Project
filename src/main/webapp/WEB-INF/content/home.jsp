@@ -66,7 +66,15 @@
                                         <div>
                                         	<p class="price"> <%= articles.get(j).getPrixUnitaire() %> €</p>
                                         	<i id="enleverButton" class="fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= articles.get(j).getId() %>')" title="moins"></i>
-                                        	<span id="article<%= articles.get(j).getId() %>">0</span>
+                                        	<span id="article<%= articles.get(j).getId() %>">
+                                        	<% 
+									            Integer nbr = (Integer) session.getAttribute(articles.get(j).getId().toString());
+												 if (nbr != null ){%>
+												<%= nbr %>
+												 <%} else {%>
+												 0
+													 <% }%>
+				 </span>
                                         	  <i id="ajouterButton" class="fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= articles.get(j).getId() %>')"></i>
 
                                         </div>
