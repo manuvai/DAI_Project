@@ -24,11 +24,6 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 																			 + "WHERE a.idArticle = c.articleComposer "
 																			 + "AND c.panierComposer = p.idPanier "
 																			 + "AND p.idPanier = :panierId").setParameter("panierId", panierId.toString()).list();
-			
-			System.out.println("-------------------------------------------------");
-			System.out.println(articles.size());
-			System.out.println("-------------------------------------------------");
-
 		
 			transaction.commit();
 

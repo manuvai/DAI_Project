@@ -2,7 +2,9 @@ package servlets;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Article;
+import models.Composer;
 import repositories.ArticleRepository;
+import repositories.ComposerRepository;
 
 /**
  * Servlet implementation class PreparationCommandeDetailServlet
@@ -37,18 +41,27 @@ public class PreparationCommandeDetailServlet extends HttpServlet {
 		RequestDispatcher rd;
 		
 		String idCommande = request.getParameter("idCommande");
-
-		//TODO Surrement pas utile à verif
-	//	PanierRepository panierRepository = new PanierRepository();
-	//	final Panier panierAPreparer = panierRepository.findById(Integer.parseInt(idCommande));
 		
 		ArticleRepository articleRepository = new ArticleRepository();
 		final List<Article> articles = articleRepository.findArticlePanier(Integer.parseInt(idCommande));
 		
+		ComposerRepository composerRepository = new ComposerRepository();
+		final List<Composer> composers = composerRepository.findArticlePanier(Integer.parseInt(idCommande));
 		
-		request.setAttribute("articles", articles);
+		Map<Article, Integer> mapArticles = new HashMap<>();
 		
-
+        // Ajout <Article, Qte> à la Map
+        for (Composer composer : composers) {
+            for (Article article : articles) {
+                if (composer.getKey().getIdArticle() == article.getId()) {
+                    mapArticles.put(article, composer.getQte());
+                    break;
+                }
+            }
+        }
+		
+		request.setAttribute("articlesQte", mapArticles);
+		
 		rd = request.getRequestDispatcher("preparationdetail");
 		rd.forward(request,response); 
 	}
