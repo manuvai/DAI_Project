@@ -60,12 +60,36 @@ public class Article {
 	 */
 	@Column(name = "CheminImage")
 	private String cheminImage;
+	
+	/**
+	 * Bio
+	 */
+	@Column(name = "Bio")
+	private Boolean bio;
+
+
 
 	/**
 	 * Nutriscore de l'article
 	 */
 	@Enumerated(EnumType.STRING)
 	private Nutriscore nutriscore;
+	
+
+	/**
+	 * Promotion de l'article
+	 */
+	@Column(name = "Promotion", columnDefinition="Decimal(10,2) default '10'")
+	
+	private Float promotion;
+	
+	/**
+	 * EAN d'un article
+	 */
+	@Column(name = "EAN")
+	private String EAN;
+
+
 
 	/**
 	 * sous categorie de l'article
@@ -73,6 +97,7 @@ public class Article {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdSousCat")
 	private SousCategorie sousCategorie;
+
 
 	@Transient
 	private float prixKilo;
@@ -102,15 +127,76 @@ public class Article {
 	 * @param poids poids de l'article
 	 * @param nutriscore nutriscore de l'article
 	 */
-	public Article(final Integer id, final String lib, final String desc, final float prixUnitaire, final int poids, final Nutriscore nutriscore) {
+	public Article(final Integer id, final String lib, final String desc, final float prixUnitaire, final int poids, final Nutriscore nutriscore, float promotion, String EAN,Boolean bio) {
 		idArticle = id;
 		this.lib = lib;
 		this.desc = desc;
 		this.prixUnitaire = prixUnitaire;
 		this.poids = poids;
 		this.nutriscore = nutriscore;
-		prixKilo = prixUnitaire*1000/poids;
+		this.prixKilo = prixUnitaire*1000/poids;
+		this.promotion = promotion;
+		this.EAN = EAN;
+		this.bio = bio;
+		
 	}
+	
+	/**
+	 * Récupération de l' EAN (European Article Number)
+	 *
+	 * @return EAN
+	 */
+	public String getEAN() {
+		return EAN;
+	}
+
+	/**
+	 * MAJ d'EAN.
+	 *
+	 * @param EAN
+	 */
+	public void setEAN(String eAN) {
+		EAN = eAN;
+	}
+
+
+	/**
+	 * Récupération du boolean 
+	 *
+	 * @return bio
+	 */
+	public Boolean getBio() {
+		return bio;
+	}
+
+	/*
+	 * MAJ du boolean bio
+	 * @param bio
+	 */
+	public void setBio(Boolean bio) {
+		this.bio = bio;
+	}
+
+	
+	/**
+	 * Récupération de la promotion
+	 *
+	 * @return promoition
+	 */
+	public float getPromotion() {
+		return promotion;
+	}
+
+	
+	/**
+	 * MAJ de la promotion.
+	 *
+	 * @param promotion
+	 */
+	public void setPromotion(float promotion) {
+		this.promotion = promotion;
+	}
+
 
 	/**
 	 * Récupération de l'identifiant de l'article.
