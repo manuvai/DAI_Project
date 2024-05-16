@@ -3,6 +3,16 @@
   <display-name>ProjetDai</display-name>
   <servlet>
     <description></description>
+    <display-name>preparationcommandes</display-name>
+    <servlet-name>preparationcommandes</servlet-name>
+    <jsp-file>/WEB-INF/content/preparationcommandes.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>preparationcommandes</servlet-name>
+    <url-pattern>/preparationcommandes</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>connexion</display-name>
     <servlet-name>connexion</servlet-name>
     <jsp-file>/WEB-INF/content/connexion.jsp</jsp-file>
