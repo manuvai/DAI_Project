@@ -56,6 +56,12 @@ public class Article {
 	private int poids;
 
 	/**
+	 * Chemin vers l'image du produit
+	 */
+	@Column(name = "CheminImage")
+	private String cheminImage;
+
+	/**
 	 * Nutriscore de l'article
 	 */
 	@Enumerated(EnumType.STRING)
@@ -176,6 +182,24 @@ public class Article {
 	 */
 	public void setPrixUnitaire(final float prixUnitaire) {
 		this.prixUnitaire = prixUnitaire;
+	}
+
+	/**
+	 * Récupération du chemin vers l'image du produit.
+	 *
+	 * @return
+	 */
+	public String getCheminImage() {
+		return cheminImage;
+	}
+
+	/**
+	 * MAJ du chemin vers l'image du produit.
+	 *
+	 * @param cheminImage
+	 */
+	public void setCheminImage(final String cheminImage) {
+		this.cheminImage = cheminImage;
 	}
 
 	/**
