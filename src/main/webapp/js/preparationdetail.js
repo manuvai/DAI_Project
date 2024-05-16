@@ -1,13 +1,25 @@
 var start = document.getElementById("bu-start");
 var stop = document.getElementById("bu-stop");
+var isStarted = false;
 var checkboxes = document.querySelectorAll('.checkbox');
 var startTime;
 var endTime;
 
+stop.disabled = true;
+checkboxes.forEach(function(checkbox) {
+    checkbox.disabled = true;
+});
+
+
 start.addEventListener("click", function() {
-    start.style.display = "none";
-    console.log("test");
+    start.disabled = true;
+    isStarted = true;
     startTime = Date.now();
+    
+    checkboxes.forEach(function(checkbox) {
+        checkbox.disabled = false;
+    });
+    
 });
 
 stop.addEventListener("click", function() {
@@ -21,10 +33,10 @@ checkboxes.forEach(function(checkbox) {
             return cb.checked;
         });
 
-        if (toutesCoches) {
-            stop.style.display = 'block';
+        if (toutesCoches && isStarted) {
+            stop.disabled = false;
         } else {
-            stop.style.display = 'none';
+            stop.disable = true;
         }
     });
 });
