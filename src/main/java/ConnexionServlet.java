@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.Utilisateur;
+import models.Utilisateur.Role;
 import repositories.UtilisateurRepository;
 
 /**
@@ -55,8 +56,22 @@ public class ConnexionServlet extends HttpServlet {
             	session.setAttribute("nom", utilisateur.getNom());
                 session.setAttribute("prenom", utilisateur.getPrenom());
                 session.setAttribute("email", email);
-            	RequestDispatcher rd = request.getRequestDispatcher("home");
-        		rd.forward(request, response);
+                session.setAttribute("role",  utilisateur.getRole());
+                
+                Role role = utilisateur.getRole();
+                RequestDispatcher rd;
+	                if (role.equals(Role.CLIENT)){
+	                	rd = request.getRequestDispatcher("home");
+	                    rd.forward(request, response);
+	                } else if (role.equals(Role.GESTIONNAIRE)) {
+	                	response.sendRedirect("management/");
+	                } else {
+	                	rd = request.getRequestDispatcher("PreparationCommandesServlet");
+	                	rd.forward(request, response);
+	                }
+                
+            	
+        		
             }else {
             	request.setAttribute("wrongMdp", true);
             	RequestDispatcher rd = request.getRequestDispatcher("connexion");
