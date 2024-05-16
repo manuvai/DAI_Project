@@ -44,7 +44,7 @@ public class ConnexionServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		
-       
+       System.out.println(email + mdp);
         
         boolean emailAlreadyExists =  utilisateurRepository.findMail(email);
         if(emailAlreadyExists) {

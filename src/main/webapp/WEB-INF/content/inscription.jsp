@@ -40,6 +40,7 @@
                 <input type="password" id="confirmMdp" name="confirmMdp" required>
             </div>
             <div>
+            <p id="messageInformatif"></p>
                 <button type="submit" disabled id="submitButton">Valider</button>
             </div>
         </form>
