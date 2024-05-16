@@ -24,12 +24,10 @@ public class HomeServlet extends AbstractServlet {
 	protected void responseGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		final List<Rayon> rayons = rayonRepository.findAll();
-		//TODO 
 		//Articles uniquement en promotion
 		final List<Article> articles = articlesEnPromotion.findAll();
 		request.setAttribute("rayons", rayons);
 		request.setAttribute("articles", articles);
-		;
 		
 		view("home", request, response);
 		
