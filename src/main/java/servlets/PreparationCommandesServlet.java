@@ -30,18 +30,7 @@ public class PreparationCommandesServlet extends HttpServlet {
 
 			RequestDispatcher rd;
 			PanierRepository panierRepository = new PanierRepository();
-			final List<Panier> paniers = panierRepository.findPanierByStatut(Etat.VALIDEE);
-			
-			/*
-			for (int i = 0; i<paniers.size(); i++) {
-				if (paniers.get(i).getEtat() != Etat.VALIDEE) {
-					System.out.println("test");
-					System.out.println(paniers.get(i).getId());
-					paniers.remove(i);
-				}
-			}
-			*/
-			
+			final List<Panier> paniers = panierRepository.findPanierByStatut(Etat.VALIDEE);			
 			
 			request.setAttribute("paniers", paniers);
 						
