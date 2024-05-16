@@ -26,24 +26,38 @@
 
 <h2>Choisis ton magasin de retrait</h2>
 
-<% String aa = (String) request.getAttribute("lol"); %>
-<%= aa %>
 
-<div>
- <% 
-        List<Magasin> magasins = (List<Magasin>) request.getAttribute("magasins");
-        if (magasins != null) {
-            for (Magasin magasin : magasins) {
-    %>
-                <button class="btn-rayon" id=<%= magasin.getCodeMagasin() %>> <%= magasin.getNomMagasin() %></button>
-    <% 
-            }
-        } 
-    %>   
+<div id="magasin">
+  <form action="MagasinServlet" method="post">
+        <div>
+            <% 
+                List<Magasin> magasins = (List<Magasin>) request.getAttribute("magasins");
+                if (magasins != null) {
+                    for (Magasin magasin : magasins) {
+            %>
+            
+            <div class="magasin-container">
+               
+                <label for="<%= magasin.getCodeMagasin() %>">
+                   <input class="checkbox-magasin" type="checkbox" id="<%= magasin.getCodeMagasin() %>" name="magasinSelectionne" value="<%= magasin.getNomMagasin() %>" onclick="handleCheckboxSelection(this)">
+                    <strong><%= magasin.getNomMagasin() %></strong> 
+                    <br>
+                     <i class="fas fa-location-arrow icon"></i>    <%= magasin.getAdresseMagasin() %>
+                    <br>
+                     <i class="fas fa-clock icon"></i>    <%= magasin.getHorairesMagasin() %>
+                </label>
+            </div>
+            <% 
+                    }
+                } 
+            %>   
+        </div>
+        <button class="btn-rayon" type="submit">Choisir ce magasin </button>
+    </form>
 </div>
 
 
-
+<script src="js/selectionMagasin.js"></script>
 <%@ include file="../template/footer.jsp" %>
 
 <!-- jQuery and Bootstrap JS -->

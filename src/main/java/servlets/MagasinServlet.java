@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import models.Magasin;
 import repositories.MagasinRepository;
@@ -25,12 +26,8 @@ public class MagasinServlet extends AbstractServlet {
 	protected void responseGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		final List<Magasin> magasins = magasinRepository.findAll();
-		System.out.println("!!!!!!!!!");
-		System.out.println(magasins);
 		request.setAttribute("magasins", magasins);
-		request.setAttribute("lol", "lol");
 		view("choixMagasin", request, response);
-
 	}
 	
 
@@ -38,8 +35,21 @@ public class MagasinServlet extends AbstractServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+        String magasinSelectionne = request.getParameter("magasinSelectionne");
+        
+        if (magasinSelectionne != null && !magasinSelectionne.isEmpty()) {
+
+            HttpSession session = request.getSession();
+            session.setAttribute("magasinRetrait", magasinSelectionne);
+            
+            response.sendRedirect("choixCreneaux.jsp"); 
+        } else {
+            //TODO : gérer erreur
+        }
+        
+        //TODO: redirection vers choix des creneaux
+        response.sendRedirect("choixCreneaux.jsp"); 
 	}
 
 

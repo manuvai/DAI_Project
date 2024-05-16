@@ -11,7 +11,7 @@
 			 if (role == null){%>
             <a href="<%= request.getContextPath() %>/connexion" class="icon"><i class="fas fa-user"  title="Connexion"></i></a>
             <% }else{ %>
-            <a href="<%= request.getContextPath() %>/choixMagasin" class="icon" ><i class="fas fa-store" title="Choisis ton magasin"></i></a>
+            <a href="<%= request.getContextPath() %>/MagasinServlet" class="icon" ><i class="fas fa-store" title="Choisis ton magasin"></i></a>
              <a href="<%= request.getContextPath() %>" class="icon"><i class="fas fa-user"  title="Mon profil"></i></a>
              <a href="<%= request.getContextPath() %>/DeconnexionServlet" class="icon"> <i class="fas fa-sign-out-alt" title="Deconnexion"></i></a>
        		<%} %>
