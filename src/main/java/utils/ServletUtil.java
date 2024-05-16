@@ -10,7 +10,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 
 public class ServletUtil {
-	private static final String UPLOAD_DIR = "";
+	private static final String UPLOAD_DIR = "images" + File.separator + "articles" + File.separator;
 
 	private ServletUtil() {
 		throw new IllegalAccessError();
