@@ -63,3 +63,14 @@ table.blueTable tfoot .links a{
   padding: 2px 8px;
   border-radius: 5px;
 }
+
+button {
+	margin-left: 50px;
+	margin-bottom: 15px;
+	padding : 5px 3px;
+}
+
+#bu-stop {
+	display: none;
+	margin-top: 15px;
+}
