@@ -110,6 +110,34 @@ public class Magasin {
 		this.stockers = stockers;
 	}
 
+	/**
+	 * @return the commandeApprovisionnement
+	 */
+	public Set<Commande> getCommandeApprovisionnement() {
+		return commandeApprovisionnement;
+	}
+
+	/**
+	 * @param commandeApprovisionnement the commandeApprovisionnement to set
+	 */
+	public void setCommandeApprovisionnement(final Set<Commande> commandeApprovisionnement) {
+		this.commandeApprovisionnement = commandeApprovisionnement;
+	}
+
+	/**
+	 * @return the creneaux
+	 */
+	public Set<Creneau> getCreneaux() {
+		return creneaux;
+	}
+
+	/**
+	 * @param creneaux the creneaux to set
+	 */
+	public void setCreneaux(final Set<Creneau> creneaux) {
+		this.creneaux = creneaux;
+	}
+
     // Méthodes
 
 	/**
