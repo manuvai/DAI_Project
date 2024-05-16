@@ -47,4 +47,14 @@
     <servlet-name>inscriptionReussie</servlet-name>
     <url-pattern>/inscriptionReussie</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>choixMagasin</display-name>
+    <servlet-name>choixMagasin</servlet-name>
+    <jsp-file>/WEB-INF/content/choixMagasin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>choixMagasin</servlet-name>
+    <url-pattern>/choixMagasin</url-pattern>
+  </servlet-mapping>
 </web-app>
