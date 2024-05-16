@@ -148,12 +148,12 @@ public class ManagementServlet extends AbstractServlet {
 		try {
 			// vérifier que des images d'articles aient été fournies
 			final List<Part> parts = extractImages(request);
-			if (parts.isEmpty()) {
-				errors.add("Vous devez fournir les images correspondantes");
+			if (parts.stream().filter(part -> part.getSize() > 0).count() <= 0) {
+				errors.add("Vous devez fournir les images des articles");
 
 			} else if (request.getPart("csv") == null || request.getPart("csv").getSize() <= 0) {
 				// vérifier que le fichier a été fourni
-				errors.add("Vous devez fournir un fichier avant de continuer");
+				errors.add("Vous devez fournir un fichier CSV avant de continuer");
 			}
 
 		} catch (IOException | ServletException e) {
@@ -180,22 +180,24 @@ public class ManagementServlet extends AbstractServlet {
 		if (imagesParts != null && articles != null) {
 			if (imagesParts.size() != articles.size()) {
 				errors.add("Le nombre d'images fourni ne correspond pas ");
+			} else {
+				final List<String> nomsImages = imagesParts.stream()
+						.map(ServletUtil::getSubmittedFileName)
+						.toList();
+
+				final List<String> nomsImagesArticles = articles.stream()
+						.map(Article::getCheminImage)
+						.toList();
+
+				final boolean isExact = nomsImages.containsAll(nomsImagesArticles)
+						&& nomsImagesArticles.containsAll(nomsImages);
+
+				if (!isExact) {
+					errors.add("Les images fournies doivent avoir les mêmes noms que ceux du fichier CSV");
+				}
+
 			}
 
-			final List<String> nomsImages = imagesParts.stream()
-					.map(ServletUtil::getSubmittedFileName)
-					.toList();
-
-			final List<String> nomsImagesArticles = articles.stream()
-					.map(Article::getCheminImage)
-					.toList();
-
-			final boolean isExact = nomsImages.containsAll(nomsImagesArticles)
-					&& nomsImagesArticles.containsAll(nomsImages);
-
-			if (!isExact) {
-				errors.add("Vous devez fournir les même nom pour les images ainsi que pour les lignes de fichier");
-			}
 		}
 
 		return errors;
