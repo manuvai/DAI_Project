@@ -60,7 +60,7 @@ public class Article {
 	 */
 	@Column(name = "CheminImage")
 	private String cheminImage;
-	
+
 	/**
 	 * Bio
 	 */
@@ -74,15 +74,15 @@ public class Article {
 	 */
 	@Enumerated(EnumType.STRING)
 	private Nutriscore nutriscore;
-	
+
 
 	/**
 	 * Promotion de l'article
 	 */
 	@Column(name = "Promotion", columnDefinition="Decimal(10,2) default '10'")
-	
+
 	private Float promotion;
-	
+
 	/**
 	 * EAN d'un article
 	 */
@@ -98,7 +98,6 @@ public class Article {
 	@JoinColumn(name = "IdSousCat")
 	private SousCategorie sousCategorie;
 
-
 	@Transient
 	private float prixKilo;
 
@@ -110,6 +109,10 @@ public class Article {
 	@MapKeyJoinColumn(name = "IdPanier")
 	@OneToMany(mappedBy = "articleComposer", cascade = CascadeType.ALL)
 	private Map<Panier, Composer> composers;
+
+	@MapKeyJoinColumn(name = "IdCommande")
+	@OneToMany(mappedBy = "articleApprovisionner", cascade = CascadeType.ALL)
+	private Map<Commande, Approvisionner> approvisionnements;
 
 	/**
 	 * Constructeur vide de l'article.
@@ -127,20 +130,20 @@ public class Article {
 	 * @param poids poids de l'article
 	 * @param nutriscore nutriscore de l'article
 	 */
-	public Article(final Integer id, final String lib, final String desc, final float prixUnitaire, final int poids, final Nutriscore nutriscore, float promotion, String EAN,Boolean bio) {
+	public Article(final Integer id, final String lib, final String desc, final float prixUnitaire, final int poids, final Nutriscore nutriscore, final float promotion, final String EAN,final Boolean bio) {
 		idArticle = id;
 		this.lib = lib;
 		this.desc = desc;
 		this.prixUnitaire = prixUnitaire;
 		this.poids = poids;
 		this.nutriscore = nutriscore;
-		this.prixKilo = prixUnitaire*1000/poids;
+		prixKilo = prixUnitaire*1000/poids;
 		this.promotion = promotion;
 		this.EAN = EAN;
 		this.bio = bio;
-		
+
 	}
-	
+
 	/**
 	 * Récupération de l' EAN (European Article Number)
 	 *
@@ -155,13 +158,13 @@ public class Article {
 	 *
 	 * @param EAN
 	 */
-	public void setEAN(String eAN) {
+	public void setEAN(final String eAN) {
 		EAN = eAN;
 	}
 
 
 	/**
-	 * Récupération du boolean 
+	 * Récupération du boolean
 	 *
 	 * @return bio
 	 */
@@ -173,11 +176,11 @@ public class Article {
 	 * MAJ du boolean bio
 	 * @param bio
 	 */
-	public void setBio(Boolean bio) {
+	public void setBio(final Boolean bio) {
 		this.bio = bio;
 	}
 
-	
+
 	/**
 	 * Récupération de la promotion
 	 *
@@ -187,13 +190,13 @@ public class Article {
 		return promotion;
 	}
 
-	
+
 	/**
 	 * MAJ de la promotion.
 	 *
 	 * @param promotion
 	 */
-	public void setPromotion(float promotion) {
+	public void setPromotion(final float promotion) {
 		this.promotion = promotion;
 	}
 
