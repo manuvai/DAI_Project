@@ -8,8 +8,9 @@ table.blueTable {
   font-family: Arial, Helvetica, sans-serif;
   border: 1px solid #1C6EA4;
   background-color: #EEEEEE;
-  width: 100%;
+  width: 90%;
   text-align: left;
+  margin: auto;
   border-collapse: collapse;
 }
 table.blueTable td, table.blueTable th {

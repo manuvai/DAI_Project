@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Panier;
+import models.Panier.Etat;
 import repositories.PanierRepository;
 
 /**
@@ -29,10 +30,21 @@ public class PreparationCommandesServlet extends HttpServlet {
 
 			RequestDispatcher rd;
 			PanierRepository panierRepository = new PanierRepository();
-			final List<Panier> paniers = panierRepository.findAll();
+			final List<Panier> paniers = panierRepository.findPanierByStatut(Etat.VALIDEE);
+			
+			/*
+			for (int i = 0; i<paniers.size(); i++) {
+				if (paniers.get(i).getEtat() != Etat.VALIDEE) {
+					System.out.println("test");
+					System.out.println(paniers.get(i).getId());
+					paniers.remove(i);
+				}
+			}
+			*/
+			
 			
 			request.setAttribute("paniers", paniers);
-			
+						
 			//Tri par date heure pour afficher en premier les plus urgents
 	        Collections.sort(paniers, new Comparator<Panier>() {
 	            @Override
