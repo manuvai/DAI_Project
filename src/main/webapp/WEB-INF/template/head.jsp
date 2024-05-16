@@ -1,14 +1,10 @@
-<%@page import="java.util.Objects"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%! @SuppressWarnings("unchecked") %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>
-	<%= Objects.isNull(request.getAttribute("pageTitle")) ? "Site marchand" : request.getAttribute("pageTitle") %>
-</title>
-</head>
-<body>
-<div class="content container">
+
+   <header class="main-header">
+   <img class="logo" src="images/logo-supermarket.png">
+        <nav class="icon-nav">
+         	<a href="#" class="icon" ><i class="fas fa-store" title="Choisis ton magasin"></i></a>
+            <input id="search-input" type="text" class="search-input" placeholder="Search..">
+            <a href="#" class="icon"><i class="fas fa-shopping-cart" title="Panier"></i></a>
+            <a href="#" class="icon"><i class="fas fa-user"  title="Connexion"></i></a>
+        </nav>
+    </header>

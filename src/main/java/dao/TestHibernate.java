@@ -1,11 +1,8 @@
 package dao;
 
 import java.util.List;
-
 import javax.persistence.criteria.CriteriaQuery;
-
 import org.hibernate.Session;
-
 import models.Utilisateur;
 
 /**
