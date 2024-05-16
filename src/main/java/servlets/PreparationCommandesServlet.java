@@ -18,8 +18,8 @@ import repositories.PanierRepository;
 /**
  * Servlet implementation class preparationCommandesServlet
  */
-@WebServlet("/preparationCommandesServlet")
-public class preparationCommandesServlet extends HttpServlet {
+@WebServlet("/PreparationCommandesServlet")
+public class PreparationCommandesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
