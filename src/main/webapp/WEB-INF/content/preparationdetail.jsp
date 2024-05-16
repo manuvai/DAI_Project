@@ -1,15 +1,25 @@
-<%@page import="repositories.ArticleRepository, models.Article, java.util.List, java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@page import="repositories.ArticleRepository"%>
+<%@page import="models.Article"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+
+
 <% request.setAttribute("pageTitle", "preparationcommandes"); %>
 
 <%@ include file="../template/head.jsp" %>
+<link rel="stylesheet" type="text/css" href="css/header.css">
+<link rel="stylesheet" type="text/css" href="css/footer.css">
 <link rel="stylesheet" type="text/css" href="css/preparationcommandes.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <body>
 	<h1>Commande en cours</h1>
 	 
 	 	<button id="bu-start">Commencer la préparation</button>
+	 	<button id="bu-annuler">Annuler</button>
 		<table class="blueTable">
 		    <thead>
 		        <tr>
