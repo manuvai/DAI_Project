@@ -29,3 +29,7 @@
     color: #00BFFF; 
 }
 
+.copyright {
+	display: block;
+    text-align:left;
+}

@@ -112,6 +112,14 @@ public class Article {
 	}
 
 
+	public float getPrixUnitaire() {
+		return prixUnitaire;
+	}
+
+	public void setPrixUnitaire(float prixUnitaire) {
+		this.prixUnitaire = prixUnitaire;
+	}
+
 	/**
 	 * Récupération de l'identifiant de l'article.
 	 *

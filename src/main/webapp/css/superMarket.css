@@ -1,8 +1,15 @@
 @charset "ISO-8859-1";
 
+body, html {
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+}
+
 h2{
 	color: #00BFFF;
     font-weight: 700;
+    font-size: 1.4rem;
     margin-left: 1rem;
     white-space: nowrap;
     display: flex;
@@ -36,3 +43,54 @@ h2{
     align-items: center;
     margin-bottom: 35px;
 }
+
+.price {
+	font-weight: bold;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.img-item {
+    width: 80px;
+    height: auto;
+    display: block; 
+    margin-bottom: 10px; 
+}
+
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    background-image: none; 
+    position: relative; 
+}
+
+.carousel-control-next-icon::after,
+.carousel-control-prev-icon::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #5f6368;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-20%, -20%);
+}
+
+.carousel-control-next-icon::after {
+    mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5L3.75 4l-2.5 2.5L2.75 8l4-4-4-4z'/%3e%3c/svg%3e") no-repeat center;
+    -webkit-mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5L3.75 4l-2.5 2.5L2.75 8l4-4-4-4z'/%3e%3c/svg%3e") no-repeat center;
+}
+
+.carousel-control-prev-icon::after {
+    mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0L6.75 1.5 2.75 4l4 2.5L5.25 8l-4-4 4-4z'/%3e%3c/svg%3e") no-repeat center;
+    -webkit-mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0L6.75 1.5 2.75 4l4 2.5L5.25 8l-4-4 4-4z'/%3e%3c/svg%3e") no-repeat center;
+}
+
+

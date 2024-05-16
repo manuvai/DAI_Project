@@ -9,7 +9,7 @@
 <%@ page import="models.Article" %>
 <%@ page import="java.util.List" %>
 
-<h2>Rayons</h2>
+<h2>Nos rayons</h2>
 <div id="rayon">
     <% 
         List<Rayon> rayons = (List<Rayon>) request.getAttribute("rayons");
@@ -26,7 +26,7 @@
 <div id="couverture-catalogue">
 </div>
 
-<h2>Promotions</h2>
+<h2>Nos articles en promotion</h2>
 <div class="container">
     <div id="articleCarousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -39,8 +39,9 @@
                             <div class="col-md-3">
                                 <div class="card">
                                     <div class="card-body">
-                                       
+                                        <img class="img-item" src="images/logo-supermarket.png">
                                         <p class="card-text"><%= articles.get(j).getDesc() %></p>
+                                        <p class="price"> <%= articles.get(j).getPrixUnitaire() %> €</p>
                                     </div>
                                 </div>
                             </div>
@@ -52,18 +53,15 @@
         </div>
         <a class="carousel-control-prev" href="#articleCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Précédent</span>
+          
         </a>
         <a class="carousel-control-next" href="#articleCarousel" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Suivant</span>
+         
         </a>
     </div>
 </div>
 
-</div>
-<div id="information">
-</div>
 
 
 <%@ include file="../template/tail.jsp" %>
