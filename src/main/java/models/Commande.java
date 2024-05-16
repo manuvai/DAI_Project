@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,9 +33,14 @@ public class Commande {
 	@Column(name = "DateCreationCommande")
 	private Date dateCreation;
 
+	@ManyToOne
+	@JoinTable(name = "IdMagasin")
+	private Magasin magasin;
 
 	@MapKeyJoinColumn(name = "IdArticle")
 	@OneToMany(mappedBy = "commande", cascade = CascadeType.ALL)
 	private Map<Article, Approvisionner> articleApprovisionner;
+
+	// TODO Ajouter les constructeurs et compagnie
 
 }

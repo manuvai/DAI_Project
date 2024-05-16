@@ -247,6 +247,15 @@ public class Article {
 	}
 
 	/**
+	 * Récupération du libellé de l'article.
+	 *
+	 * @return
+	 */
+	public String getNom() {
+		return lib;
+	}
+
+	/**
 	 * Récupération du poids de l'article.
 	 *
 	 * @return

@@ -2,6 +2,7 @@ package mappers;
 
 import java.util.List;
 
+import dtos.ArticleStockDto;
 import models.Article;
 import models.SousCategorie;
 
@@ -39,4 +40,13 @@ public class ArticleMapper {
 		return article;
 	}
 
+	public ArticleStockDto articleToStockDto(final Article article) {
+		ArticleStockDto dto = null;
+
+		if (article != null) {
+			dto = new ArticleStockDto(article.getId(), article.getNom(), article.getCheminImage());
+		}
+
+		return dto;
+	}
 }

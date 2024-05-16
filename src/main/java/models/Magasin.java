@@ -44,6 +44,9 @@ public class Magasin {
     @OneToMany(mappedBy = "magasinStock", cascade = CascadeType.ALL)
     private Map<Article,Stocker> stockers;
 
+	@OneToMany(mappedBy = "magasin", fetch = FetchType.LAZY)
+	private Set<Commande> commandeApprovisionnement;
+
     // Constructeurs
 
     /**
@@ -140,7 +143,7 @@ public class Magasin {
         if (this == obj) {
 			return true;
 		}
-        if ((obj == null) || (getClass() != obj.getClass())) {
+        if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
         final Magasin other = (Magasin) obj;
