@@ -39,8 +39,9 @@
                             <div class="col-md-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <img class="img-item" src="images/logo-supermarket.png">
+                                        <img class="img-item" src=<%= articles.get(j).getCheminImage() %> >
                                         <p class="card-text"><%= articles.get(j).getDesc() %></p>
+                                        <img class="img-nutriscore" src="<%= "images/nutriscores/" + articles.get(j).getNutriscore() + ".png" %>" >
                                         <p class="price"> <%= articles.get(j).getPrixUnitaire() %> €</p>
                                     </div>
                                 </div>
