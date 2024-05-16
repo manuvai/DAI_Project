@@ -21,14 +21,6 @@ import repositories.PanierRepository;
 @WebServlet("/preparationCommandesServlet")
 public class preparationCommandesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public preparationCommandesServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
