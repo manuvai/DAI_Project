@@ -16,10 +16,11 @@ a{
 }
 
 main{
+	min-height:100vh;
 	margin:auto;
 	display:flex;
 	flex-direction:row;
-	width:80%;
+	width:94%;
 	justify-content:space-around;
 }
 
@@ -40,32 +41,48 @@ main{
 }
 
 .article{
+	display:flex;
+	flex-direction:column;
+	justify-content:flex-start;
+	align-items:center;
+	border-radius:5px;
 	background-color:white;
 	padding:10px;
 	text-align:right;
 	margin-top:10px;
 	margin-bottom:10px;
-	height:120px;
-	width:300px;
+	height:250px;
+	width:220px;
 	background-size:120px;
 	background-repeat: no-repeat;
 }
 
+.articleDetails{
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content: space-around;
+}
+
+.imgArticle{
+	width:150px;
+	height:150px;
+	margin-bottom:10px;
+}
+
 .nomArticle{
-	width:140px;
 	display:inline-block;
-	text-align:right;
 	font-weight:bold;
-	font-size:16px;
+	font-size:18px;
 }
 
 .prixArticle{
-	font-size:13px;
+	font-size:15px;
 }
 
 .poidsArticle{
 	color:grey;
-	font-size:10px;
+	font-size:13px;
 }
 
 .article:hover{
@@ -88,7 +105,6 @@ select{
 	height:50px;
 	appearance: none;
 	text-align:center;
-	border-radius:5px;
 	background-color:rgb(250, 250, 250);
 	padding:0;
 	width: 80%;
@@ -96,6 +112,10 @@ select{
 	font-size: inherit;
 	cursor:pointer;
 	line-height: inherit;
+}
+
+select:hover{
+	background-color:rgb(230, 230, 230);
 }
 
 option{

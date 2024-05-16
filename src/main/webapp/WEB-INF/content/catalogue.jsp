@@ -33,10 +33,13 @@
 	<div id="catalogue">
 	<% if (request.getAttribute("articles") != null) {%>
 	            <% for (Article article : (List<Article>)request.getAttribute("articles")) {%>
-	                <a href=""> <div class="article" style="background-image:url('<%= article.getCheminImage() %>');">
+	                <a href=""> <div class="article">
+	                	<img class ="imgArticle" src="<%= article.getCheminImage() %>">
+	                	<div class="articleDetails">
 	                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
 	        			<span class ="prixArticle"><%= article.getPrixUnitaire() %>€</span><br/>
 	    				<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/>
+	    				</div>
 	                </div> </a>
 	            <% }
 		}
