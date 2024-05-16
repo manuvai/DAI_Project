@@ -24,6 +24,10 @@ public class Utilisateur {
 	@Column(name = "IdUtilisateur")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUtilisateur;
+	
+
+	@Column(name = "PtFidelite")
+	private Integer ptFidelite;
 
 	@Column(name = "NomUtilisateur")
 	private String nom;
@@ -49,6 +53,7 @@ public class Utilisateur {
 	
 	public Utilisateur(String nom, String prenom, String email, String motDePasse, Role role) {
 		super();
+		this.ptFidelite = 0;
 		this.idUtilisateur = idUtilisateur;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -58,6 +63,15 @@ public class Utilisateur {
 		this.role = role;
 		this.listeDeCourse = new HashSet();
 	}
+	
+	public Integer getPtFidelite() {
+		return ptFidelite;
+	}
+
+	public void setPtFidelite(Integer ptFidelite) {
+		this.ptFidelite = ptFidelite;
+	}
+
 	public Utilisateur() {};
 
 	/**

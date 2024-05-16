@@ -5,6 +5,7 @@
 
 <%@ page import="models.Rayon" %>
 <%@ page import="models.Article" %>
+<%@ page import="models.Utilisateur" %>
 <%@ page import="java.util.List" %>
 <%@ page import="repositories.ArticleRepository" %>
 <!DOCTYPE html>
@@ -13,13 +14,14 @@
 
 <link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
 <link rel="stylesheet" type="text/css" href="css/header.css">
-
+<script src="js/home.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <title>Panier</title>
 
   <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/superMarket.css">
+    <link rel="stylesheet" type="text/css" href="css/panier.css">
 </head>
 <script src="js/home.js"></script>
 <body>
@@ -33,18 +35,49 @@
     <% 
         List<String> numeros = (List<String>) session.getAttribute("numeros");
     	ArticleRepository articleR = new ArticleRepository();
+    	Utilisateur user = (Utilisateur) session.getAttribute("user");
     %>
     
-    <% if (numeros != null && !numeros.isEmpty()) { %>
+    <% if (numeros != null && !numeros.isEmpty()) { 
+    float total = 0;%>
         <ul>
             <% for (String numero : numeros) { %>
-            <% if ((int) session.getAttribute(numero)>0) { %>
-                <li><%= articleR.findById(Integer.parseInt(numero)).getDesc() %> - Quantité : <%= session.getAttribute(numero) %></li>
+            <% if ((int) session.getAttribute(numero)>0) { 
+            Article article = articleR.findById(Integer.parseInt(numero));%>
+            
+                  
+            	<div class="row ">
+	                	<img class ="imgArticle" src="<%= article.getCheminImage() %>">
+	                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
+	        			<span class ="prixArticle"><%= article.getPrixUnitaire() %>€</span><br/>
+	    				<i id="enleverButton" class="fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>
+                            	<span id="article<%= article.getId() %>">
+                            	<% Integer nbr = (Integer) session.getAttribute(article.getId().toString());
+									 if (nbr != null ){%>
+									<%= nbr %>
+									 <%} else {%>
+									 0
+										 <% }%>
+								</span>
+                    
+                    <i id="ajouterButton" class="fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i></a>
+					<% if (article.getPromotion()> 0) { %>
+					<span class ="promotion">- <%= article.getPromotion()%>%</span><br/>
+					   <% }%>
+					   	 <%total+=article.getPrixUnitaire()*nbr*(1-article.getPromotion()/100);%>
+					<span class ="prixTotal"><%= article.getPrixUnitaire()*nbr*(1-article.getPromotion()/100) %>€</span><br/>
+	                </div> 
+	                
+  
+            
             <% }} %>
         </ul>
-    <% } else { %>
-        <p>Aucun article n'a été ajouté à la liste.</p>
-    <% } %>
+        <h1>Total: <%= total %></h1>
+        <% if (user != null) { %>
+        <h1>Points Fidélités: <%= user.getPtFidelite() %></h1>
+        <% if (user.getPtFidelite()>9) { %>
+        <h1>Vous pouvez les utiliser et gagner <%= user.getPtFidelite()/10 %>€</h1>
+    <% } }} %>
 </div>
 
 
