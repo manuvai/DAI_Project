@@ -1,13 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setAttribute("pageTitle", "HomePage"); %>
-<%@ include file="../template/head.jsp" %>
-<link rel="stylesheet" type="text/css" href="css/superMarket.css">
-  <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<%@page import="java.util.Objects"%>
+<%! @SuppressWarnings("unchecked") %>
+
 <%@ page import="models.Rayon" %>
 <%@ page import="models.Article" %>
 <%@ page import="java.util.List" %>
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
+<link rel="stylesheet" type="text/css" href="css/header.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<title>Online Shop</title>
+
+  <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/superMarket.css">
+</head>
+<body>
+<%@ include file="../template/head.jsp" %>
+
 
 <h2>Nos rayons</h2>
 <div id="rayon">
