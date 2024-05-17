@@ -70,15 +70,11 @@ public class Panier {
 
 	}
 
-	public Panier(final Integer idPanier, final Date dateDebutPreparation, final Date dateFinPreparation, final Etat etat,
-			final Utilisateur utilisateur, final Creneau creneau, final Map<Article, Composer> composers) {
-		this.idPanier = idPanier;
-		this.dateDebutPreparation = dateDebutPreparation;
-		this.dateFinPreparation = dateFinPreparation;
-		this.etat = etat;
+	public Panier(
+			final Utilisateur utilisateur, final Creneau creneau) {
+		this.etat = Etat.VALIDEE;
 		this.utilisateur = utilisateur;
 		this.creneau = creneau;
-		this.composers = composers;
 	}
 
 	/**
@@ -219,7 +215,7 @@ public class Panier {
 	}
 
 	public enum Etat {
-		ATTENTE, VALIDEE, LIVRE
+		ATTENTE, VALIDEE, PRETE, LIVRE
 	}
 
 }

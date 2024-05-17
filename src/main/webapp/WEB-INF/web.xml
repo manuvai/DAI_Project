@@ -49,6 +49,46 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>panier</display-name>
+    <servlet-name>panier</servlet-name>
+    <jsp-file>/WEB-INF/content/panier.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>panier</servlet-name>
+    <url-pattern>/panier</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>validerPanier</display-name>
+    <servlet-name>validerPanier</servlet-name>
+    <jsp-file>/WEB-INF/content/validerPanier.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>validerPanier</servlet-name>
+    <url-pattern>/validerPanier</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>choixCreneau</display-name>
+    <servlet-name>choixCreneau</servlet-name>
+    <jsp-file>/WEB-INF/content/choixCreneau.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>choixCreneau</servlet-name>
+    <url-pattern>/choixCreneau</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>panierEnregistrer</display-name>
+    <servlet-name>panierEnregistrer</servlet-name>
+    <jsp-file>/WEB-INF/content/panierEnregistrer.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>panierEnregistrer</servlet-name>
+    <url-pattern>/panierEnregistrer</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>preparationdetail</display-name>
     <servlet-name>preparationdetail</servlet-name>
     <jsp-file>/WEB-INF/content/preparationdetail.jsp</jsp-file>
