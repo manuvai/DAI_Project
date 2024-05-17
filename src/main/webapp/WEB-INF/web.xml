@@ -58,6 +58,7 @@
     <url-pattern>/choixMagasin</url-pattern>
    </servlet-mapping>
     <servlet>
+      <description></description>
     <display-name>panier</display-name>
     <servlet-name>panier</servlet-name>
     <jsp-file>/WEB-INF/content/panier.jsp</jsp-file>
