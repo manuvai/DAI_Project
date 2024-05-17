@@ -28,10 +28,7 @@
 <%@ include file="../template/head.jsp" %>
 <div>
 <h1>Bonjour, voici votre panier</h1>
-<h2>Vous avez actuellement une quantité totale de <%= session.getAttribute("nbrArticleTotal") %> article(s)</h2>
 
-<h3>Liste des Articles Ajoutés</h1>
-    
     <% 
         List<String> numeros = (List<String>) session.getAttribute("numeros");
     	ArticleRepository articleR = new ArticleRepository();
@@ -40,6 +37,10 @@
     
     <% if (numeros != null && !numeros.isEmpty()) { 
     float total = 0;%>
+    <h2>Vous avez actuellement une quantité totale de <%= session.getAttribute("nbrArticleTotal") %> article(s)</h2>
+
+<h3>Liste des Articles Ajoutés</h1>
+    
         <ul>
             <% for (String numero : numeros) { %>
             <% if ((int) session.getAttribute(numero)>0) { 
@@ -77,7 +78,13 @@
         <h1>Points Fidélités: <%= user.getPtFidelite() %></h1>
         <% if (user.getPtFidelite()>9) { %>
         <h1>Vous pouvez les utiliser et gagner <%= user.getPtFidelite()/10 %>€</h1>
-    <% } }} %>
+    <% } }%>
+         <% if (total != 0) { %>
+         <a href="validerPanier" class="validerP">Valider le panier</a>
+          <%}%>
+  <%   }else{ %>
+    <h2>Pas encore d'articles</h2>
+      <%}%>
 </div>
 
 

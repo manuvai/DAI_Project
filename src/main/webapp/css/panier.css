@@ -37,7 +37,7 @@
     color: #007bff; 
     margin-right: 10px; 
 
-
+}
 #article,
 .prixTotal {
     font-size: 16px;
@@ -53,4 +53,21 @@
         margin-right: 0; 
         margin-bottom: 10px;
     }
+}
+
+.validerP {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff; 
+    text-decoration: none;
+    border-radius: 5px; 
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.validerP:hover {
+    background-color: #0056b3; 
+    color : #fff; 
 }
