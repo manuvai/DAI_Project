@@ -17,7 +17,8 @@
 
 <body>
 	<h1>Commande en cours</h1>
-	 
+	 	<a id="a-accueil" href="./PreparationCommandesServlet">Retour aux commandes</a>
+	 	<br>
 	 	<button id="bu-start">Commencer la préparation</button>
 	 	<button id="bu-annuler">Annuler</button> 
 	 	<h3 id="affichageCommande"> Panier numéro <%= " " + request.getAttribute("idCommande") %></h3>

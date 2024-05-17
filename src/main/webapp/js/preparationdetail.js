@@ -10,7 +10,7 @@ var endTime;
 
 var idPanierRaw = document.getElementById("affichageCommande").textContent;
 var regex = /\d+/; 
-var idPanier = texte.match(regex);
+var idPanier = idPanierRaw.match(regex);
 
 //Etats initiaux
 annuler.disabled = true;
@@ -29,7 +29,7 @@ start.addEventListener("click", function() {
     checkboxes.forEach(function(checkbox) {
         checkbox.disabled = false;
     });
-    	enregistrerTempsBd(endTime, "Debut")
+    	enregistrerTempsBd(startTime, "Debut")
 
 });
 
@@ -73,7 +73,7 @@ function enregistrerTempsBd(temps, etat) {
 	var xhr = new XMLHttpRequest();
 	
 	    // Requête au serveur avec les paramètres éventuels.
-	    xhr.open("GET","PreparationDateCommandeServlet?idPanier="+idPanier+"&Date"+etat+"=true"+temps);
+	    xhr.open("GET","PreparationDateCommandeServlet?idPanier="+idPanier+"&Date"+etat+"="+temps);
 	
         // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
 	    /*

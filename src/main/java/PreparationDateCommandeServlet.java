@@ -1,6 +1,7 @@
 
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,11 @@ import org.hibernate.Transaction;
 import dao.HibernateUtil;
 import models.Article;
 import models.Composer;
+import models.Panier;
+import models.Panier.Etat;
 import repositories.ArticleRepository;
 import repositories.ComposerRepository;
+import repositories.PanierRepository;
 
 /**
  * Servlet implementation class PreparationDateCommandeServlet
@@ -28,7 +32,9 @@ import repositories.ComposerRepository;
 @WebServlet("/PreparationDateCommandeServlet")
 public class PreparationDateCommandeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	PanierRepository pr = new PanierRepository();
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -44,24 +50,23 @@ public class PreparationDateCommandeServlet extends HttpServlet {
 		RequestDispatcher rd;
 		
 		String idPanier = request.getParameter("idPanier");
-		String date = request.getParameter("DateFin");
-		String dateEtat;
+		String dateJs = request.getParameter("DateFin");
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		final Transaction transaction = session.beginTransaction();
-
-		if (date.isEmpty()) {
-			dateEtat = "DateDebutPreparation";
-			date = request.getParameter("DateDebut");
+		Panier panier = pr.findById(Integer.parseInt(idPanier));
+		Date date;
+		
+		
+		
+		if (dateJs == null) {
+			date = new Date(Long.parseLong(request.getParameter("DateDebut")));
+			panier.setDateDebutPreparation(date);
 		} else {
-			dateEtat = "DateFinPreparation";
+			date = new Date(Long.parseLong(dateJs));
+			panier.setDateFinPreparation(date);
+			panier.setEtat(Etat.PRETE);
 		}
 		
-		session.createQuery("UPDATE Panier "
-				 + "SET :dateEtat = :date"
-				 + "WHERE Panier.IdPanier = :idPanier").setParameter("idPanier", idPanier).setParameter("dateEtat", dateEtat).setParameter("date", date);
-	
-		transaction.commit();
+		pr.update(panier);
 		
 		rd = request.getRequestDispatcher("preparationdetail");
 		rd.forward(request,response); 
@@ -74,5 +79,4 @@ public class PreparationDateCommandeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
