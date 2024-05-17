@@ -43,7 +43,7 @@
     }
 %>
 
-<form action="choixCreneauServlet" method="post">
+<form action="ChoisirCreneauServlet" method="post">
     <label for="magasin">Choisir un magasin :</label>
     <select name="magasin" id="magasin">
         <% 
