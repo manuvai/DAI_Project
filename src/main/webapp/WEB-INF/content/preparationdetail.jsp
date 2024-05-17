@@ -38,5 +38,3 @@
 	    
 	    </tbody>
 	</table>
-	
-<%@ include file="../template/tail.jsp" %>

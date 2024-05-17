@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+body{
+	font-family:sans-serif;
+	background-color:#f5f4f2;
+	font-size:20px;
+}
+
+main{
+	background-color:white;
+	min-height:100vh;
+	margin:auto;
+	display:flex;
+	flex-direction:row;
+	width:60%;
+	justify-content:flex-start;
+	padding-right:100px;
+	padding-left:100px;
+	
+}
+
+img{
+	max-height:500px;
+	max-width:500px;
+}
+
+.descArticle{
+	margin-bottom:5px;
+}
+
+#article{
+	display:flex;
+	justify-content:space-between;
+}
+
+.img-nutriscore{
+	max-width:100px;
+}
+
+.prixArticle{
+	font-size:25px;
+	margin-bottom:25px;
+}
+
+.articleDetails{
+	margin-left:20px;
+	width:300px;
+	display:flex;
+	flex-direction:column;
+}

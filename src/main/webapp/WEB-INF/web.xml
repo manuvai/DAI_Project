@@ -57,4 +57,14 @@
     <servlet-name>preparationdetail</servlet-name>
     <url-pattern>/preparationdetail</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ArticleServlet</display-name>
+    <servlet-name>ArticleServlet</servlet-name>
+    <jsp-file>/WEB-INF/content/article.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticleServlet</servlet-name>
+    <url-pattern>/ArticleServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
