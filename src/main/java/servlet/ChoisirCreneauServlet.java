@@ -51,8 +51,10 @@ public class ChoisirCreneauServlet extends HttpServlet {
 		List<Creneau> cx = cr.findCreneauByMagasin(Integer.parseInt(magasin));
 		HttpSession session = request.getSession();
 		session.setAttribute("creneaux", cx);
+		session.setAttribute("magasinRetrait", magasin);
 		Utilisateur user = (Utilisateur) session.getAttribute("user");
-		Double total = Double.parseDouble((String)session.getAttribute("totalPanierValidation"));
+		System.out.println(session.getAttribute("totalPanierValidation"));
+		Double total = (Double) session.getAttribute("totalPanierValidation");
 		 String utiliserPoints = request.getParameter("utiliserPoints");
 		 boolean utiliserPointsBool = "true".equals(utiliserPoints);
 		 int reduc = 0;

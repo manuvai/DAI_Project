@@ -67,4 +67,14 @@
     <servlet-name>validerPanier</servlet-name>
     <url-pattern>/validerPanier</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>choixCreneau</display-name>
+    <servlet-name>choixCreneau</servlet-name>
+    <jsp-file>/WEB-INF/content/choixCreneau.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>choixCreneau</servlet-name>
+    <url-pattern>/choixCreneau</url-pattern>
+  </servlet-mapping>
 </web-app>
