@@ -1,0 +1,73 @@
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+
+ 
+.imgArticle {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px; 
+}
+
+
+.nomArticle {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.prixArticle {
+    color: #007bff; 
+    font-weight: bold;
+}
+
+
+#enleverButton,
+#ajouterButton {
+    cursor: pointer;
+    font-size: 20px;
+    color: #007bff; 
+    margin-right: 10px; 
+
+}
+#article,
+.prixTotal {
+    font-size: 16px;
+}
+
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .imgArticle {
+        margin-right: 0; 
+        margin-bottom: 10px;
+    }
+}
+
+.validerP {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff; 
+    text-decoration: none;
+    border-radius: 5px; 
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.validerP:hover {
+    background-color: #0056b3; 
+    color : #fff; 
+}
