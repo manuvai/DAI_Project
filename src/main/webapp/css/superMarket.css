@@ -108,3 +108,11 @@ h2{
 .checkbox-magasin{
 	 border-radius: 5px;
 }  
+
+
+.btn-rayon:disabled, 
+.btn-rayon.disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}

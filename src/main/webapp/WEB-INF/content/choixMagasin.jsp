@@ -39,7 +39,7 @@
             <div class="magasin-container">
                
                 <label for="<%= magasin.getCodeMagasin() %>">
-                   <input class="checkbox-magasin" type="checkbox" id="<%= magasin.getCodeMagasin() %>" name="magasinSelectionne" value="<%= magasin.getNomMagasin() %>" onclick="handleCheckboxSelection(this)">
+                   <input class="checkbox-magasin" type="radio" id="<%= magasin.getCodeMagasin() %>" name="magasinSelectionne" value="<%= magasin.getNomMagasin() %>" onclick="handleCheckboxSelection(this)" required>
                     <strong><%= magasin.getNomMagasin() %></strong> 
                     <br>
                      <i class="fas fa-location-arrow icon"></i>    <%= magasin.getAdresseMagasin() %>
@@ -52,7 +52,7 @@
                 } 
             %>   
         </div>
-        <button class="btn-rayon" type="submit">Choisir ce magasin </button>
+        <button id="submit-button" class="btn-rayon" type="submit" >Choisir ce magasin </button>
     </form>
 </div>
 

@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.Magasin;
+import models.Utilisateur.Role;
 import repositories.MagasinRepository;
 
 /**
@@ -37,19 +39,21 @@ public class MagasinServlet extends AbstractServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
         String magasinSelectionne = request.getParameter("magasinSelectionne");
-        
+        RequestDispatcher rd;
+       
         if (magasinSelectionne != null && !magasinSelectionne.isEmpty()) {
 
             HttpSession session = request.getSession();
-            session.setAttribute("magasinRetrait", magasinSelectionne);
-            
-            response.sendRedirect("choixCreneaux.jsp"); 
+            session.setAttribute("magasinRetrait", magasinSelectionne);     
+            rd = request.getRequestDispatcher("home");
+            rd.forward(request, response); 
         } else {
-            //TODO : gérer erreur
+        	rd = request.getRequestDispatcher("choixMagasin");
+            rd.forward(request, response);
         }
         
-        //TODO: redirection vers choix des creneaux
-        response.sendRedirect("choixCreneaux.jsp"); 
+        rd = request.getRequestDispatcher("home");
+        rd.forward(request, response);
 	}
 
 
