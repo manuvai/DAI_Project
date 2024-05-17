@@ -6,6 +6,7 @@
 <%@ page import="models.Rayon" %>
 <%@ page import="models.Article" %>
 <%@ page import="models.Utilisateur" %>
+<%@ page import="models.Magasin" %>
 <%@ page import="java.util.List" %>
 <%@ page import="repositories.ArticleRepository" %>
 <!DOCTYPE html>
@@ -28,6 +29,19 @@
 <%@ include file="../template/head.jsp" %>
 <div>
 <h1>Validation du panier</h1>
+<%
+    String magasinRetrait = (String) session.getAttribute("magasinRetrait");
+
+    if (magasinRetrait == null) {
+%>
+        <p>Vous n'avez pas encore choisi de magasin.</p>
+<%
+    }
+%>
+choix du creneau
+promo ou pas
+total
+bouton pour payer
 
 <%@ include file="../template/footer.jsp" %>
 </body>
