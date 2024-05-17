@@ -39,4 +39,4 @@
 	    </tbody>
 	</table>
 	
-<%@ include file="../template/tail.jsp" %>
+<%@ include file="../template/footer.jsp" %>
