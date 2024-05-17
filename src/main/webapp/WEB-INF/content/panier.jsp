@@ -80,7 +80,7 @@
         <h1>Vous pouvez les utiliser et gagner <%= user.getPtFidelite()/10 %>€</h1>
     <% } }%>
          <% if (total != 0) { %>
-         <a href="validerPanier" class="validerP">Valider le panier</a>
+         <a href="ValiderPanierServlet" class="validerP">Valider le panier</a>
           <%}%>
   <%   }else{ %>
     <h2>Pas encore d'articles</h2>

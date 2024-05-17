@@ -15,6 +15,7 @@
 
 <link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
 <link rel="stylesheet" type="text/css" href="css/header.css">
+<link rel="stylesheet" type="text/css" href="css/validerPanier.css">
 <script src="js/home.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <title>Valider Panier</title>
@@ -24,13 +25,16 @@
     <link rel="stylesheet" type="text/css" href="css/superMarket.css">
     <link rel="stylesheet" type="text/css" href="css/panier.css">
 </head>
-<script src="js/home.js"></script>
+<script src="js/promotion.js"></script>
 <body>
 <%@ include file="../template/head.jsp" %>
 <div>
 <h1>Validation du panier</h1>
 <%
     String magasinRetrait = (String) session.getAttribute("magasinRetrait");
+	Double totalValidation = (Double) session.getAttribute("totalPanierValidation");
+	String nombreArrondi = String.format("%.2f", totalValidation);
+	Utilisateur user = (Utilisateur) session.getAttribute("user");
 
     if (magasinRetrait == null) {
 %>
@@ -38,10 +42,26 @@
 <%
     }
 %>
-choix du creneau
-promo ou pas
-total
-bouton pour payer
+
+<form action="choixCreneauServlet" method="post">
+    <label for="magasin">Choisir un magasin :</label>
+    <select name="magasin" id="magasin">
+        <% 
+            List<Magasin> tousMagasins = (List<Magasin>) session.getAttribute("tousMagasins");
+            for (Magasin magasin : tousMagasins) { 
+        %>
+                <option value="<%= magasin.getCodeMagasin() %>"><%= magasin.getNomMagasin() %></option>
+        <% 
+            } 
+        %>
+    </select>
+    <br>
+    <label for="utiliserPoints">Utiliser les points de fidélité : (<span id="ptFidel"><%= user.getPtFidelite()%></span> pts)</label>
+    <input type="checkbox" id="utiliserPoints" name="utiliserPoints" value="true">
+    <br>
+    <input type="submit" value="Choisir le creneau">
+</form>
+Total : <span id="totalPP" ><%= nombreArrondi%></span>€
 
 <%@ include file="../template/footer.jsp" %>
 </body>
