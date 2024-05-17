@@ -39,7 +39,7 @@
             <div class="magasin-container">
                
                 <label for="<%= magasin.getCodeMagasin() %>">
-                   <input class="checkbox-magasin" type="radio" id="<%= magasin.getCodeMagasin() %>" name="magasinSelectionne" value="<%= magasin.getNomMagasin() %>" onclick="handleCheckboxSelection(this)" required>
+                   <input class="checkbox-magasin" type="radio" id="<%= magasin.getCodeMagasin() %>" name="magasinSelectionne" value="<%= magasin.getCodeMagasin() %>"  required>
                     <strong><%= magasin.getNomMagasin() %></strong> 
                     <br>
                      <i class="fas fa-location-arrow icon"></i>    <%= magasin.getAdresseMagasin() %>
