@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="css/superMarket.css">
     <link rel="stylesheet" type="text/css" href="css/panier.css">
 </head>
-<script src="js/home.js"></script>
+<script src="js/panier.js"></script>
 <body>
 <%@ include file="../template/head.jsp" %>
 <div>
@@ -50,7 +50,7 @@
             	<div class="row ">
 	                	<img class ="imgArticle" src="<%= article.getCheminImage() %>">
 	                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
-	        			<span class ="prixArticle"><%= article.getPrixUnitaire() %>€</span><br/>
+	        			<span  class ="prixArticle"><span id="prixUnitaire<%= article.getId() %>"><%= article.getPrixUnitaire() %></span>€</span><br/>
 	    				<i id="enleverButton" class="fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>
                             	<span id="article<%= article.getId() %>">
                             	<% Integer nbr = (Integer) session.getAttribute(article.getId().toString());
@@ -63,17 +63,17 @@
                     
                     <i id="ajouterButton" class="fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i></a>
 					<% if (article.getPromotion()> 0) { %>
-					<span class ="promotion">- <%= article.getPromotion()%>%</span><br/>
+					<span class ="promotion">-  <span id="promotion<%= article.getId() %>"><%=article.getPromotion()%></span>%</span><br/>
 					   <% }%>
 					   	 <%total+=article.getPrixUnitaire()*nbr*(1-article.getPromotion()/100);%>
-					<span class ="prixTotal"><%= article.getPrixUnitaire()*nbr*(1-article.getPromotion()/100) %>€</span><br/>
+					<span id="prix<%= article.getId() %>" class ="prixTotal"><%= article.getPrixUnitaire()*nbr*(1-article.getPromotion()/100) %>€</span><br/>
 	                </div> 
 	                
   
             
             <% }} %>
         </ul>
-        <h1>Total: <%= total %></h1>
+        <h1>Total: <span id="total"><%= total %>€</span></h1>
         <% if (user != null) { %>
         <h1>Points Fidélités: <%= user.getPtFidelite() %></h1>
         <% if (user.getPtFidelite()>9) { %>
