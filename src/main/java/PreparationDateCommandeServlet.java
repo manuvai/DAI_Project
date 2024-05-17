@@ -1,4 +1,3 @@
-package servlets;
 
 
 import java.io.IOException;
@@ -6,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,22 +13,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import dao.HibernateUtil;
 import models.Article;
 import models.Composer;
 import repositories.ArticleRepository;
 import repositories.ComposerRepository;
 
 /**
- * Servlet implementation class PreparationCommandeDetailServlet
+ * Servlet implementation class PreparationDateCommandeServlet
  */
-@WebServlet("/PreparationCommandeDetailServlet")
-public class PreparationCommandeDetailServlet extends HttpServlet {
+@WebServlet("/PreparationDateCommandeServlet")
+public class PreparationDateCommandeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PreparationCommandeDetailServlet() {
+    public PreparationDateCommandeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,31 +41,27 @@ public class PreparationCommandeDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		RequestDispatcher rd;
 		
-		String idCommande = request.getParameter("idCommande");
+		String idPanier = request.getParameter("idPanier");
+		String date = request.getParameter("DateFin");
+		String dateEtat;
 		
-		ArticleRepository articleRepository = new ArticleRepository();
-		final List<Article> articles = articleRepository.findArticlePanier(Integer.parseInt(idCommande));
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();
+
+		if (date.isEmpty()) {
+			dateEtat = "DateDebutPreparation";
+			date = request.getParameter("DateDebut");
+		} else {
+			dateEtat = "DateFinPreparation";
+		}
 		
-		ComposerRepository composerRepository = new ComposerRepository();
-		final List<Composer> composers = composerRepository.findArticlePanier(Integer.parseInt(idCommande));
-		
-		Map<Article, Integer> mapArticles = new HashMap<>();
-		
-        // Ajout <Article, Qte> à la Map
-        for (Composer composer : composers) {
-            for (Article article : articles) {
-                if (composer.getKey().getIdArticle() == article.getId()) {
-                    mapArticles.put(article, composer.getQte());
-                    break;
-                }
-            }
-        }
-		
-		request.setAttribute("articlesQte", mapArticles);
-		request.setAttribute("idCommande", idCommande);
+		session.createQuery("UPDATE Panier "
+				 + "SET :dateEtat = :date"
+				 + "WHERE Panier.IdPanier = :idPanier").setParameter("idPanier", idPanier).setParameter("dateEtat", dateEtat).setParameter("date", date);
+	
+		transaction.commit();
 		
 		rd = request.getRequestDispatcher("preparationdetail");
 		rd.forward(request,response); 

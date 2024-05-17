@@ -19,7 +19,8 @@
 	<h1>Commande en cours</h1>
 	 
 	 	<button id="bu-start">Commencer la préparation</button>
-	 	<button id="bu-annuler">Annuler</button>
+	 	<button id="bu-annuler">Annuler</button> 
+	 	<h3 id="affichageCommande"> Panier numéro <%= " " + request.getAttribute("idCommande") %></h3>
 		<table class="blueTable">
 		    <thead>
 		        <tr>
