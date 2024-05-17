@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="css/validerPanier.css">
 <script src="js/home.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<title>Choisir Creneau</title>
+<title>Panier Validé</title>
 
   <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -30,38 +30,15 @@
 <body>
 <%@ include file="../template/head.jsp" %>
 <div>
-<h1>Choisir un créneau</h1>
 <%
     String magasinRetrait = (String) session.getAttribute("magasinRetrait");
 	String creneauRetrait = (String) session.getAttribute("creneauRetrait");
 	Double apayer = (Double) session.getAttribute("apayer");
 	Utilisateur user = (Utilisateur) session.getAttribute("user");
 	List<Creneau> cx = (List<Creneau>) session.getAttribute("creneaux");
-	
-    if (creneauRetrait == null) {
 %>
-        <p>Vous n'avez pas encore choisi de créneau.</p>
-<%
-    }
-%>
-
-<form action="PayerServlet" method="post">
-    <label for="creneau">Choisir un creneau :</label>
-    <select name="creneau" id="creneau">
-        <% 
-            List<Creneau> tousCreneaux = (List<Creneau>) session.getAttribute("creneaux");
-            for (Creneau creneau: tousCreneaux) { 
-        %>
-                <option value="<%= creneau.getCodeCreneau() %>"><%= creneau.getHeureCreneau() %> LE <%= creneau.getDateCreneau() %></option>
-        <% 
-            } 
-        %>
-    </select>
-    
-    <input type="submit" value="Payer">
-</form>
-<% String nombreArrondi = String.format("%.2f", apayer);%>
-<p>A Payer : <span id="apayer" ><%= nombreArrondi%></span> Euro</p>
+		<h2><%= user.getPrenom()%> <%= user.getNom()%></h2>
+        <p>Votre panier a été enregistré, vous pourrez venir le récupérer au créneau choisi.</p>
 
 <%@ include file="../template/footer.jsp" %>
 </body>

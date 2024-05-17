@@ -77,4 +77,14 @@
     <servlet-name>choixCreneau</servlet-name>
     <url-pattern>/choixCreneau</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>panierEnregistrer</display-name>
+    <servlet-name>panierEnregistrer</servlet-name>
+    <jsp-file>/WEB-INF/content/panierEnregistrer.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>panierEnregistrer</servlet-name>
+    <url-pattern>/panierEnregistrer</url-pattern>
+  </servlet-mapping>
 </web-app>

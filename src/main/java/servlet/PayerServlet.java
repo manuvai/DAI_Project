@@ -13,21 +13,18 @@ import javax.servlet.http.HttpSession;
 
 import models.Creneau;
 import models.Utilisateur;
-import repositories.CreneauRepository;
-import repositories.MagasinRepository;
 
 /**
- * Servlet implementation class ChoisirCreneauServlet
+ * Servlet implementation class PayerServlet
  */
-@WebServlet("/ChoisirCreneauServlet")
-public class ChoisirCreneauServlet extends HttpServlet {
+@WebServlet("/PayerServlet")
+public class PayerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    CreneauRepository cr = new CreneauRepository();
-    
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChoisirCreneauServlet() {
+    public PayerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,34 +41,16 @@ public class ChoisirCreneauServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
-		String magasin = request.getParameter("magasin");
-		    
-		List<Creneau> cx = cr.findCreneauByMagasin(Integer.parseInt(magasin));
+		String creneau = request.getParameter("creneau");
 		HttpSession session = request.getSession();
-		session.setAttribute("creneaux", cx);
-		session.setAttribute("magasinRetrait", magasin);
+		session.setAttribute("creneau", creneau);
+		String magasin = (String) session.getAttribute("magasinRetrait");
 		Utilisateur user = (Utilisateur) session.getAttribute("user");
-		System.out.println(session.getAttribute("totalPanierValidation"));
-		Double total = (Double) session.getAttribute("totalPanierValidation");
-		 String utiliserPoints = request.getParameter("utiliserPoints");
-		 boolean utiliserPointsBool = "true".equals(utiliserPoints);
-		 int reduc = 0;
-		 if(utiliserPointsBool) {
-			 reduc = user.getPtFidelite()/10;
-			 System.out.println(reduc);
-			 session.setAttribute("ptfidelConso", reduc);
-		 }else {
-			 session.setAttribute("ptfidelConso", 0);
-		 }
+		int ptconso = (int) session.getAttribute("ptfidelConso");
 		 
-		 double montantAPayer = total - reduc;
-		 
-		 session.setAttribute("apayer", montantAPayer);
-		 
-		 RequestDispatcher rd = request.getRequestDispatcher("choixCreneau");
-			rd.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("panierEnregistrer");
+		rd.forward(request, response);
 	}
 
 }
