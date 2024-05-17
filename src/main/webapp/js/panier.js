@@ -62,8 +62,10 @@ function enleverAuPanier(articleId) {
     
     var nbrArticleElement = document.getElementById("article"+articleId);
     var nbrArticle = parseInt(nbrArticleElement.textContent.trim(), 10);
-    	var promoElement = document.getElementById("promotion"+articleId);
+    var promoElement = document.getElementById("promotion"+articleId);
   	var promo = 0;
+  	var totalElement = document.getElementById("total");
+  	var total= parseFloat(totalElement.textContent.trim());
 
   	if(promoElement === null){
 		  promo = 0;
@@ -96,6 +98,7 @@ function enleverAuPanier(articleId) {
 				    nbrPanierElement.innerText = nbrPanier;
 				    nbrArticleElement.innerText = nbrArticle;
 				    nbrPrixElement.innerText = nbrArticle*prix*(1-promo/100) +"€";
+				    totalElement.innerText = total - prix*(1-promo/100);
 					}
 				};
 			xhr.send();
@@ -103,4 +106,9 @@ function enleverAuPanier(articleId) {
 
     nbrPanierElement.innerText = nbrPanier;
     nbrArticleElement.innerText = nbrArticle;
+    
+
+		   
+		    
+		   
 }

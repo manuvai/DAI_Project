@@ -60,8 +60,12 @@ public class ChoisirCreneauServlet extends HttpServlet {
 		 int reduc = 0;
 		 if(utiliserPointsBool) {
 			 reduc = user.getPtFidelite()/10;
-			 System.out.println(reduc);
-			 session.setAttribute("ptfidelConso", reduc);
+
+			 if(reduc<total) {
+				 session.setAttribute("ptfidelConso", reduc);
+			 }else {
+				 session.setAttribute("ptfidelConso", total.intValue());
+			 }
 		 }else {
 			 session.setAttribute("ptfidelConso", 0);
 		 }
