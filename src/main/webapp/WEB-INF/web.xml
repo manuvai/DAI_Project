@@ -87,4 +87,14 @@
     <servlet-name>panierEnregistrer</servlet-name>
     <url-pattern>/panierEnregistrer</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>preparationdetail</display-name>
+    <servlet-name>preparationdetail</servlet-name>
+    <jsp-file>/WEB-INF/content/preparationdetail.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>preparationdetail</servlet-name>
+    <url-pattern>/preparationdetail</url-pattern>
+  </servlet-mapping>
 </web-app>
