@@ -20,18 +20,18 @@ function validation ()
             if (mdp === confirmMdp && email === confirmEmail) {
                 submitButton.disabled = false;
             } else {
-				console.log(email,confirmEmail)
+
 				if(mdp != confirmMdp){
-					console.log("mdp inco")
+				
 					messageElement.textContent = "Mot de passe non identique";
 				}
 				if(email != confirmEmail){
-					console.log("pb mail")
+					
 					if(messageElement.textContent === ""){
-						console.log("mdp ok")
+						
 						messageElement.textContent = "Mail non identique";
 					}else{
-						console.log("mdp pas ok")
+						
 						messageElement.textContent = messageElement.textContent + " et Mail non identique"
 					}
 				}

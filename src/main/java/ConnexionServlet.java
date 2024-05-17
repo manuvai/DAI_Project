@@ -57,6 +57,7 @@ public class ConnexionServlet extends HttpServlet {
                 session.setAttribute("prenom", utilisateur.getPrenom());
                 session.setAttribute("email", email);
                 session.setAttribute("role",  utilisateur.getRole());
+                session.setAttribute("user",utilisateur);
                 
                 Role role = utilisateur.getRole();
                 RequestDispatcher rd;
