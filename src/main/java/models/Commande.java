@@ -7,10 +7,11 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
@@ -34,8 +35,8 @@ public class Commande {
 	@Column(name = "DateCreationCommande")
 	private Date dateCreation;
 
-	@ManyToOne
-	@JoinTable(name = "IdMagasin")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "IdMagasin")
 	private Magasin magasin;
 
 	@MapKeyJoinColumn(name = "IdArticle")
@@ -127,7 +128,7 @@ public class Commande {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(articleApprovisionner, dateArrivee, dateCreation, id, magasin);
+		return Objects.hash(dateArrivee, dateCreation, id, magasin);
 	}
 
 	@Override
@@ -135,12 +136,11 @@ public class Commande {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 		final Commande other = (Commande) obj;
-		return Objects.equals(articleApprovisionner, other.articleApprovisionner)
-				&& Objects.equals(dateArrivee, other.dateArrivee) && Objects.equals(dateCreation, other.dateCreation)
+		return Objects.equals(dateArrivee, other.dateArrivee) && Objects.equals(dateCreation, other.dateCreation)
 				&& Objects.equals(id, other.id) && Objects.equals(magasin, other.magasin);
 	}
 

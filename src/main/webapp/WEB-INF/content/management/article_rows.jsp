@@ -19,7 +19,7 @@ for (ArticleStockDto dto : articles) { %>
   	<th scope="row"><%= dto.getId() %></th>
   	<td><%= dto.getLabel() %></td>
   	<td class="col-md-2">
-  		<img src="<%= request.getContextPath() %>/images/articles/<%= dto.getImagePath() %>" 
+  		<img src="<%= request.getContextPath() %>/<%= dto.getImagePath() %>" 
   			alt="<%= dto.getLabel() %>" 
   			class="img-thumbnail">
 	</td>
