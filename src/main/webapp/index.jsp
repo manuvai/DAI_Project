@@ -1,5 +1,5 @@
 <html>
 <body>
-<h1>Hello World!</h1>
+<h1>Page en cours de construction!</h1>
 </body>
 </html>

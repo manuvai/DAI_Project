@@ -39,8 +39,23 @@ public class Magasin {
      */
     @Column(name="NomMagasin")
     private String nomMagasin;
+    
+    /**
+     * L'adresse du magasin.
+     * 
+     */
+    @Column(name="AdresseMagasin")
+    private String adresseMagasin;
+    
+    /**
+     * Les horaires du magasin.
+     * 
+     */
+    @Column(name="HorairesMagasin")
+    private String horairesMagasin;
 
-    @MapKeyJoinColumn(name = "IdArticle")
+  
+	@MapKeyJoinColumn(name = "IdArticle")
     @OneToMany(mappedBy = "magasinStock", cascade = CascadeType.ALL)
     private Map<Article,Stocker> stockers;
 
@@ -62,8 +77,12 @@ public class Magasin {
      *
      * @param nomMagasin Le nom du magasin.
      */
-    public Magasin(final String nomMagasin) {
+
+    public Magasin(String nomMagasin, String horairesMagasin, String adresseMagasin) {
+        super();
         this.nomMagasin = nomMagasin;
+        this.horairesMagasin= horairesMagasin;
+        this.adresseMagasin=adresseMagasin;
     }
 
     // Getters et setters
@@ -98,6 +117,31 @@ public class Magasin {
     public void setNomMagasin(final String nomMagasin) {
         this.nomMagasin = nomMagasin;
     }
+    
+    /*
+     * Obient les horaires du magasin
+     * @return hoairesMagasin
+     */
+    public String getHorairesMagasin() {
+  		return horairesMagasin;
+  	}
+
+    /*
+     * Définit les horaires du magasin
+     * @param horairesMagasin
+     */
+  	public void setHorairesMagasin(String horairesMagasin) {
+  		this.horairesMagasin = horairesMagasin;
+  	}
+
+  	 public String getAdresseMagasin() {
+ 		return adresseMagasin;
+ 	}
+
+ 	public void setAdresseMagasin(String adresseMagasin) {
+ 		this.adresseMagasin = adresseMagasin;
+ 	}
+
 
 	/**
 	 * Récupération des stocks des articles.
@@ -154,7 +198,6 @@ public class Magasin {
 	}
 
     // Méthodes
-
 	/**
 	 * Retourne une représentation sous forme de chaîne de caractères du magasin.
 	 *

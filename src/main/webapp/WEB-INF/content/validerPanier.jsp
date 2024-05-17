@@ -48,11 +48,17 @@
     <select name="magasin" id="magasin">
         <% 
             List<Magasin> tousMagasins = (List<Magasin>) session.getAttribute("tousMagasins");
-            for (Magasin magasin : tousMagasins) { 
-        %>
-                <option value="<%= magasin.getCodeMagasin() %>"><%= magasin.getNomMagasin() %></option>
+            for (Magasin magasin : tousMagasins) {
+            	if(magasinRetrait != null && magasinRetrait.equals(Integer.toString(magasin.getCodeMagasin()))){
+        %>	
+                <option value="<%= magasin.getCodeMagasin() %>" selected><%= magasin.getNomMagasin() %></option>
         <% 
-            } 
+            	}else {
+            		%> 
+            		 <option value="<%= magasin.getCodeMagasin() %>" ><%= magasin.getNomMagasin() %></option>
+            		<%
+            	} 
+            	}
         %>
     </select>
     <br>

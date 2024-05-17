@@ -49,10 +49,21 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>choixMagasin</display-name>
+    <servlet-name>choixMagasin</servlet-name>
+    <jsp-file>/WEB-INF/content/choixMagasin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>choixMagasin</servlet-name>
+    <url-pattern>/choixMagasin</url-pattern>
+   </servlet-mapping>
+    <servlet>
+      <description></description>
     <display-name>panier</display-name>
     <servlet-name>panier</servlet-name>
     <jsp-file>/WEB-INF/content/panier.jsp</jsp-file>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>panier</servlet-name>
     <url-pattern>/panier</url-pattern>

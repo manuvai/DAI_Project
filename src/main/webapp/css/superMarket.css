@@ -113,3 +113,20 @@ h2{
 	color: black;
 }
 
+.magasin-container {
+            margin-left:20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+       
+.checkbox-magasin{
+	 border-radius: 5px;
+}  
+
+
+.btn-rayon:disabled, 
+.btn-rayon.disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
