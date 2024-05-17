@@ -198,12 +198,6 @@ public class Magasin {
 	}
 
     // Méthodes
-   
-	/**
-     * Retourne une représentation sous forme de chaîne de caractères du magasin.
-     *
-     * @return Une chaîne de caractères représentant le magasin.
-     */
 	/**
 	 * Retourne une représentation sous forme de chaîne de caractères du magasin.
 	 *
