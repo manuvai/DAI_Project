@@ -59,6 +59,13 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		return result;
 	}
 
+	/**
+	 * Extraction de la liste des articles et leur stocks en fonction d'un magasin
+	 * donné.
+	 *
+	 * @param magasinId
+	 * @return
+	 */
 	public List<ArticleStockDto> extractArticleStock(final String magasinId) {
 		Map<Article, Stocker> articles = new HashMap<>();
 		final Session session = getSession();
@@ -83,14 +90,22 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		}
 
 		// Mapping des données
-		final List<ArticleStockDto> articlesDtos = construireArticleDtos(paniersSurDeuxSemaines,
+		final List<ArticleStockDto> articlesDtos = constructArticleDtos(paniersSurDeuxSemaines,
 				commandesApprovisionnement, articles);
 
 		session.close();
 		return articlesDtos;
 	}
 
-	private List<ArticleStockDto> construireArticleDtos(final List<Panier> paniersSurDeuxSemaines,
+	/**
+	 * Construction de la liste d'articles avec le stock.
+	 *
+	 * @param paniersSurDeuxSemaines
+	 * @param commandesApprovisionnement
+	 * @param articles
+	 * @return
+	 */
+	private List<ArticleStockDto> constructArticleDtos(final List<Panier> paniersSurDeuxSemaines,
 			final List<Commande> commandesApprovisionnement, final Map<Article, Stocker> articles) {
 		final List<ArticleStockDto> resultList = new ArrayList<>();
 
@@ -107,7 +122,7 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 
 				for (int i = 1; i < 15; i++) {
 
-					final Date nextDay = Date.from(date.toInstant().plus(Duration.ofDays(1)));
+					final Date nextDay = retrieveNextDay(date);
 					final int qteCommandee = retrieveQuantityOrdered(date, article, commandesApprovisionnement);
 					final int qteRetiree = retrieveQuantityCut(date, article, paniersSurDeuxSemaines);
 
@@ -123,26 +138,6 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		}
 
 		return resultList;
-	}
-
-	private int retrieveQuantityCut(final Date date, final Article article, final List<Panier> paniersSurDeuxSemaines) {
-		int qte = 0;
-
-		if (date != null && article != null && paniersSurDeuxSemaines != null) {
-			final Date nextDay = Date.from(date.toInstant().plus(Duration.ofDays(1)));
-			final List<Panier> concernedPaniers = paniersSurDeuxSemaines.stream()
-					.filter(panier -> (date.before(panier.getCreneau().getDateCreneau())
-							|| date.equals(panier.getCreneau().getDateCreneau()))
-							&& nextDay.after(panier.getCreneau().getDateCreneau()))
-					.filter(panier -> panier.getComposers().containsKey(article))
-					.toList();
-
-			for (final Panier panier : concernedPaniers) {
-				qte += panier.getComposers().get(article).getQte();
-			}
-		}
-
-		return qte;
 	}
 
 	/**
@@ -199,15 +194,22 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		return creneauxSurDeuxSemaines.stream().map(Creneau::getPaniers).flatMap(Set::stream).toList();
 	}
 
+	/**
+	 * Récupère la quantité commandée d'un article.
+	 *
+	 * @param date
+	 * @param article
+	 * @param commandesApprovisionnement
+	 * @return
+	 */
 	private int retrieveQuantityOrdered(final Date date, final Article article,
 			final List<Commande> commandesApprovisionnement) {
 		int qte = 0;
 
 		if (date != null && article != null && commandesApprovisionnement != null) {
-			final Date nextDay = Date.from(date.toInstant().plus(Duration.ofDays(1)));
+			final Date nextDay = retrieveNextDay(date);
 			final List<Commande> concernedCommandes = commandesApprovisionnement.stream()
-					.filter(commande -> (date.before(commande.getDateArrivee())
-							|| date.equals(commande.getDateArrivee())) && nextDay.after(commande.getDateArrivee()))
+					.filter(commande -> isBetween(commande.getDateArrivee(), date, nextDay))
 					.filter(commande -> commande.getArticleApprovisionner().containsKey(article)).toList();
 
 			for (final Commande commande : concernedCommandes) {
@@ -218,6 +220,37 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		return qte;
 	}
 
+	/**
+	 * Récupération de la quantité d'articles concernant des commandes client.
+	 *
+	 * @param date
+	 * @param article
+	 * @param paniers
+	 * @return
+	 */
+	private int retrieveQuantityCut(final Date date, final Article article, final List<Panier> paniers) {
+		int qte = 0;
+
+		if (date != null && article != null && paniers != null) {
+			final Date nextDay = retrieveNextDay(date);
+			final List<Panier> concernedPaniers = paniers.stream()
+					.filter(panier -> isBetween(panier.getCreneau().getDateCreneau(), date, nextDay))
+					.filter(panier -> panier.getComposers().containsKey(article)).toList();
+
+			for (final Panier panier : concernedPaniers) {
+				qte += panier.getComposers().get(article).getQte();
+			}
+		}
+
+		return qte;
+	}
+
+	/**
+	 * Récupère la date sans heure définie
+	 *
+	 * @param inDate
+	 * @return
+	 */
 	private Date transformOnlyDate(final Date inDate) {
 		final DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date;
@@ -227,5 +260,27 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 			date = null;
 		}
 		return date;
+	}
+
+	/**
+	 * Détermine si une date fournie est comprise entre deux dates.
+	 *
+	 * @param givenDate
+	 * @param date
+	 * @param nextDay
+	 * @return
+	 */
+	private boolean isBetween(final Date givenDate, final Date date, final Date nextDay) {
+		return (date.before(givenDate) || date.equals(givenDate)) && nextDay.after(givenDate);
+	}
+
+	/**
+	 * Récupération du jour suivant la date fournie
+	 *
+	 * @param date
+	 * @return
+	 */
+	private Date retrieveNextDay(final Date date) {
+		return date == null ? null : Date.from(date.toInstant().plus(Duration.ofDays(1)));
 	}
 }

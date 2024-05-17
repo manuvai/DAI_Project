@@ -11,28 +11,54 @@ import javax.persistence.Table;
 
 import models.keys.ApprovisionnerKey;
 
+/**
+ * Classe représentant la table d'association entre commande et article
+ */
 @Entity
 @Table(name = "Approvisionner")
 public class Approvisionner {
 
+	/**
+	 * Identifiant de la table
+	 */
 	@EmbeddedId
 	private ApprovisionnerKey key;
 
+	/**
+	 * La quantité de la commande d'approvisionnement
+	 */
 	@Column(name = "QteApprovisionnement")
 	private int qte;
 
+	/**
+	 * L'article à approvisionner
+	 */
 	@ManyToOne
 	@JoinColumn(name = "IdArticle", insertable = false, updatable = false)
 	private Article articleApprovisionner;
 
+	/**
+	 * La commande concernée
+	 */
 	@ManyToOne
 	@JoinColumn(name = "IdCommande", insertable = false, updatable = false)
 	private Commande commande;
 
+	/**
+	 * Constructeur vide.
+	 */
 	public Approvisionner() {
 
 	}
 
+	/**
+	 * Constructeur complet.
+	 *
+	 * @param key
+	 * @param qte
+	 * @param articleApprovisionner
+	 * @param commande
+	 */
 	public Approvisionner(final ApprovisionnerKey key, final int qte, final Article articleApprovisionner,
 			final Commande commande) {
 		this.key = key;
@@ -42,56 +68,72 @@ public class Approvisionner {
 	}
 
 	/**
-	 * @return the key
+	 * Récupération de la clé de l'association.
+	 *
+	 * @return
 	 */
 	public ApprovisionnerKey getKey() {
 		return key;
 	}
 
 	/**
-	 * @param key the key to set
+	 * MAJ de la clé de l'association.
+	 *
+	 * @param key
 	 */
 	public void setKey(final ApprovisionnerKey key) {
 		this.key = key;
 	}
 
 	/**
-	 * @return the qte
+	 * Récupération de la quantité de l'association.
+	 *
+	 * @return
 	 */
 	public int getQte() {
 		return qte;
 	}
 
 	/**
-	 * @param qte the qte to set
+	 * MAJ de la quantité de l'association.
+	 *
+	 * @param qte
 	 */
 	public void setQte(final int qte) {
 		this.qte = qte;
 	}
 
 	/**
-	 * @return the articleApprovisionner
+	 * Récupération de l'article de l'association.
+	 *
+	 * @return
 	 */
 	public Article getArticleApprovisionner() {
 		return articleApprovisionner;
 	}
 
 	/**
-	 * @param articleApprovisionner the articleApprovisionner to set
+	 * MAJ de l'article de l'association.
+	 *
+	 * @param articleApprovisionner
 	 */
 	public void setArticleApprovisionner(final Article articleApprovisionner) {
 		this.articleApprovisionner = articleApprovisionner;
 	}
 
 	/**
-	 * @return the commande
+	 * Récupération de la commande de l'association.
+	 *
+	 * @return
 	 */
 	public Commande getCommande() {
 		return commande;
 	}
 
 	/**
-	 * @param commande the commande to set
+	 * MAJ de la commande de l'association.
+	 *
+	 * @param commande
 	 */
 	public void setCommande(final Commande commande) {
 		this.commande = commande;
@@ -107,7 +149,7 @@ public class Approvisionner {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 		final Approvisionner other = (Approvisionner) obj;

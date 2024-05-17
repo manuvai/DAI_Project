@@ -19,34 +19,64 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * Classe représentant la table pour approvisionner les produits.
+ */
 @Entity
 @Table(name = "Commande")
 public class Commande {
+	/**
+	 * Identifiant de la commande.
+	 */
 	@Id
 	@Column(name = "IdCommande")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	/**
+	 * Date d'arrivée de la commande.
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DateArriveeCommande")
 	private Date dateArrivee;
 
+	/**
+	 * Date de création de la commande.
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DateCreationCommande")
 	private Date dateCreation;
 
+	/**
+	 * Liaison vers le magasin originaire de la commande.
+	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdMagasin")
 	private Magasin magasin;
 
+	/**
+	 * Liaison vers l'association d'approvisionnements
+	 */
 	@MapKeyJoinColumn(name = "IdArticle")
 	@OneToMany(mappedBy = "commande", cascade = CascadeType.ALL)
 	private Map<Article, Approvisionner> articleApprovisionner;
 
+	/**
+	 * Constructeur vide.
+	 */
 	public Commande() {
 
 	}
 
+	/**
+	 * Constructeur complet.
+	 *
+	 * @param id
+	 * @param dateArrivee
+	 * @param dateCreation
+	 * @param magasin
+	 * @param articleApprovisionner
+	 */
 	public Commande(final Integer id, final Date dateArrivee, final Date dateCreation, final Magasin magasin,
 			final Map<Article, Approvisionner> articleApprovisionner) {
 		this.id = id;
@@ -57,70 +87,90 @@ public class Commande {
 	}
 
 	/**
-	 * @return the id
+	 * Récupération de l'identifiant de la commande.
+	 *
+	 * @return
 	 */
 	public Integer getId() {
 		return id;
 	}
 
 	/**
-	 * @param id the id to set
+	 * MAJ de l'identifiant de la commande.
+	 *
+	 * @param id
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
 
 	/**
-	 * @return the dateArrivee
+	 * Récupération de la date d'arrivée de la commande.
+	 *
+	 * @return
 	 */
 	public Date getDateArrivee() {
 		return dateArrivee;
 	}
 
 	/**
-	 * @param dateArrivee the dateArrivee to set
+	 * MAJ de la date d'arrivée de la commande.
+	 *
+	 * @param dateArrivee
 	 */
 	public void setDateArrivee(final Date dateArrivee) {
 		this.dateArrivee = dateArrivee;
 	}
 
 	/**
-	 * @return the dateCreation
+	 * Récupération de la date de création de la commande.
+	 *
+	 * @return
 	 */
 	public Date getDateCreation() {
 		return dateCreation;
 	}
 
 	/**
-	 * @param dateCreation the dateCreation to set
+	 * MAJ de la date de création de la commande.
+	 *
+	 * @param dateCreation
 	 */
 	public void setDateCreation(final Date dateCreation) {
 		this.dateCreation = dateCreation;
 	}
 
 	/**
-	 * @return the magasin
+	 * Récupération du magasin de la commande.
+	 *
+	 * @return
 	 */
 	public Magasin getMagasin() {
 		return magasin;
 	}
 
 	/**
-	 * @param magasin the magasin to set
+	 * MAJ du magasin de la commande.
+	 *
+	 * @param magasin
 	 */
 	public void setMagasin(final Magasin magasin) {
 		this.magasin = magasin;
 	}
 
 	/**
-	 * @return the articleApprovisionner
+	 * Récupération des approvisionnements de la commande.
+	 *
+	 * @return
 	 */
 	public Map<Article, Approvisionner> getArticleApprovisionner() {
 		return articleApprovisionner;
 	}
 
 	/**
-	 * @param articleApprovisionner the articleApprovisionner to set
+	 * MAJ des approvisionnements de la commande.
+	 *
+	 * @param articleApprovisionner
 	 */
 	public void setArticleApprovisionner(final Map<Article, Approvisionner> articleApprovisionner) {
 		this.articleApprovisionner = articleApprovisionner;

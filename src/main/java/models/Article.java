@@ -110,6 +110,9 @@ public class Article {
 	@OneToMany(mappedBy = "articleComposer", cascade = CascadeType.ALL)
 	private Map<Panier, Composer> composers;
 
+	/**
+	 * Association vers l'approvisionnement d'articles
+	 */
 	@MapKeyJoinColumn(name = "IdCommande")
 	@OneToMany(mappedBy = "articleApprovisionner", cascade = CascadeType.ALL)
 	private Map<Commande, Approvisionner> approvisionnements;
@@ -209,7 +212,7 @@ public class Article {
 	public Integer getId() {
 		return idArticle;
 	}
-	
+
 	/**
 	 * Récupération du libellé de l'article.
 	 *
@@ -244,15 +247,6 @@ public class Article {
 	 */
 	public void setNom(final String lib) {
 		this.lib = lib;
-	}
-
-	/**
-	 * Récupération du libellé de l'article.
-	 *
-	 * @return
-	 */
-	public String getNom() {
-		return lib;
 	}
 
 	/**

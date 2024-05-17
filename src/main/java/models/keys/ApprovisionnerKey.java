@@ -49,7 +49,7 @@ public class ApprovisionnerKey implements Serializable {
 	/**
 	 * Récupération de l'identifiant de l'article.
 	 *
-	 * @return the idArticle
+	 * @return
 	 */
 	public int getIdArticle() {
 		return idArticle;
@@ -58,7 +58,7 @@ public class ApprovisionnerKey implements Serializable {
 	/**
 	 * MAJ de l'identifiant de l'article.
 	 *
-	 * @param idArticle the idArticle to set
+	 * @param idArticle
 	 */
 	public void setIdArticle(final int idArticle) {
 		this.idArticle = idArticle;
@@ -67,7 +67,7 @@ public class ApprovisionnerKey implements Serializable {
 	/**
 	 * Récupération de l'identifiant de la commande.
 	 *
-	 * @return the idCommande
+	 * @return
 	 */
 	public int getIdCommande() {
 		return idCommande;
@@ -76,7 +76,7 @@ public class ApprovisionnerKey implements Serializable {
 	/**
 	 * MAJ de l'identifiant de la commande.
 	 *
-	 * @param idCommande the idCommande to set
+	 * @param idCommande
 	 */
 	public void setIdCommande(final int idCommande) {
 		this.idCommande = idCommande;

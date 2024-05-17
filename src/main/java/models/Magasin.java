@@ -44,6 +44,9 @@ public class Magasin {
     @OneToMany(mappedBy = "magasinStock", cascade = CascadeType.ALL)
     private Map<Article,Stocker> stockers;
 
+	/**
+	 * Liste des commandes concernant l'approvisionnement du magasin.
+	 */
 	@OneToMany(mappedBy = "magasin", fetch = FetchType.LAZY)
 	private Set<Commande> commandeApprovisionnement;
 
@@ -97,42 +100,54 @@ public class Magasin {
     }
 
 	/**
-	 * @return the stockers
+	 * Récupération des stocks des articles.
+	 *
+	 * @return
 	 */
 	public Map<Article, Stocker> getStockers() {
 		return stockers;
 	}
 
 	/**
-	 * @param stockers the stockers to set
+	 * MAJ des stocks des articles.
+	 *
+	 * @param stockers
 	 */
 	public void setStockers(final Map<Article, Stocker> stockers) {
 		this.stockers = stockers;
 	}
 
 	/**
-	 * @return the commandeApprovisionnement
+	 * Récupération des commandes d'approvisionnement.
+	 *
+	 * @return
 	 */
 	public Set<Commande> getCommandeApprovisionnement() {
 		return commandeApprovisionnement;
 	}
 
 	/**
-	 * @param commandeApprovisionnement the commandeApprovisionnement to set
+	 * MAJ des commandes d'approvisionnement
+	 *
+	 * @param commandeApprovisionnement
 	 */
 	public void setCommandeApprovisionnement(final Set<Commande> commandeApprovisionnement) {
 		this.commandeApprovisionnement = commandeApprovisionnement;
 	}
 
 	/**
-	 * @return the creneaux
+	 * Récupération des créneaux
+	 *
+	 * @return
 	 */
 	public Set<Creneau> getCreneaux() {
 		return creneaux;
 	}
 
 	/**
-	 * @param creneaux the creneaux to set
+	 * MAJ des créneaux
+	 *
+	 * @param creneaux
 	 */
 	public void setCreneaux(final Set<Creneau> creneaux) {
 		this.creneaux = creneaux;

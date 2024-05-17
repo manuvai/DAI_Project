@@ -40,11 +40,17 @@ public class ArticleMapper {
 		return article;
 	}
 
+	/**
+	 * Transformation d'un article en DTO pour la gestion de stocks
+	 *
+	 * @param article
+	 * @return
+	 */
 	public ArticleStockDto articleToStockDto(final Article article) {
 		ArticleStockDto dto = null;
 
 		if (article != null) {
-			dto = new ArticleStockDto(article.getId(), article.getNom(), article.getCheminImage());
+			dto = new ArticleStockDto(article.getId(), article.getLib(), article.getCheminImage());
 		}
 
 		return dto;
