@@ -9,8 +9,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import models.Approvisionner;
 import models.Article;
 import models.Categorie;
+import models.Commande;
 import models.Composer;
 import models.Concerner;
 import models.Contenir;
@@ -56,6 +58,8 @@ public class HibernateUtil {
 			classList.add(Stocker.class);
 			classList.add(Composer.class);
 			classList.add(Contenir.class);
+			classList.add(Commande.class);
+			classList.add(Approvisionner.class);
 
 			classList.forEach(configuration::addAnnotatedClass);
 

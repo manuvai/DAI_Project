@@ -20,6 +20,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/superMarket.css">
 </head>
+<script src="js/home.js"></script>
 <body>
 <%@ include file="../template/head.jsp" %>
 
@@ -43,8 +44,13 @@
 
 <h2>Nos articles en promotion</h2>
 <div class="container">
+ <a class="carousel-control-prev" href="#articleCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          
+        </a>
     <div id="articleCarousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
+        
             <% int itemCount = 0;
            	   List<Article> articles = (List<Article>) request.getAttribute("articles");
                for (int i = 0; i < articles.size(); i += 4) { %>
@@ -57,7 +63,21 @@
                                         <img class="img-item" src=<%= articles.get(j).getCheminImage() %> >
                                         <p class="card-text"><%= articles.get(j).getDesc() %></p>
                                         <img class="img-nutriscore" src="<%= "images/nutriscores/" + articles.get(j).getNutriscore() + ".png" %>" >
-                                        <p class="price"> <%= articles.get(j).getPrixUnitaire() %> €</p>
+                                        <div>
+                                        	<p class="price"> <%= articles.get(j).getPrixUnitaire() %> €</p>
+                                        	<i id="enleverButton" class="fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= articles.get(j).getId() %>')" title="moins"></i>
+                                        	<span id="article<%= articles.get(j).getId() %>">
+                                        	<% 
+									            Integer nbr = (Integer) session.getAttribute(articles.get(j).getId().toString());
+												 if (nbr != null ){%>
+												<%= nbr %>
+												 <%} else {%>
+												 0
+													 <% }%>
+				 </span>
+                                        	  <i id="ajouterButton" class="fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= articles.get(j).getId() %>')"></i>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -67,24 +87,20 @@
                 <% itemCount += 4;
                } %>
         </div>
-        <a class="carousel-control-prev" href="#articleCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          
-        </a>
-        <a class="carousel-control-next" href="#articleCarousel" role="button" data-slide="next">
+       
+        
+    </div>
+    <a class="carousel-control-next" href="#articleCarousel" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
          
         </a>
-    </div>
 </div>
 
 
-
 <%@ include file="../template/footer.jsp" %>
-
+</body>
+</html>
 <!-- jQuery and Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-
 

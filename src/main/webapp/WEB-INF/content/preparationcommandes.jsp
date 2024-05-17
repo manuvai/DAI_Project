@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="css/preparationcommandes.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<h1>Page de préparation des commandes</h1>
+<h1>Page de préparation des commandes</h1> 
  
 	<table class="blueTable">
 	<thead>
@@ -22,8 +22,8 @@
 	    <% for (Panier panier : (List<Panier>) request.getAttribute("paniers")) {%>
 	    	<tr>
 		    	<td>
-			    	<form action="/test" method="get">
-	    				<input type="hidden" name="<%= panier.getId() %>" value="<%= panier.getId() %>">
+			    	<form action="./PreparationCommandeDetailServlet" method="get">
+	    				<input type="hidden" name="idCommande" value="<%= panier.getId() %>">
 	    				<input type="submit" value="<%= panier.getId() %>">
 					</form>
 		    	</td>

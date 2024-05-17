@@ -35,7 +35,7 @@ public class Magasin {
 
     /**
      * Le nom du magasin.
-     * 
+     *
      */
     @Column(name="NomMagasin")
     private String nomMagasin;
@@ -58,7 +58,13 @@ public class Magasin {
 	@MapKeyJoinColumn(name = "IdArticle")
     @OneToMany(mappedBy = "magasinStock", cascade = CascadeType.ALL)
     private Map<Article,Stocker> stockers;
-    
+
+	/**
+	 * Liste des commandes concernant l'approvisionnement du magasin.
+	 */
+	@OneToMany(mappedBy = "magasin", fetch = FetchType.LAZY)
+	private Set<Commande> commandeApprovisionnement;
+
     // Constructeurs
 
     /**
@@ -71,6 +77,7 @@ public class Magasin {
      *
      * @param nomMagasin Le nom du magasin.
      */
+
     public Magasin(String nomMagasin, String horairesMagasin, String adresseMagasin) {
         super();
         this.nomMagasin = nomMagasin;
@@ -101,13 +108,13 @@ public class Magasin {
     //Mapping
     @OneToMany(mappedBy = "magasin", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private Set<Creneau> creneaux = new HashSet(0);
- 
+
     /**
      * Définit le nom du magasin.
      *
      * @param nomMagasin Le nouveau nom du magasin.
      */
-    public void setNomMagasin(String nomMagasin) {
+    public void setNomMagasin(final String nomMagasin) {
         this.nomMagasin = nomMagasin;
     }
     
@@ -136,14 +143,72 @@ public class Magasin {
  	}
 
 
-    // Méthodes
+	/**
+	 * Récupération des stocks des articles.
+	 *
+	 * @return
+	 */
+	public Map<Article, Stocker> getStockers() {
+		return stockers;
+	}
 
+	/**
+	 * MAJ des stocks des articles.
+	 *
+	 * @param stockers
+	 */
+	public void setStockers(final Map<Article, Stocker> stockers) {
+		this.stockers = stockers;
+	}
+
+	/**
+	 * Récupération des commandes d'approvisionnement.
+	 *
+	 * @return
+	 */
+	public Set<Commande> getCommandeApprovisionnement() {
+		return commandeApprovisionnement;
+	}
+
+	/**
+	 * MAJ des commandes d'approvisionnement
+	 *
+	 * @param commandeApprovisionnement
+	 */
+	public void setCommandeApprovisionnement(final Set<Commande> commandeApprovisionnement) {
+		this.commandeApprovisionnement = commandeApprovisionnement;
+	}
+
+	/**
+	 * Récupération des créneaux
+	 *
+	 * @return
+	 */
+	public Set<Creneau> getCreneaux() {
+		return creneaux;
+	}
+
+	/**
+	 * MAJ des créneaux
+	 *
+	 * @param creneaux
+	 */
+	public void setCreneaux(final Set<Creneau> creneaux) {
+		this.creneaux = creneaux;
+	}
+
+    // Méthodes
    
 	/**
      * Retourne une représentation sous forme de chaîne de caractères du magasin.
      *
      * @return Une chaîne de caractères représentant le magasin.
      */
+	/**
+	 * Retourne une représentation sous forme de chaîne de caractères du magasin.
+	 *
+	 * @return Une chaîne de caractères représentant le magasin.
+	 */
     @Override
     public String toString() {
         return "Magasin [codeMagasin=" + idMagasin + ", nomMagasin=" + nomMagasin + "]";
@@ -166,14 +231,14 @@ public class Magasin {
      * @return true si les objets sont égaux, false sinon.
      */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Magasin other = (Magasin) obj;
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+			return true;
+		}
+        if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+        final Magasin other = (Magasin) obj;
         return idMagasin == other.idMagasin && Objects.equals(nomMagasin, other.nomMagasin);
     }
 }
