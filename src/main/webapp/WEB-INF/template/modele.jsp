@@ -75,8 +75,12 @@ request.setAttribute(AbstractServlet.CSS_LIBS_KEY, cssFiles);
 %>
 <%@ include file="../template/start.jsp" %>
 
-<div class="container">
-    <h1>Hello</h1>
+<h1>Hello</h1>
+
+<div class="row">
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. In voluptas quisquam impedit molestiae iste
+	dignissimos maiores voluptates, accusamus veniam quaerat possimus. Distinctio voluptas et repellat 
+	incidunt, aspernatur est modi ipsa.
 </div>
 
 <%@ include file="../template/end.jsp" %>

@@ -31,7 +31,7 @@ if (request.getAttribute("article") != null) {
 			<h1 class ="nomArticle"><%= article.getLib() %></h1><br/>
 			<span class ="prixArticle"><%= article.getPrixUnitaire() %>€</span><br/>
 			<span class ="descArticle">
-				<%= article.getDesc() %> description description lalala lorem ipsul doloret sit amet description description lalala lorem ipsul doloret sit amet
+				<%= article.getDesc() %>
 			</span><br/>
 			<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/>
 			<span class ="prixKilo"><%= (article.getPrixUnitaire() / (float) article.getPoids()) * 1000%>€ / kg</span><br/>

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" type="text/css" href="css/catalogue.css">
     <%@ page import="models.*" %>
-    <%@ page import="java.util.List" %>>
+    <%@ page import="java.util.List" %>
     <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +36,8 @@
 	<div id="catalogue">
 	<% if (request.getAttribute("articles") != null) {%>
 	            <% for (Article article : (List<Article>)request.getAttribute("articles")) {%>
-	                <a href="<%="Article?idArticle="+article.getId() %>"> <div class="article">
+	                <a href="<%="Article?idArticle="+article.getId() %>"> 
+	                <div class="article">
 	                	<img class ="imgArticle" src="<%= article.getCheminImage() %>">
 	                	<div class="articleDetails">
 	                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
