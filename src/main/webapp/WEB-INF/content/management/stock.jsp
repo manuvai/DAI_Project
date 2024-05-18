@@ -1,31 +1,25 @@
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="dtos.ArticleStockDto"%>
 <%@page import="java.util.List"%>
 <%@page import="models.Magasin"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 
-<% request.setAttribute("pageTitle", "Gestion des articles"); %>
+<% 
+request.setAttribute("pageTitle", "Gestion des articles"); 
 
-<!DOCTYPE html>
-<html>
-<head>
+List<String> jsLibs = new ArrayList<>();
+jsLibs.add("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js");
+request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsLibs);
 
-<link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/header.css">
+List<String> jsFiles = new ArrayList<>();
+jsFiles.add("js/managementstock.js");
+request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
+%>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<title>Online Shop</title>
-
-  <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/superMarket.css">
-</head>
-<body>
-<%@ include file="../../template/head.jsp" %>
-<%@ include file="../../template/errors.jsp" %>
-<div class="content">
+<%@ include file="../../template/start.jsp" %>
 
 <h1>Visualisation des stocks</h1>
 
@@ -63,10 +57,5 @@
 <% } %>
 </div>
 <input type="hidden" id="rootPath" value="<%= request.getContextPath() %>">
-<script src=
-"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
-<script src="<%= request.getContextPath() %>/js/managementstock.js"></script>
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
+<%@ include file="../../template/end.jsp" %>

@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Connexion</title>
-<link rel="stylesheet" type="text/css" href="css/connexion.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-<div class="container">
+<%
+request.setAttribute("pageTitle", "Connexion");
+request.setAttribute("isHeaderDisabled", true);
+
+List<String> cssFiles = new ArrayList<>();
+cssFiles.add("css/connexion.css");
+request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
+%>
+<%@ include file="../template/start.jsp" %>
  <h1>Connexion</h1>
 
     <form action="ConnexionServlet" method="post">
@@ -33,7 +32,4 @@
     </form>
 
     <p>Pas encore inscrit ? <a href="inscription">Inscrivez-vous ici</a></p>
-    </div>
-</body>
-</html>
-<%@ include file="../template/footer.jsp" %>
+<%@ include file="../template/end.jsp" %>

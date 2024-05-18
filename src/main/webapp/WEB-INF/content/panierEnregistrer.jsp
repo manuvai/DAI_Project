@@ -10,26 +10,22 @@
 <%@ page import="models.Creneau" %>
 <%@ page import="java.util.List" %>
 <%@ page import="repositories.ArticleRepository" %>
-<!DOCTYPE html>
-<html>
-<head>
 
-<link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
-<link rel="stylesheet" type="text/css" href="css/header.css">
-<link rel="stylesheet" type="text/css" href="css/validerPanier.css">
-<script src="js/home.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<title>Panier Validé</title>
+<%
 
-  <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/superMarket.css">
-    <link rel="stylesheet" type="text/css" href="css/panier.css">
-</head>
-<script src="js/promotion.js"></script>
-<body>
-<%@ include file="../template/head.jsp" %>
-<div>
+request.setAttribute("pageTitle", "Panier Validé");
+
+List<String> cssFiles = new ArrayList<>();
+cssFiles.add("css/validerPanier.css");
+cssFiles.add("css/panier.css");
+request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
+
+List<String> jsFiles = new ArrayList<>();
+jsFiles.add("js/promotion.js");
+request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
+%>
+
+<%@ include file="../template/start.jsp" %>
 <%
     String magasinRetrait = (String) session.getAttribute("magasinRetrait");
 	String creneauRetrait = (String) session.getAttribute("creneauRetrait");
@@ -37,15 +33,7 @@
 	Utilisateur user = (Utilisateur) session.getAttribute("user");
 	List<Creneau> cx = (List<Creneau>) session.getAttribute("creneaux");
 %>
-		<h2><%= user.getPrenom()%> <%= user.getNom()%></h2>
-        <p>Votre panier a été enregistré, vous pourrez venir le récupérer au créneau choisi.</p>
+<h2><%= user.getPrenom()%> <%= user.getNom()%></h2>
+<p>Votre panier a été enregistré, vous pourrez venir le récupérer au créneau choisi.</p>
 
-<%@ include file="../template/footer.jsp" %>
-</body>
-</html>
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-
-
+<%@ include file="../template/end.jsp" %>

@@ -1,34 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" type="text/css" href="css/article.css">
-    <%@ page import="models.*" %>
-    <%@ page import="java.util.List" %>
-    <%@ include file="../template/head.jsp" %>
-    <!DOCTYPE html>
-<html>
-<head>
+<%@ page import="models.*" %>
+<%@ page import="java.util.List" %>
+<%
+// =============================
+// GESTION DES FICHIERS CSS
+// =============================
+List<String> cssFiles = (List<String>) request.getAttribute(AbstractServlet.CSS_FILES_KEY);
 
-<link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
-<link rel="stylesheet" type="text/css" href="css/header.css">
+cssFiles = cssFiles == null ? new ArrayList<>() : cssFiles;
+/*
+	Cette partie traite l'ajout des CDN des librairies JS
+	Pour ajouter une nouvelle librairie :
+		cssFiles.add("css/example.css");
+*/
+cssFiles.add("css/article.css");
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<title>Online Shop</title>
-    
+request.setAttribute(AbstractServlet.CSS_LIBS_KEY, cssFiles);
+
+%>
+<%@ include file="../template/start.jsp" %>
 <main>
 	<div id="article">
-	<% if (request.getAttribute("article") != null) {Article article = (Article)request.getAttribute("article");%>
-        	<img class ="imgArticle" src="<%= article.getCheminImage() %>">
-	                	<div class="articleDetails">
-		                	<h1 class ="nomArticle"><%= article.getLib() %></h2><br/>
-            				<span class ="prixArticle"><%= article.getPrixUnitaire() %>€</span><br/>
-         			        <span class ="descArticle"><%= article.getDesc() %> description description lalala lorem ipsul doloret sit amet description description lalala lorem ipsul doloret sit amet </span><br/>
-		    				<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/>
-		    				<span class ="prixKilo"><%= (article.getPrixUnitaire()/(float)article.getPoids())*1000%>€ / kg</span><br/>
-		    				<img class="img-nutriscore" src="<%= "images/nutriscores/" + article.getNutriscore() + ".png" %>">
-	    				</div>
-	                </div>
-	            <% }
-	%>
+<% 
+if (request.getAttribute("article") != null) {
+	Article article = (Article)request.getAttribute("article");
+%>
+		<img class ="imgArticle" src="<%= article.getCheminImage() %>">
+		<div class="articleDetails">
+			<h1 class ="nomArticle"><%= article.getLib() %></h1><br/>
+			<span class ="prixArticle"><%= article.getPrixUnitaire() %>€</span><br/>
+			<span class ="descArticle">
+				<%= article.getDesc() %> description description lalala lorem ipsul doloret sit amet description description lalala lorem ipsul doloret sit amet
+			</span><br/>
+			<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/>
+			<span class ="prixKilo"><%= (article.getPrixUnitaire() / (float) article.getPoids()) * 1000%>€ / kg</span><br/>
+			<img class="img-nutriscore" src="<%= "images/nutriscores/" + article.getNutriscore() + ".png" %>">
+		</div>
+<% 
+}
+%>
 	</div>
 </main>
-<%@ include file="../template/footer.jsp" %>
+<%@ include file="../template/end.jsp" %>
