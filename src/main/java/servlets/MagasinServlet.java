@@ -51,9 +51,6 @@ public class MagasinServlet extends AbstractServlet {
         	rd = request.getRequestDispatcher("choixMagasin");
             rd.forward(request, response);
         }
-        
-        rd = request.getRequestDispatcher("home");
-        rd.forward(request, response);
 	}
 
 
