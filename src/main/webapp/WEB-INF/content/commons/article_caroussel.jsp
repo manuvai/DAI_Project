@@ -32,10 +32,11 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 							<div class="card">
 								<div class="card-body">
 									<img class="img-item"
-										src="<%= article.getCheminImage() %>" alt="">
+										src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>" 
+										alt="Image <%= article.getLib() %>/">
 									<p class="card-text"><%= article.getDesc() %></p>
 									<img class="img-nutriscore"
-										src="<%= request.getContextPath() %>images/nutriscores/<%= article.getNutriscore() %>.png"
+										src="<%= request.getContextPath() %>/images/nutriscores/<%= article.getNutriscore() %>.png"
 										alt="">
 									<div>
 										<p class="price">
