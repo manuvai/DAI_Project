@@ -37,7 +37,7 @@ if (roleManagement == null) {
 			</div>
 			<div class="col-md-4">
 				<button type="submit" class="btn btn-success">Ajouter par fichier CSV</button>
-				<a href="<%= request.getContextPath() %>/management/stock" id="add-stock-link">Ajouter stock manuellement</a>
+				<a href="<%= request.getContextPath() %>/management/stock" id="add-stock-link">Afficher le stock par magasin</a>
 			</div>
 		
 		</form>
