@@ -1,40 +1,72 @@
-<header class="main-header">
-    <%@page import="models.Utilisateur.Role" %>
-        <a href="<%= request.getContextPath() %>/home">
-            <img class="logo" src="<%= request.getContextPath() %>/images/logo-supermarket.png">
-        </a>
-        <nav class="icon-nav">
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="servlets.AbstractServlet"%>
+<%@page import="models.Utilisateur.Role" %>
 
-            <input id="search-input" type="text" class="search-input" placeholder="Search..">
-            <a href="<%= request.getContextPath() %>/panier" class="icon">
-                <i class="fas fa-shopping-cart" title="Panier"></i>
-            </a>
-<% 
+<%
 
-Integer nbrArticleTotal=(Integer) session.getAttribute("nbrArticleTotal");
+Integer nbrArticleTotal = (Integer) session.getAttribute("nbrArticleTotal");
 int nbrArticleString = nbrArticleTotal == null ? 0 : nbrArticleTotal;
 
+Role role = (Role) session.getAttribute("role");
+
+if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
+	request.setAttribute(AbstractServlet.JS_FILES_KEY, new ArrayList<>());
+}
+((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY))
+	.add("js/header.js");
 %>
-            <p id="nbrPanier">
-                <%= nbrArticleString %>
-            </p>
-<% 
-Role role = (Role) session.getAttribute("role"); 
-if (role == null) {
-%>
-                <a href="<%= request.getContextPath() %>/connexion" class="icon">
-                    <i class="fas fa-user" title="Connexion"></i>
-                </a>
-<% } else { %>
-                <a href="<%= request.getContextPath() %>/MagasinServlet" class="icon">
-                    <i class="fas fa-store" title="Choisis ton magasin"></i>
-                </a>
-                <a href="<%= request.getContextPath() %>" class="icon">
-                    <i class="fas fa-user" title="Mon profil"></i>
-                </a>
-                <a href="<%= request.getContextPath() %>/DeconnexionServlet" class="icon">
-                    <i class="fas fa-sign-out-alt" title="Deconnexion"></i>
-                </a>
-<%} %>
-        </nav>
-</header>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light main-header">
+	<input type="hidden" value="<%= request.getContextPath() %>" id="headerRootPath" />
+    <a class="navbar-brand" href="<%= request.getContextPath() %>/home">
+        <img src="<%= request.getContextPath() %>/images/logo-supermarket.png" class="logo" alt="Supermarché Logo">
+    </a>
+    <div class="navbar-nav ml-auto">
+    
+	    <form class="form-inline my-2 my-lg-0" id="searchForm">
+	        <input class="form-control mr-sm-2" 
+	        	type="search" 
+	        	placeholder="Rechercher" 
+	        	aria-label="Rechercher" 
+	        	 data-toggle="dropdown" 
+	        	 aria-haspopup="true" 
+	        	 aria-expanded="false"
+	        	id="searchInput">
+	        <div id="searchResults" 
+	        	class="dropdown-menu dropdown-menu-right" 
+	        	aria-labelledby="searchForm"></div>
+	    </form>
+        <a class="nav-item nav-link" href="<%= request.getContextPath() %>/panier">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge badge-pill badge-danger" id="nbrPanier"><%= nbrArticleString %></span>
+        </a>
+        
+       	<% if (role != null) { %>
+        <a class="nav-item nav-link" href="<%= request.getContextPath() %>/MagasinServlet">
+            <i class="fas fa-store"></i>
+        </a>
+        <% } %>
+        <div class="nav-item dropdown">
+       	<% if (role == null) { %>
+        	<a class="nav-item nav-link" href="<%= request.getContextPath() %>/connexion">
+                <i class="fas fa-user"></i>
+            </a>
+       	<% } else { %>
+            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                <a class="dropdown-item" href="<%= request.getContextPath() %>/dashboard">Tableau de bord</a>
+                <a class="dropdown-item" href="#">Commandes</a>
+                <a class="dropdown-item" href="#">Paramètres</a>
+            </div>
+        <% } %>
+        </div>
+       	<% if (role != null) { %>
+        <a class="nav-item nav-link" href="<%= request.getContextPath() %>/DeconnexionServlet">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+        <% } %>
+    </div>
+</nav>
