@@ -3,12 +3,14 @@ package repositories;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import dao.HibernateUtil;
 
@@ -19,6 +21,55 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 	protected AbstractRepository(final Class<T> inClazz) {
 		clazz = inClazz;
 
+	}
+
+	/**
+	 * Exécution et récupération des résultats de la requête passée en paramètre.
+	 *
+	 * @param query
+	 * @return
+	 */
+	public List<T> getQueryResults(final String query) {
+		return getQueryResults(query, null);
+	}
+
+	/**
+	 * Exécution et récupération des résultats de la requête passée en paramètre.
+	 *
+	 * @param inQuery
+	 * @param mappedValues
+	 * @return
+	 */
+	public List<T> getQueryResults(final String inQuery, final Map<String, Object> mappedValues) {
+		final Session session = getSession();
+
+		session.beginTransaction();
+
+		final List<T> resultList = getQueryResults(inQuery, mappedValues, session);
+
+		session.close();
+
+		return resultList;
+	}
+
+	/**
+	 * Exécution et récupération des résultats de la requête passée en paramètre.
+	 *
+	 * @param inQuery
+	 * @param mappedValues
+	 * @param session
+	 * @return
+	 */
+	public List<T> getQueryResults(final String inQuery, final Map<String, Object> mappedValues,
+			final Session session) {
+
+		final Query<T> query = session.createQuery(inQuery);
+
+		if (mappedValues != null) {
+			mappedValues.forEach((key, value) -> query.setParameter(key, value));
+		}
+
+		return query.getResultList();
 	}
 
 	/**
