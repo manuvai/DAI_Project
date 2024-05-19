@@ -23,9 +23,6 @@ if (roleManagement == null) {
 	<div class="container">
 
 		<h1>Gestion des articles</h1>
-		
-		<%@ include file="../../template/errors.jsp" %>
-		
 		<form action="" method="POST" enctype="multipart/form-data">
 				
 			<div class="custom-file col-md-4">

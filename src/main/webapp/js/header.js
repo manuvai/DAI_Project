@@ -4,7 +4,7 @@
 $(window).on('load', () => {
     let headerRootPath = $('#headerRootPath').val();
     $('#searchInput').on('input', function () {
-        let query = $(this).val();
+        let query = encodeURIComponent($(this).val());
 
         if (query.length <= 2) {
             $('#searchResults').hide();
@@ -13,11 +13,15 @@ $(window).on('load', () => {
         	let url = `${headerRootPath}/articles/search?q=${query}`;
         	
         	get(url, xhr => {
-                $('#searchResults').empty().show();
                 
 				let responseXML = xhr.responseXML;
 				let nuplets = responseXML.getElementsByTagName("article");
+				
+				if (nuplets.length <= 0) {
+					return;
+				}
 
+                $('#searchResults').empty().show();
                 Array.from(nuplets).forEach(item => {
                     let idArticle = item.getElementsByTagName("id")[0].innerHTML;
                     let nomArticle = item.getElementsByTagName("nom")[0].innerHTML;

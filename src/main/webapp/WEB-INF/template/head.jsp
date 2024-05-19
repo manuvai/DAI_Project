@@ -24,9 +24,13 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
     </a>
     <div class="navbar-nav ml-auto">
     
-	    <form class="form-inline my-2 my-lg-0" id="searchForm">
+	    <form class="form-inline my-2 my-lg-0" 
+	    	id="searchForm" 
+	    	method="POST"
+	    	action="<%= request.getContextPath() %>/articles/search">
 	        <input class="form-control mr-sm-2" 
 	        	type="search" 
+	        	name="query"
 	        	placeholder="Rechercher" 
 	        	aria-label="Rechercher" 
 	        	 data-toggle="dropdown" 

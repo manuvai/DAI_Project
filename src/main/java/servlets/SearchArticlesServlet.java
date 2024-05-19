@@ -42,7 +42,13 @@ public class SearchArticlesServlet extends AbstractServlet {
 	@Override
 	protected void responsePost(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		final String query = request.getParameter("query");
+
+		final List<Article> articles = articleRepository.search(query);
+
+		request.setAttribute("articlesCaroussel", articles);
+
+		view("search", request, response);
 
 	}
 
