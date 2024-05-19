@@ -29,7 +29,7 @@ public class HomeServlet extends AbstractServlet {
 		//Articles uniquement en promotion
 		final List<Article> articles = articlesEnPromotion.findAll();
 		request.setAttribute("rayons", rayons);
-		request.setAttribute("articles", articles);
+		request.setAttribute("articlesCaroussel", articles);
 
 		view("home", request, response);
 
