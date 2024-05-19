@@ -4,6 +4,8 @@
 $(window).on('load', () => {
     let headerRootPath = $('#headerRootPath').val();
     $('#searchInput').on('input', function () {
+		return;
+		// FIXME Corriger le CSS pour permettre un affichage ergonomique de la liste des résultats 
         let query = encodeURIComponent($(this).val());
 
         if (query.length <= 2) {

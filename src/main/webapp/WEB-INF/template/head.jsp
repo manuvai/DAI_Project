@@ -24,22 +24,22 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
     </a>
     <div class="navbar-nav ml-auto">
     
-	    <form class="form-inline my-2 my-lg-0" 
+	    <form class="form-inline my-2 my-lg-0 dropdown-toggle" 
 	    	id="searchForm" 
 	    	method="POST"
 	    	action="<%= request.getContextPath() %>/articles/search">
-	        <input class="form-control mr-sm-2" 
+	        <input class="form-control mr-sm-2 dropdown-toggle" 
 	        	type="search" 
 	        	name="query"
 	        	placeholder="Rechercher" 
 	        	aria-label="Rechercher" 
-	        	 data-toggle="dropdown" 
-	        	 aria-haspopup="true" 
-	        	 aria-expanded="false"
+				data-toggle="dropdown" 
+				aria-haspopup="true" 
+				aria-expanded="false"
 	        	id="searchInput">
 	        <div id="searchResults" 
 	        	class="dropdown-menu dropdown-menu-right" 
-	        	aria-labelledby="searchForm"></div>
+	        	aria-labelledby="searchInput"></div>
 	    </form>
         <a class="nav-item nav-link" href="<%= request.getContextPath() %>/panier">
             <i class="fas fa-shopping-cart"></i>
