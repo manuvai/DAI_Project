@@ -1,31 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setAttribute("pageTitle", "HomePage"); %>
-<%@page import="java.util.Objects"%>
 <%! @SuppressWarnings("unchecked") %>
 
+<%@page import="java.util.Objects"%>
 <%@ page import="models.Magasin" %>
 <%@ page import="java.util.List" %>
-<!DOCTYPE html>
-<html>
-<head>
+<%
+// =============================
+// GESTION DES FICHIERS JS
+// =============================
+List<String> jsFiles = (List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY);
 
-<link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
-<link rel="stylesheet" type="text/css" href="css/header.css">
+jsFiles = jsFiles == null ? new ArrayList<>() : jsFiles;
+/*
+	Cette partie traite l'ajout des CDN des librairies JS
+	Pour ajouter une nouvelle librairie :
+		jsFiles.add("js/example.js");
+*/
+jsFiles.add("js/selectionMagasin.js");
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<title>Online Shop </title>
-
-  <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/superMarket.css">
-</head>
-<body>
-<%@ include file="../template/head.jsp" %>
-
-
+request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
+%>
+<%@ include file="../template/start.jsp" %>
 <h2>Choisis ton magasin de retrait</h2>
-
 
 <div id="magasin">
   <form action="MagasinServlet" method="post">
@@ -57,12 +55,4 @@
 </div>
 
 
-<script src="js/selectionMagasin.js"></script>
-<%@ include file="../template/footer.jsp" %>
-
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-
-
+<%@ include file="../template/end.jsp" %>

@@ -1,23 +1,24 @@
 <%@page import="repositories.PanierRepository, models.Panier, java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% request.setAttribute("pageTitle", "preparationcommandes"); %>
+<%
+request.setAttribute("pageTitle", "preparationcommandes");
 
-<%@ include file="../template/head.jsp" %>
-<link rel="stylesheet" type="text/css" href="css/header.css">
-<link rel="stylesheet" type="text/css" href="css/footer.css">
-<link rel="stylesheet" type="text/css" href="css/preparationcommandes.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+List<String> cssFiles = new ArrayList<>();
+cssFiles.add("css/preparationcommandes.css");
+request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
+%>
+<%@ include file="../template/start.jsp" %>
 <h1>Page de préparation des commandes</h1> 
 
  
-	<table class="blueTable">
+<table class="blueTable">
 	<thead>
-	<tr>
-	<th>Commandes en cours</th>
-	<th>Date de collecte</th>
-	</tr>
+		<tr>
+			<th>Commandes en cours</th>
+			<th>Date de collecte</th>
+		</tr>
 	</thead>
 	<tbody>
 	    <% for (Panier panier : (List<Panier>) request.getAttribute("paniers")) {%>
@@ -32,7 +33,6 @@
 	    	</tr>
 	    <% } %>
 	</tbody>
-	</table>
-</body>
+</table>
 	
-<%@ include file="../template/footer.jsp" %>
+<%@ include file="../template/end.jsp" %>

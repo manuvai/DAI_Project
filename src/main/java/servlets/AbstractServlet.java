@@ -18,6 +18,10 @@ import javax.servlet.http.HttpSession;
 public abstract class AbstractServlet extends HttpServlet {
 
 	public static final String ERRORS_KEY = "errors";
+	public static final String CSS_FILES_KEY = "cssFiles";
+	public static final String CSS_LIBS_KEY = "cssLibs";
+	public static final String JS_LIBS_KEY = "jsLibs";
+	public static final String JS_FILES_KEY = "jsFiles";
 	private static final String UTF_8 = "UTF-8";
 
 	@Override
