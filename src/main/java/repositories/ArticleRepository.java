@@ -32,6 +32,30 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 	}
 
 	/**
+	 * Récupération des articles correspondant à la chaîne fournie.
+	 *
+	 * @param q
+	 * @return
+	 */
+	public List<Article> search(final String q) {
+
+		List<Article> articles = new ArrayList<>();
+
+		if (q != null) {
+			final String query = "SELECT a "
+					+ "FROM Article a "
+					+ "WHERE a.lib "
+					+ "	LIKE :q ";
+			final Map<String, Object> mappedValues = Collections.singletonMap("q", "%" + q + "%");
+
+			articles = getQueryResults(query, mappedValues);
+
+		}
+
+		return articles;
+	}
+
+	/**
 	 * Récupération des articles concernant un panier donné.
 	 *
 	 * @param panierId

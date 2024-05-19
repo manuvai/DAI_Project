@@ -34,6 +34,9 @@ public class DashboardServlet extends AbstractServlet {
 			return;
 		}
 
+		// TODO Ajouter le dropdown du header pour accéder à la partie des articles
+		// commandés les plus fréquemment
+
 		final List<Article> articlesFrequentlyOrdered = articleRepository
 				.findFrequentlyOrdered(utilisateur, 5);
 
