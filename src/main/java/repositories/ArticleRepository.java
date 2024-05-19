@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import dtos.ArticleStockDto;
 import mappers.ArticleMapper;
@@ -23,40 +23,104 @@ import models.Creneau;
 import models.Magasin;
 import models.Panier;
 import models.Stocker;
+import models.Utilisateur;
 
 public class ArticleRepository extends AbstractRepository<Article, Integer> {
 
 	public ArticleRepository() {
 		super(Article.class);
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Article> findArticlePanier(Integer panierId) {
 
-			final Session session = getSession();
-			final Transaction transaction = session.beginTransaction();
+	/**
+	 * Récupération des articles correspondant à la chaîne fournie.
+	 *
+	 * @param q
+	 * @return
+	 */
+	public List<Article> search(final String q) {
 
-			final List<Article> articles = (List<Article>) session.createQuery("SELECT a "
-																			 + "FROM Article a, Composer c, Panier p "
-																			 + "WHERE a.idArticle = c.articleComposer "
-																			 + "AND c.panierComposer = p.idPanier "
-																			 + "AND p.idPanier = :panierId").setParameter("panierId", panierId.toString()).list();
-		
-			transaction.commit();
+		List<Article> articles = new ArrayList<>();
 
-			return articles;
+		if (q != null) {
+			final String query = "SELECT a "
+					+ "FROM Article a "
+					+ "WHERE a.lib "
+					+ "	LIKE :q ";
+			final Map<String, Object> mappedValues = Collections.singletonMap("q", "%" + q + "%");
+
+			articles = getQueryResults(query, mappedValues);
+
 		}
-	
-	public List<Article> getArticlesByRayonName(String nomRayon) {
-		
-		final Session session = getSession();
 
-		final Transaction transaction = session.beginTransaction();
+		return articles;
+	}
 
-		final List<Article> result = session.createQuery("SELECT a FROM Article a , SousCategorie sc, Categorie c, Rayon r WHERE 		a.sousCategorie = sc.idSousCat AND sc.categorie = c.idCat AND c.rayon = r.id AND r.nomRayon = :nomRayon ").setParameter("nomRayon", 		nomRayon).list();
+	/**
+	 * Récupération des articles concernant un panier donné.
+	 *
+	 * @param panierId
+	 * @return
+	 */
+	public List<Article> findArticlePanier(final Integer panierId) {
+		final String query = "SELECT a "
+				+ "FROM Article a, Composer c, Panier p "
+				+ "WHERE a.idArticle = c.articleComposer "
+				+ "AND c.panierComposer = p.idPanier "
+				+ "AND p.idPanier = :panierId";
+		final Map<String, Object> mappedValues = Collections.singletonMap("panierId", panierId.toString());
 
-		session.close();
-		return result;
+		return getQueryResults(query, mappedValues);
+	}
+
+	/**
+	 * Récupération des articles concernant un rayon donné.
+	 *
+	 * @param nomRayon
+	 * @return
+	 */
+	public List<Article> getArticlesByRayonName(final String nomRayon) {
+
+		final String query = "SELECT a "
+				+ "FROM Article a , SousCategorie sc, Categorie c, Rayon r "
+				+ "WHERE a.sousCategorie = sc.idSousCat "
+				+ "	AND sc.categorie = c.idCat "
+				+ "	AND c.rayon = r.id "
+				+ "	AND r.nomRayon = :nomRayon ";
+
+		final Map<String, Object> mappedValues = Collections.singletonMap("nomRayon", nomRayon);
+
+		return getQueryResults(query, mappedValues);
+
+	}
+
+	/**
+	 * Récupération des articles les plus commandés.
+	 *
+	 * @param utilisateur
+	 * @param limit
+	 * @return
+	 */
+	public List<Article> findFrequentlyOrdered(final Utilisateur utilisateur, final int limit) {
+		List<Article> articles = new ArrayList<>();
+
+		if (utilisateur != null && limit > 0) {
+			final String query = "SELECT a "
+					+ "FROM Article a, Composer c, Panier p, Utilisateur u "
+					+ "WHERE a = c.articleComposer "
+					+ " AND c.panierComposer = p "
+					+ " AND p.utilisateur = :userId "
+					+ "GROUP BY a.idArticle "
+					+ "ORDER BY SUM(c.qte) "
+					+ "LIMIT :limit";
+
+			final Map<String, Object> mappedValues = new HashMap<>();
+			mappedValues.put("userId", utilisateur.getId());
+			mappedValues.put("limit", limit);
+
+			articles = getQueryResults(query, mappedValues);
+		}
+
+		return articles;
 	}
 
 	/**

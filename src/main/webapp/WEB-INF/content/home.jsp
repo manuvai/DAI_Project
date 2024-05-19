@@ -32,58 +32,6 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 </div>
 
 <h2>Nos articles en promotion</h2>
-<div class="container">
- <a class="carousel-control-prev" href="#articleCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          
-        </a>
-    <div id="articleCarousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-        
-            <% int itemCount = 0;
-           	   List<Article> articles = (List<Article>) request.getAttribute("articles");
-               for (int i = 0; i < articles.size(); i += 4) { %>
-                <div class="carousel-item <% if (i == 0) { %>active<% } %>">
-                    <div class="row">
-                        <% for (int j = i; j < Math.min(i + 4, articles.size()); j++) { %>
-                            <div class="col-md-3">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <img class="img-item" src=<%= articles.get(j).getCheminImage() %> >
-                                        <p class="card-text"><%= articles.get(j).getDesc() %></p>
-                                        <img class="img-nutriscore" src="<%= "images/nutriscores/" + articles.get(j).getNutriscore() + ".png" %>" >
-                                        <div>
-                                        	<p class="price"> <%= articles.get(j).getPrixUnitaire() %> €</p>
-                                        	<i id="enleverButton" class="fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= articles.get(j).getId() %>')" title="moins"></i>
-                                        	<span id="article<%= articles.get(j).getId() %>">
-                                        	<% 
-									            Integer nbr = (Integer) session.getAttribute(articles.get(j).getId().toString());
-												 if (nbr != null ){%>
-												<%= nbr %>
-												 <%} else {%>
-												 0
-													 <% }%>
-				 </span>
-                                        	  <i id="ajouterButton" class="fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= articles.get(j).getId() %>')"></i>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-                <% itemCount += 4;
-               } %>
-        </div>
-       
-        
-    </div>
-    <a class="carousel-control-next" href="#articleCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-         
-        </a>
-</div>
-
+<%@ include file="./commons/article_caroussel.jsp" %>
 
 <%@ include file="../template/end.jsp" %>

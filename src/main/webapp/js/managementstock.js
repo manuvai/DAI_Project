@@ -34,6 +34,13 @@ function chargerCanva(id) {
 		type: 'line',
 		options: {
 	        maintainAspectRatio: false,
+	        scales: { 
+	            yAxes: [{ 
+	                ticks: { 
+	                    beginAtZero:true 
+	                } 
+	            }] 
+        	} 
 	    },
 		data: {
 			labels: labels,

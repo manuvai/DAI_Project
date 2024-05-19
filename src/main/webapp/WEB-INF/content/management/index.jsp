@@ -19,20 +19,29 @@ if (roleManagement == null) {
     <a href='<%= request.getContextPath() %>/connexion'>S'identifier</a>
     <% } else if (roleManagement.equals(Role.GESTIONNAIRE)) { %>
 
-	<h1>Gestion des articles</h1>
 	
-	<form action="" method="POST" enctype="multipart/form-data">
-	
-	    <label for="images">Ajouter images produit</label>
-	    <input type="file" name="images" id="images" accept="image/png, image/jpeg"
-	        multiple />
-	    <label for="csv">Ajouter CSV</label>
-	    <input type="file" name="csv" id="csv" accept=".csv" />
-	    <button type="submit">Ajouter par fichier CSV</button>
-	
-	    <a href="<%= request.getContextPath() %>/management/stock"
-	        id="add-stock-link">Ajouter stock manuellement</a>
-	</form>
+	<div class="container">
+
+		<h1>Gestion des articles</h1>
+		<form action="" method="POST" enctype="multipart/form-data">
+				
+			<div class="custom-file col-md-4">
+				<input type="file" name="images" id="images" accept="image/png, image/jpeg" multiple>
+				<label class="custom-file-label" for="images">Choisissez les images</label>
+				<div class="invalid-feedback">Veuillez vérifier les images soumies</div>
+			</div>
+			<div class="custom-file col-md-4">
+				<input type="file" name="images" id="images" accept="image/png, image/jpeg" multiple/>
+				<label class="custom-file-label" for="images">Choisissez le fichier CSV</label>
+				<div class="invalid-feedback">Veuillez vérifier le fichier CSV fourni</div>
+			</div>
+			<div class="col-md-4">
+				<button type="submit" class="btn btn-success">Ajouter par fichier CSV</button>
+				<a href="<%= request.getContextPath() %>/management/stock" id="add-stock-link">Afficher le stock par magasin</a>
+			</div>
+		
+		</form>
+	</div>
         <% }else{%>
 
         <div class="error-message">
