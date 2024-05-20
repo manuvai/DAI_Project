@@ -31,8 +31,8 @@ if (roleManagement == null) {
 				<div class="invalid-feedback">Veuillez vérifier les images soumies</div>
 			</div>
 			<div class="custom-file col-md-4">
-				<input type="file" name="images" id="images" accept="image/png, image/jpeg" multiple/>
-				<label class="custom-file-label" for="images">Choisissez le fichier CSV</label>
+				<input type="file" name="csv" id="csv" accept=".csv" />
+				<label class="custom-file-label" for="csv">Choisissez le fichier CSV</label>
 				<div class="invalid-feedback">Veuillez vérifier le fichier CSV fourni</div>
 			</div>
 			<div class="col-md-4">
