@@ -1,10 +1,10 @@
 package utils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
@@ -14,6 +14,19 @@ public class ServletUtil {
 
 	private ServletUtil() {
 		throw new IllegalAccessError();
+	}
+
+	/**
+	 * Transforme un objet Part en tableau binaire.
+	 *
+	 * @param part
+	 * @return
+	 * @throws IOException
+	 */
+	public static byte[] toByteArray(final Part part) throws IOException {
+		try (InputStream inputStream = part.getInputStream()) {
+			return inputStream.readAllBytes();
+		}
 	}
 
 	/**
@@ -37,27 +50,22 @@ public class ServletUtil {
 	}
 
 	/**
-	 * Téléversement des images
+	 * Téléversement des images sous forme binaire.
 	 *
-	 * @param imagesParts
+	 * @param images
+	 * @param servletContext
+	 * @throws IOException
 	 */
-	public static void uploadImages(final List<Part> imagesParts, final ServletContext servletContext) {
-		// Upload images
-		if (imagesParts == null) {
-			return;
-		}
-
+	public static void uploadImages(final Map<String, byte[]> images, final ServletContext servletContext)
+			throws IOException {
 		final String uploadPath = servletContext.getRealPath("") + File.separator + UPLOAD_DIR;
-		final File uploads = new File(uploadPath);
+		final File uploadFile = new File(uploadPath);
 
-		imagesParts.forEach(part -> {
-			final File file = new File(uploads, getSubmittedFileName(part));
-			try (InputStream input = part.getInputStream()) {
-				Files.copy(input, file.toPath());
-
-			} catch (final IOException e) {
-				e.printStackTrace();
+		for (final Map.Entry<String, byte[]> entry : images.entrySet()) {
+			final File imageFile = new File(uploadFile, entry.getKey());
+			try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+				fos.write(entry.getValue());
 			}
-		});
+		}
 	}
 }
