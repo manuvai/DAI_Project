@@ -49,6 +49,7 @@ public class ManagementServlet extends AbstractServlet {
 	protected void responsePost(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 
+		viderSucces(request);
 		viderErreurs(request);
 		List<String> errors = validateRequest(request);
 
@@ -75,11 +76,15 @@ public class ManagementServlet extends AbstractServlet {
 			return;
 		}
 
+
 		// Uploader les images
 		ServletUtil.uploadImages(imagesParts, getServletContext());
 
 		// Ajouter les produits
 		articleRepository.createAll(articles);
+
+		// Ajout d'un message de succès
+		ajouterSucces("Produits ajoutés au catalogue", request);
 
 		// Redirection vers page de gestion
 		doGet(request, response);

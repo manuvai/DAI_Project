@@ -69,4 +69,4 @@ if (isHeaderDisabled == null || Boolean.FALSE.equals(isHeaderDisabled)) {
 %>
 
 <div class="container">
-<%@include file="errors.jsp" %>
+<%@include file="messages.jsp" %>

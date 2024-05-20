@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 public abstract class AbstractServlet extends HttpServlet {
 
 	public static final String ERRORS_KEY = "errors";
+	public static final String INFOS_KEY = "infos";
+	public static final String SUCCESSES_KEY = "successes";
 	public static final String CSS_FILES_KEY = "cssFiles";
 	public static final String CSS_LIBS_KEY = "cssLibs";
 	public static final String JS_LIBS_KEY = "jsLibs";
@@ -128,17 +130,6 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	/**
-	 * Vide la variable contenant les erreurs
-	 *
-	 * @param request L'objet de requête
-	 */
-	protected void viderErreurs(final HttpServletRequest request) {
-		if (Objects.nonNull(request)) {
-			request.setAttribute(ERRORS_KEY, Collections.emptyList());
-		}
-	}
-
-	/**
 	 * Détermine si aucune erreur n'est présent
 	 *
 	 * @param request L'objet requête
@@ -157,18 +148,90 @@ public abstract class AbstractServlet extends HttpServlet {
 	 * @param error L'erreur
 	 * @param request L'objet de requête
 	 */
-	@SuppressWarnings("unchecked")
 	protected void ajouterErreur(final String error,  final HttpServletRequest request) {
-		if (Objects.nonNull(error) && Objects.nonNull(request)) {
-			final List<String> erreurList = (List<String>) request.getAttribute(ERRORS_KEY);
+		ajouterMessage(ERRORS_KEY, error, request);
+	}
 
-			final List<String> nouvelleErreurList = Objects.isNull(erreurList)
-					? new ArrayList<>()
-					: new ArrayList<>(erreurList);
+	/**
+	 * Vide la variable contenant les erreurs
+	 *
+	 * @param request L'objet de requête
+	 */
+	protected void viderErreurs(final HttpServletRequest request) {
+		viderMessages(ERRORS_KEY, request);
+	}
 
-			nouvelleErreurList.add(error);
+	/**
+	 * Ajoute un succès à la liste
+	 *
+	 * @param error   L'erreur
+	 * @param request L'objet de requête
+	 */
+	protected void ajouterSucces(final String message, final HttpServletRequest request) {
+		ajouterMessage(SUCCESSES_KEY, message, request);
+	}
 
-			request.setAttribute(ERRORS_KEY, nouvelleErreurList);
+	/**
+	 * Vide la variable contenant les succès
+	 *
+	 * @param request L'objet de requête
+	 */
+	protected void viderSucces(final HttpServletRequest request) {
+		viderMessages(SUCCESSES_KEY, request);
+	}
+
+	/**
+	 * Ajoute une info à la liste
+	 *
+	 * @param error   L'erreur
+	 * @param request L'objet de requête
+	 */
+	protected void ajouterInfo(final String message, final HttpServletRequest request) {
+		ajouterMessage(INFOS_KEY, message, request);
+	}
+
+	/**
+	 * Vide la variable contenant les infos
+	 *
+	 * @param request L'objet de requête
+	 */
+	protected void viderInfos(final HttpServletRequest request) {
+		viderMessages(INFOS_KEY, request);
+	}
+
+	/**
+	 * Ajoute des messages au contexte partagé.
+	 *
+	 * @param key
+	 * @param message
+	 * @param request
+	 */
+	@SuppressWarnings("unchecked")
+	protected void ajouterMessage(final String key, final String message, final HttpServletRequest request) {
+		final boolean isParametersValid = Objects.nonNull(key) && Objects.nonNull(message) && Objects.nonNull(request);
+
+		if (isParametersValid) {
+			final List<String> messageList = (List<String>) request.getAttribute(key);
+
+			final List<String> nouvelleMessageList = Objects.isNull(messageList) ? new ArrayList<>()
+					: new ArrayList<>(messageList);
+
+			nouvelleMessageList.add(message);
+
+			request.setAttribute(key, nouvelleMessageList);
+		}
+
+	}
+
+	/**
+	 * Vide le contenu des messages dans le contexte partagé.
+	 *
+	 * @param key
+	 * @param request
+	 */
+	protected void viderMessages(final String key, final HttpServletRequest request) {
+		if (Objects.nonNull(key) && Objects.nonNull(request)) {
+			request.setAttribute(key, Collections.emptyList());
 		}
 	}
 
