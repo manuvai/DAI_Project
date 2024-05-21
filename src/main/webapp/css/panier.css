@@ -71,3 +71,26 @@
     background-color: #0056b3; 
     color : #fff; 
 }
+
+.supprimerP {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f38265;
+    color: #fff; 
+    text-decoration: none;
+    border-radius: 5px; 
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.supprimerP:hover {
+    background-color: #ff0000; 
+    color : #fff; 
+}
+
+#validationOuSuppresion{
+	display: flex;
+	flex-direction: row;
+	gap: 20px; 
+}
