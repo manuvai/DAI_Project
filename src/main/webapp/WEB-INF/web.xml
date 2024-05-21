@@ -57,6 +57,16 @@
     <servlet-name>choixMagasin</servlet-name>
     <url-pattern>/choixMagasin</url-pattern>
   </servlet-mapping>
+ <servlet>
+    <description></description>
+    <display-name>commandesClient</display-name>
+    <servlet-name>commandesClient</servlet-name>
+    <jsp-file>/WEB-INF/content/commandesClient.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>commandesClient</servlet-name>
+    <url-pattern>/commandesClient</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>panier</display-name>

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.Magasin;
-import models.Utilisateur.Role;
 import repositories.MagasinRepository;
 
 /**
