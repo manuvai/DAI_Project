@@ -65,8 +65,7 @@ public class Article {
 	 * Bio
 	 */
 	@Column(name = "Bio")
-	private Boolean bio;
-
+	private Boolean bio = false;
 
 
 	/**
