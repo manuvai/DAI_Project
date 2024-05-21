@@ -58,12 +58,16 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
         %>
     </select>
     <br>
-    <label for="utiliserPoints">Utiliser les points de fidélité : (<span id="ptFidel"><%= user.getPtFidelite()%></span> pts)</label>
-    <input type="checkbox" id="utiliserPoints" name="utiliserPoints" value="true">
+    <label for="utiliserPoints"><% if (user.getPtFidelite() < 10 ){ %> Vous ne pouvez pas utiliser vos points de fidélité <% } else{%>Utiliser les points de fidélité :<% } %> (<span id="ptFidel"><%= user.getPtFidelite()%></span> pts)</label>
+    <input type="checkbox" id="utiliserPoints" name="utiliserPoints" <% if (user.getPtFidelite() < 10 ){ %> disabled <% } %>value="true">
     <br>
     <input type="submit" value="Choisir le creneau">
 </form>
-Total : <span id="totalPP" ><%= nombreArrondi%></span>€
+<div>
+<p>Nombre de points utilisés : <span id="ptUsed" >0</span></p>
+<p>Total : <span id="totalPP" ><%= nombreArrondi%></span>€</p>
+</div>
+
 
 <%@ include file="../template/end.jsp" %>
 

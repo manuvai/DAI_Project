@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -71,10 +72,11 @@ public class Panier {
 	}
 
 	public Panier(
-			final Utilisateur utilisateur, final Creneau creneau) {
+		final Utilisateur utilisateur, final Creneau creneau) {
 		this.etat = Etat.VALIDEE;
 		this.utilisateur = utilisateur;
 		this.creneau = creneau;
+		this.composers = new HashMap<Article, Composer>();
 	}
 
 	/**

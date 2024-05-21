@@ -79,7 +79,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 					%>
 					<span id="prix<%= article.getId() %>" 
 						class ="prixTotal">
-						<%= article.getPrixUnitaire()*nbr*(1-article.getPromotion()/100) %>€
+						<%=  String.format("%.2f", article.getPrixUnitaire()*nbr*(1-article.getPromotion()/100)) %>€
 					</span><br/>
                 </div> 
 	<%
@@ -88,13 +88,14 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 	} 
 	%>
         </ul>
-        <h1>Total: <span id="total"><%= total %>€</span></h1>
+        <% String nombreArrondi = String.format("%.2f", total);%>
+        <h1>Total: <span id="total"><%= nombreArrondi %>€</span></h1>
 <% 
         if (user != null) { 
 %>
         <h1>Points Fidélités: <%= user.getPtFidelite() %></h1>
 	        <% if (user.getPtFidelite() > 9) { %>
-	        <h1>Vous pouvez les utiliser et gagner <%= user.getPtFidelite()/10 %>€</h1>
+	        <h1>Vous pouvez les utiliser et gagner jusqu'à <%= user.getPtFidelite()/10 %>€</h1>
 	    	<% } 
         }
 		if (total != 0) { %>
