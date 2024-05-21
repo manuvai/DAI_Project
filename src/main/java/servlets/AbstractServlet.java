@@ -1,10 +1,12 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -233,6 +235,43 @@ public abstract class AbstractServlet extends HttpServlet {
 		if (Objects.nonNull(key) && Objects.nonNull(request)) {
 			request.setAttribute(key, Collections.emptyList());
 		}
+	}
+
+	/**
+	 * Récupération d'une information du fichier de propriétés.
+	 *
+	 * @param inKey
+	 * @return
+	 */
+	protected String getProperty(final String inKey) {
+		String property = null;
+
+		if (inKey != null) {
+			final Properties prop = new Properties();
+			InputStream input = null;
+			try {
+				input = getClass().getClassLoader().getResourceAsStream("config.properties");
+
+				// load a properties file
+				prop.load(input);
+
+				// get the property value and print it out
+				property = prop.getProperty(inKey);
+
+			} catch (final IOException ex) {
+				ex.printStackTrace();
+			} finally {
+				if (input != null) {
+					try {
+						input.close();
+					} catch (final IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		return property;
 	}
 
 }

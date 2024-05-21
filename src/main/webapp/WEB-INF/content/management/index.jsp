@@ -10,6 +10,11 @@ request.setAttribute("pageTitle", "Gestion des articles" );
 List<String> jsFiles = new ArrayList<>();
 jsFiles.add("js/managementindex.js");
 request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
+
+List<Integer> articlesAddedIds = (List<Integer>) request.getAttribute("articlesAddedIds"); 
+if (articlesAddedIds == null) {
+	articlesAddedIds = new ArrayList<>();
+}
 %>
 
 <%@include file="../../template/start.jsp" %>
@@ -93,8 +98,11 @@ if (roleManagement == null) {
 				</tr>
 			</thead>
 			<tbody>
-				<% for (Article article : articles) { %>
-			    <tr>
+				<% 
+				for (Article article : articles) { 
+					boolean isAdded = articlesAddedIds.contains(article.getId());
+				%>
+			    <tr <%= isAdded ? "class=\"table-success\"" : "" %>>
 					<th scope="row" class="align-middle"><%= article.getId() %></th>
 					<td class="col-2">
 						<img class="img-thumbnail"

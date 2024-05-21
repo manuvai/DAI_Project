@@ -36,15 +36,42 @@
 	<div id="catalogue">
 	<% if (request.getAttribute("articles") != null) {%>
 	            <% for (Article article : (List<Article>)request.getAttribute("articles")) {%>
+	            <%Float prixArticle = article.getPrixUnitaire();
+				Float prixReduit=0.0f;
+				Float promo = 0.0f;
+				Float promotionArticle = article.getPromotion();
+	         
+	           
+	            if (promotionArticle != null) {
+	                promo = promotionArticle;
+	            }
+	            if (promo>0){
+	            	prixReduit = prixArticle - (prixArticle * promo / 100);
+	            } %>
 	                <a href="<%="Article?idArticle="+article.getId() %>"> 
 	                <div class="article">
+	                <% if (article != null && Boolean.TRUE.equals(article.getBio())) { %>
+						 <img class="img-bio-catalogue" src="images/bio.png">
+					    <% } %>
 	                	<img class ="imgArticle" src="<%= article.getCheminImage() %>">
 	                	<div class="articleDetails">
 	                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
-	        			<span class ="prixArticle"><%= article.getPrixUnitaire() %>€</span><br/>
-	    				<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/></a>
-   						<div id="gestionPanier">
-	    				<i id="enleverButton" class="boutonPanier fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>
+	                	<div class="price-container">
+							<% if (promo >0) { %>
+								<p class="price promotion">
+									<%= prixArticle %>€
+								</p>
+								
+								<p class="price discount">
+									<%=String.format("%.2f",prixReduit)%>€
+								</p>
+							<%}else{ %>
+								<p class="price">
+									<%= prixArticle %>€
+								</p>
+							<%} %>
+						</div>
+	    				<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/>
                             	<span id="article<%= article.getId() %>">
                             	<% Integer nbr = (Integer) session.getAttribute(article.getId().toString());
 									 if (nbr != null ){%>
@@ -53,8 +80,10 @@
 									 0
 										 <% }%>
 								</span>
-                    <i id="ajouterButton" class="boutonPanier fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
-	            </div>
+						<div id="gestionPanier">
+							<i id="enleverButton" class="boutonPanier fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>			
+							<i id="ajouterButton" class="boutonPanier fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
+						</div>
 	    				</div>
 	                </div> 
 	                <% }

@@ -26,11 +26,27 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 						<%
 						for (int j = i; j < Math.min(i + 4, articles.size()); j++) {
 							Article article = articles.get(j);
+							Float prixArticle = article.getPrixUnitaire();
+							Float prixReduit=0.0f;
+							Float promo = 0.0f;
+							Float promotionArticle = article.getPromotion();
+				         
+				           
+				            if (promotionArticle != null) {
+				                promo = promotionArticle;
+				            }
+				            if (promo>0){
+				            	prixReduit = prixArticle - (prixArticle * promo / 100);
+				            }
+							
 							Integer nbr = (Integer) session.getAttribute(article.getId().toString());
 						%>
 						<div class="col-md-3">
 							<div class="card">
 								<div class="card-body">
+								 <% if (article != null && Boolean.TRUE.equals(article.getBio())) { %>
+							        <img class="img-bio" src="images/bio.png">
+							    <% } %>
 									<img class="img-item"
 										src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>" 
 										alt="Image <%= article.getLib() %>/">
@@ -38,10 +54,36 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 									<img class="img-nutriscore"
 										src="<%= request.getContextPath() %>/images/nutriscores/<%= article.getNutriscore() %>.png"
 										alt="">
-									<div>
-										<p class="price">
-											<%= article.getPrixUnitaire() %>€
-										</p>
+										 
+										<div class="price-container">
+											<% if (promo >0) { %>
+												<p class="price promotion">
+													<%= prixArticle %>€
+												</p>
+												
+												<p class="price discount">
+													<%=String.format("%.2f",prixReduit)%>€
+												</p>
+											<%}else{ %>
+												<p class="price">
+													<%= prixArticle %>€
+												</p>
+											<%} %>
+										</div>
+									
+										 
+										<i id="enleverButton"
+											class="fas fa-arrow-alt-circle-left ison"
+											onclick="enleverAuPanier('<%= article.getId() %>')"
+											title="moins"></i> 
+										<span
+											id="article<%= article.getId() %>">
+											<%=nbr == null ? 0 : nbr%> 
+										</span> 
+										<i id="ajouterButton"
+											class="fas fa-arrow-alt-circle-right icon" 
+											onclick="ajouterAuPanier('<%= article.getId() %>')"
+											title="plus"></i>
 										<div id="gestionPanier">
 											<i id="enleverButton"
 												class="boutonPanier fas fa-arrow-alt-circle-left ison"

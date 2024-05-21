@@ -32,6 +32,54 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 	}
 
 	/**
+	 * Effectue une recherche d'article par leur nom.
+	 *
+	 * @param inName
+	 * @return
+	 */
+	public Article findByName(final String inName) {
+
+		Article article = null;
+
+		if (inName != null) {
+			final Session session = getSession();
+			session.beginTransaction();
+
+			article = findByName(inName, session);
+
+			session.close();
+		}
+
+		return article;
+	}
+
+	/**
+	 * Effectue une recherche d'article par leur nom à partir d'une session donnée.
+	 *
+	 * @param inName
+	 * @param session
+	 * @return
+	 */
+	public Article findByName(final String inName, final Session session) {
+		Article article = null;
+
+		if (inName != null && session != null) {
+			final String query = "SELECT a " 
+					+ "FROM Article a " 
+					+ "WHERE a.lib = :lib";
+			final Map<String, Object> mappedValues = Collections.singletonMap("lib", inName);
+			final List<Article> results = getQueryResults(query, mappedValues, session);
+
+			if (results != null && !results.isEmpty()) {
+				article = results.get(0);
+
+			}
+		}
+
+		return article;
+	}
+
+	/**
 	 * Récupération des articles correspondant à la chaîne fournie.
 	 *
 	 * @param q

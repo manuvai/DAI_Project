@@ -70,6 +70,29 @@ h2{
     display: block; 
     margin-bottom: 10px; 
 }
+
+.img-bio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.img-bio-catalogue {
+    width: 30px;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.img-article-detail {
+	height:60px;
+	width:auto;
+}
+
 .carousel-control-next-icon,
 .carousel-control-prev-icon {
     background-image: none; 
@@ -134,4 +157,21 @@ h2{
 .boutonPanier{
 	cursor:pointer;
 	z-index:1000;
+}
+.price {
+    font-size: 15px; 
+    color: #333; 
+}
+
+.price.promotion {
+    text-decoration: line-through; 
+    color: #888; 
+}
+
+.discount {
+    color: red; 
+}
+
+.price-container{
+	display:flex;
 }
