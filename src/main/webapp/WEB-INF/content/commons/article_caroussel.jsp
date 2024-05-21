@@ -55,6 +55,7 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 										src="<%= request.getContextPath() %>/images/nutriscores/<%= article.getNutriscore() %>.png"
 										alt="">
 										 
+									<div>
 										<div class="price-container">
 											<% if (promo >0) { %>
 												<p class="price promotion">
@@ -70,20 +71,6 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 												</p>
 											<%} %>
 										</div>
-									
-										 
-										<i id="enleverButton"
-											class="fas fa-arrow-alt-circle-left ison"
-											onclick="enleverAuPanier('<%= article.getId() %>')"
-											title="moins"></i> 
-										<span
-											id="article<%= article.getId() %>">
-											<%=nbr == null ? 0 : nbr%> 
-										</span> 
-										<i id="ajouterButton"
-											class="fas fa-arrow-alt-circle-right icon" 
-											onclick="ajouterAuPanier('<%= article.getId() %>')"
-											title="plus"></i>
 										<div id="gestionPanier">
 											<i id="enleverButton"
 												class="boutonPanier fas fa-arrow-alt-circle-left ison"

@@ -40,7 +40,6 @@ Float promotionArticle = article.getPromotion();
 	 prixReduit = prixArticle - (prixArticle * promo / 100);
  } %>
 
-%>
 <% if (article != null && Boolean.TRUE.equals(article.getBio())) { %>
 	<img class="img-article-detail" src="images/bio.png">
 <% } %>
