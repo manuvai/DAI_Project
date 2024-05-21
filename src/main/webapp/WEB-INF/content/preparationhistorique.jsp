@@ -10,14 +10,15 @@ cssFiles.add("css/preparationcommandes.css");
 request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 %>
 <%@ include file="../template/start.jsp" %>
-<h1>Page de préparation des commandes</h1> 
+<h1>Historique des commandes préparées</h1> 
 
  
 <table class="blueTable">
 	<thead>
 		<tr>
-			<th>Commandes en cours</th>
+			<th>Historique des commandes préparées</th>
 			<th>Date de collecte</th>
+			<th>Statut</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -30,10 +31,12 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 					</form>
 		    	</td>
 		    	<td><%= panier.getCreneau().getDateCreneau().toString() %> <br> <%= panier.getCreneau().getHeureCreneau().name().substring(1).replace("_", " à ") %> </td>
+		    	<td><%= panier.getEtat().toString() %>
 	    	</tr>
 	    <% } %>
 	</tbody>
 </table>
-<a id="a-historique" href="./PreparationCommandesHistoriqueServlet">Historique des commandes préparées</a>
+
+<a id="a-accueil" href="./PreparationCommandesServlet">Retour aux commandes</a>
 	
 <%@ include file="../template/end.jsp" %>

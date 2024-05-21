@@ -1,4 +1,4 @@
-package servlet;
+package servlets;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,22 +12,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.Creneau;
+import models.Panier;
 import models.Utilisateur;
 import repositories.CreneauRepository;
-import repositories.MagasinRepository;
+import repositories.PanierRepository;
+import repositories.UtilisateurRepository;
 
 /**
- * Servlet implementation class ChoisirCreneauServlet
+ * Servlet implementation class PayerServlet
  */
-@WebServlet("/ChoisirCreneauServlet")
-public class ChoisirCreneauServlet extends HttpServlet {
+@WebServlet("/PayerServlet")
+public class PayerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    CreneauRepository cr = new CreneauRepository();
-    
+    PanierRepository pr = new PanierRepository();
+    CreneauRepository  cr = new CreneauRepository();
+    UtilisateurRepository ur = new UtilisateurRepository();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChoisirCreneauServlet() {
+    public PayerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,37 +47,22 @@ public class ChoisirCreneauServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
-		String magasin = request.getParameter("magasin");
-		    
-		List<Creneau> cx = cr.findCreneauByMagasin(Integer.parseInt(magasin));
+		String creneauS = request.getParameter("creneau");
 		HttpSession session = request.getSession();
-		session.setAttribute("creneaux", cx);
-		session.setAttribute("magasinRetrait", magasin);
+		session.setAttribute("creneau", creneauS);
+		String magasin = (String) session.getAttribute("magasinRetrait");
 		Utilisateur user = (Utilisateur) session.getAttribute("user");
-		Double total = (Double) session.getAttribute("totalPanierValidation");
-		 String utiliserPoints = request.getParameter("utiliserPoints");
-		 boolean utiliserPointsBool = "true".equals(utiliserPoints);
-		 int reduc = 0;
-		 if(utiliserPointsBool) {
-			 reduc = user.getPtFidelite()/10;
-
-			 if(reduc<total) {
-				 session.setAttribute("ptfidelConso", reduc);
-			 }else {
-				 session.setAttribute("ptfidelConso", total.intValue());
-			 }
-		 }else {
-			 session.setAttribute("ptfidelConso", 0);
-		 }
-		 
-		 double montantAPayer = total - reduc;
-		 
-		 session.setAttribute("apayer", montantAPayer);
-		 
-		 RequestDispatcher rd = request.getRequestDispatcher("choixCreneau");
-			rd.forward(request, response);
+		Creneau creneau = cr.findById( Integer.parseInt(creneauS));
+		int ptconso = (int) session.getAttribute("ptfidelConso");
+		
+		user.setPtFidelite(user.getPtFidelite()-ptconso*10);
+		ur.update(user);
+		Panier p = new Panier(user, creneau);
+		
+		pr.create(p);
+		RequestDispatcher rd = request.getRequestDispatcher("panierEnregistrer");
+		rd.forward(request, response);
 	}
 
 }
