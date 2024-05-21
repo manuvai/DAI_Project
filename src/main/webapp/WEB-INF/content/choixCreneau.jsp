@@ -63,7 +63,7 @@ if (creneauRetrait == null) {
 	            for (Creneau creneau: tousCreneaux) { 
 	        %>
 	                <option value="<%= creneau.getCodeCreneau() %>">
-	                	<%= creneau.getHeureCreneau() %> LE <%= creneau.getDateCreneau() %>
+	                	<%= creneau.getHeureCreneau().toString().replace("_","-").substring(1) %> le <%= creneau.getDateCreneau() %>
 	               	</option>
 	        <% 
 	            } 

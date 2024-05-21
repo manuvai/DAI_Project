@@ -95,7 +95,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 %>
         <h1>Points Fidélités: <%= user.getPtFidelite() %></h1>
 	        <% if (user.getPtFidelite() > 9) { %>
-	        <h1>Vous pouvez les utiliser et gagner <%= user.getPtFidelite()/10 %>€</h1>
+	        <h1>Vous pouvez les utiliser et gagner jusqu'à <%= user.getPtFidelite()/10 %>€</h1>
 	    	<% } 
         }
 		if (total != 0) { %>
