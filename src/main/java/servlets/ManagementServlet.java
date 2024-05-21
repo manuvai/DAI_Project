@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,7 @@ public class ManagementServlet extends AbstractServlet {
 			throws ServletException, IOException {
 
 		final List<Article> articles = articleRepository.findAll();
+		Collections.reverse(articles);
 		request.setAttribute("articles", articles);
 		view("management/index", request, response);
 
@@ -69,8 +71,8 @@ public class ManagementServlet extends AbstractServlet {
 		viderSucces(request);
 		viderErreurs(request);
 
-		final List<Article> articles = new ArrayList<>();
-		final Map<String, byte[]> images = new HashMap<>();
+		List<Article> articles = new ArrayList<>();
+		Map<String, byte[]> images = new HashMap<>();
 
 		for (final Part part : request.getParts()) {
 			final String contentType = part.getContentType();
@@ -102,17 +104,83 @@ public class ManagementServlet extends AbstractServlet {
 			return;
 		}
 
+		// Extraire les articles non présents dans la base.
+		articles = filterOnlyNonExistingArticles(articles);
+
+		// Enlever les images des articles enlevés.
+		images = filterOnlyNonExistingImages(images, articles);
+
+		// Modifier le chemin d'acces des images d'articles
+		for (final Article article : articles) {
+			final String nouveauChemin = "images/articles/" + article.getCheminImage();
+			article.setCheminImage(nouveauChemin);
+		}
+
 		// Uploader les images
-		ServletUtil.uploadImages(images, getServletContext());
+		ServletUtil.uploadImages(images, getProperty("projectPath"));
 
 		// Ajouter les produits
 		articleRepository.createAll(articles);
+
+		// On garde en session les articles ajoutés
+		final List<Integer> articleIds = articles.stream().map(Article::getId).toList();
+		request.setAttribute("articlesAddedIds", articleIds);
 
 		// Ajout d'un message de succès
 		ajouterSucces("Produits ajoutés au catalogue", request);
 
 		// Redirection vers page de gestion
 		doGet(request, response);
+	}
+
+	/**
+	 * Filtrage des images en fonction des articles restants.
+	 *
+	 * @param images
+	 * @param articles
+	 * @return
+	 */
+	private Map<String, byte[]> filterOnlyNonExistingImages(final Map<String, byte[]> images,
+			final List<Article> articles) {
+		final Map<String, byte[]> resultMap = new HashMap<>();
+
+		if (articles != null && images != null) {
+			// On créé une liste des images des articles n'existant pas en base
+			final List<String> articleImages = articles.stream()
+					.map(Article::getCheminImage)
+					.toList();
+			// On filtre les images qui n'existent pas en base
+			final List<String> imagesKeys = images.keySet().stream()
+					.filter(articleImages::contains)
+					.toList();
+
+			// On n'ajoute que les images des articles n'étant pas en base
+			imagesKeys.forEach(image -> resultMap.put(image, images.get(image)));
+		}
+
+		return resultMap;
+	}
+
+	/**
+	 * Filtrage des articles qui n'existent pas en base.
+	 *
+	 * @param articles
+	 * @return
+	 */
+	private List<Article> filterOnlyNonExistingArticles(final List<Article> articles) {
+		final List<Article> resultList = new ArrayList<>();
+
+		if (articles != null && !articles.isEmpty()) {
+			for (final Article article : articles) {
+				final Article searchedArticle = articleRepository.findByName(article.getLib());
+
+				if (searchedArticle == null) {
+					resultList.add(article);
+				}
+			}
+		}
+
+		return resultList;
 	}
 
 	/**
