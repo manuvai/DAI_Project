@@ -92,6 +92,42 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		return getQueryResults(query, mappedValues);
 
 	}
+	
+	 /* Récupération des articles concernant une catégorie donnée.
+	 *
+	 * @param nomCategorie
+	 * @return
+	 */
+	public List<Article> getArticlesByCategorieName(final String nomCategorie) {
+
+		final String query = "SELECT a "
+				+ "FROM Article a , SousCategorie sc, Categorie c"
+				+ "WHERE a.sousCategorie = sc.idSousCat "
+				+ "	AND sc.categorie = c.idCat "
+				+ "	AND c.nomCategorie = :nomCategorie ";
+
+		final Map<String, Object> mappedValues = Collections.singletonMap("nomCategorie", nomCategorie);
+
+		return getQueryResults(query, mappedValues);
+	}
+	
+	 /* Récupération des articles concernant une sous-catégorie donnée.
+	 *
+	 * @param nomSousCategorie
+	 * @return
+	 */
+	public List<Article> getArticlesBySousCategorieName(final String nomSousCategorie) {
+
+		final String query = "SELECT a "
+				+ "FROM Article a , SousCategorie sc, Categorie c"
+				+ "WHERE a.sousCategorie = sc.idSousCat "
+				+ "	AND sc.nomSousCategorie = :nomSousCategorie ";
+
+		final Map<String, Object> mappedValues = Collections.singletonMap("nomSousCategorie", nomSousCategorie);
+
+		return getQueryResults(query, mappedValues);
+	}
+
 
 	/**
 	 * Récupération des articles les plus commandés.
