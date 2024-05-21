@@ -122,6 +122,10 @@ public class ManagementServlet extends AbstractServlet {
 		// Ajouter les produits
 		articleRepository.createAll(articles);
 
+		// On garde en session les articles ajoutés
+		final List<Integer> articleIds = articles.stream().map(Article::getId).toList();
+		request.setAttribute("articlesAddedIds", articleIds);
+
 		// Ajout d'un message de succès
 		ajouterSucces("Produits ajoutés au catalogue", request);
 
