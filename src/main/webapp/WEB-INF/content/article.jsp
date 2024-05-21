@@ -25,11 +25,38 @@ request.setAttribute(AbstractServlet.CSS_LIBS_KEY, cssFiles);
 <% 
 if (request.getAttribute("article") != null) {
 	Article article = (Article)request.getAttribute("article");
-%>
+	Float prixArticle = article.getPrixUnitaire();
+	Float prixReduit=0.0f;
+	Float promo = 0.0f;
+	Float promotionArticle = article.getPromotion(); 
+	           
+     if (promotionArticle != null) {
+         promo = promotionArticle;
+     }
+     if (promo>0){
+     	prixReduit = prixArticle - (prixArticle * promo / 100);
+     } %>
+		 <% if (article != null && Boolean.TRUE.equals(article.getBio())) { %>
+			<img class="img-article-detail" src="images/bio.png">
+		<% } %>
 		<img class ="imgArticle" src="<%= article.getCheminImage() %>">
 		<div class="articleDetails">
 			<h1 class ="nomArticle"><%= article.getLib() %></h1><br/>
-			<span class ="prixArticle"><%= article.getPrixUnitaire() %>€</span><br/>
+			<div class="price-container">
+							<% if (promo >0) { %>
+								<p class="price promotion">
+									<%= prixArticle %>€
+								</p>
+								
+								<p class="price discount">
+									<%=String.format("%.2f",prixReduit)%>€
+								</p>
+							<%}else{ %>
+								<p class="price">
+									<%= prixArticle %>€
+								</p>
+							<%} %>
+						</div>
 			<span class ="descArticle">
 				<%= article.getDesc() %>
 			</span><br/>

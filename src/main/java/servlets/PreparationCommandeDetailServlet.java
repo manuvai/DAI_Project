@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import models.Article;
 import models.Composer;
+import models.Panier;
 import repositories.ArticleRepository;
 import repositories.ComposerRepository;
+import repositories.PanierRepository;
 
 /**
  * Servlet implementation class PreparationCommandeDetailServlet
@@ -42,6 +44,9 @@ public class PreparationCommandeDetailServlet extends HttpServlet {
 		
 		String idCommande = request.getParameter("idCommande");
 		
+		PanierRepository panierRepository = new PanierRepository();
+		Panier panier = panierRepository.findById(Integer.parseInt(idCommande));
+		
 		ArticleRepository articleRepository = new ArticleRepository();
 		final List<Article> articles = articleRepository.findArticlePanier(Integer.parseInt(idCommande));
 		
@@ -59,7 +64,8 @@ public class PreparationCommandeDetailServlet extends HttpServlet {
                 }
             }
         }
-		
+        
+		request.setAttribute("panier", panier);
 		request.setAttribute("articlesQte", mapArticles);
 		request.setAttribute("idCommande", idCommande);
 		

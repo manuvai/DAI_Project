@@ -3,11 +3,13 @@
     
 <%@page import="repositories.ArticleRepository"%>
 <%@page import="models.Article"%>
+<%@page import="models.Panier" %>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 
 <% 
 request.setAttribute("pageTitle", "Préparation de commandes"); 
+request.setAttribute("isHeaderDisabled", true);
 
 List<String> cssFiles = new ArrayList<>();
 cssFiles.add("css/preparationcommandes.css");
@@ -24,13 +26,25 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 <h1>Commande en cours</h1>
 <a id="a-accueil" href="./PreparationCommandesServlet">Retour aux commandes</a>
 <br>
+<%
+	Panier panier = (Panier) request.getAttribute("panier");
+	if (panier.getEtat() == models.Panier.Etat.VALIDEE) {
+		
+%>
 <button id="bu-start">Commencer la préparation</button>
 <button id="bu-annuler">Annuler</button> 
+
+<%
+	}
+%>
+
 <h3 id="affichageCommande"> Panier numéro <%= " " + request.getAttribute("idCommande") %></h3>
 <table class="blueTable">
     <thead>
         <tr>
+	        <% if (panier.getEtat() == models.Panier.Etat.VALIDEE) { %>
             <th>Validation</th>
+            <% } %>
             <th>Nom Article</th>
             <th>Quantité</th>
             <th>Prix</th>
@@ -45,7 +59,9 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 		            int quantite = entry.getValue();
 		%>
 		    <tr>
+		    	 <% if (panier.getEtat() == models.Panier.Etat.VALIDEE) { %>
 		        <td><input type="checkbox" class="checkbox"></td>
+		        <% } %>
 		        <td><%= article.getDesc() %></td>
 		        <td><%= quantite %></td>
 		        <td><%= article.getPrixUnitaire()*quantite %>€</td>
@@ -57,5 +73,12 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
     
     </tbody>
 </table>
+
+<% if (panier.getEtat() == models.Panier.Etat.VALIDEE) { %>
 <button id="bu-stop">Terminer la préparation</button>
+<%
+	}
+%>
+
+
 <%@ include file="../template/end.jsp" %>
