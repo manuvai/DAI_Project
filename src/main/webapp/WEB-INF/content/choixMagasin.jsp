@@ -24,7 +24,16 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 %>
 <%@ include file="../template/start.jsp" %>
 <h2>Choisis ton magasin de retrait</h2>
-
+<%
+    String magasinRetrait = (String) session.getAttribute("magasinRetrait");
+    if (magasinRetrait == null) {
+%>
+        <p style="color:red">Vous n'avez pas encore choisi de magasin de retrait.</p>
+<%
+    } else {
+%>
+	<p>Vous avez déjà choisi un magasin.<p>
+<% } %>
 <div id="magasin">
   <form action="MagasinServlet" method="post">
         <div>
@@ -32,12 +41,13 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
                 List<Magasin> magasins = (List<Magasin>) request.getAttribute("magasins");
                 if (magasins != null) {
                     for (Magasin magasin : magasins) {
+                    	 String codeMagasinStr = String.valueOf(magasin.getCodeMagasin());
+                         boolean isChecked = magasinRetrait != null && magasinRetrait.equals(codeMagasinStr);
             %>
             
             <div class="magasin-container">
-               
                 <label for="<%= magasin.getCodeMagasin() %>">
-                   <input class="checkbox-magasin" type="radio" id="<%= magasin.getCodeMagasin() %>" name="magasinSelectionne" value="<%= magasin.getCodeMagasin() %>"  required>
+                   <input class="checkbox-magasin" type="radio" id="<%= magasin.getCodeMagasin() %>" name="magasinSelectionne" value="<%= magasin.getCodeMagasin() %>" <%= isChecked ? "checked" : "" %> required>
                     <strong><%= magasin.getNomMagasin() %></strong> 
                     <br>
                      <i class="fas fa-location-arrow icon"></i>    <%= magasin.getAdresseMagasin() %>
@@ -53,6 +63,7 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
         <button id="submit-button" class="btn-rayon" type="submit" >Choisir ce magasin </button>
     </form>
 </div>
+
 
 
 <%@ include file="../template/end.jsp" %>
