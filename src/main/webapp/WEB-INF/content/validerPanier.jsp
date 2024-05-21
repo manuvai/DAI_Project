@@ -63,7 +63,11 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
     <br>
     <input type="submit" value="Choisir le creneau">
 </form>
-Total : <span id="totalPP" ><%= nombreArrondi%></span>€
+<div>
+<p>Nombre de points utilisés : <span id="ptUsed" >0</span></p>
+<p>Total : <span id="totalPP" ><%= nombreArrondi%></span>€</p>
+</div>
+
 
 <%@ include file="../template/end.jsp" %>
 
