@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 
 public class ServletUtil {
-	private static final String UPLOAD_DIR = "images" + File.separator + "articles" + File.separator;
+	private static final String WEBAPP_DIR = "src" + File.separator + "main" + File.separator + "webapp";
+	public static final String UPLOAD_DIR = "images" + File.separator + "articles" + File.separator;
 
 	private ServletUtil() {
 		throw new IllegalAccessError();
@@ -53,12 +53,13 @@ public class ServletUtil {
 	 * Téléversement des images sous forme binaire.
 	 *
 	 * @param images
-	 * @param servletContext
+	 * @param path
 	 * @throws IOException
 	 */
-	public static void uploadImages(final Map<String, byte[]> images, final ServletContext servletContext)
+	public static void uploadImages(final Map<String, byte[]> images, final String path)
 			throws IOException {
-		final String uploadPath = servletContext.getRealPath("") + File.separator + UPLOAD_DIR;
+		final String uploadPath = path + File.separator + WEBAPP_DIR
+				+ File.separator + UPLOAD_DIR;
 		final File uploadFile = new File(uploadPath);
 
 		for (final Map.Entry<String, byte[]> entry : images.entrySet()) {
