@@ -6,7 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,6 +18,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import org.apache.commons.io.IOUtils;
+
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 
 import mappers.ArticleMapper;
 import models.Article;
@@ -32,6 +41,13 @@ public class ManagementServlet extends AbstractServlet {
 
 	private static final String DELIMITER = ",";
 
+	private static final List<String> ZIP_TYPES = Arrays.asList("application/x-zip-compressed", "application/zip",
+			"multipart/x-zip", "application/zip-compressed", "application/x-zip");
+
+	private static final List<String> CSV_TYPES = Arrays.asList("text/csv");
+
+	private static final List<String> IMAGES_TYPES = Arrays.asList("image/jpeg", "image/png");
+
 	private static final long serialVersionUID = 1L;
 
 	ArticleMapper articleMapper = ArticleMapper.INSTANCE;
@@ -41,6 +57,8 @@ public class ManagementServlet extends AbstractServlet {
 	protected void responseGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 
+		final List<Article> articles = articleRepository.findAll();
+		request.setAttribute("articles", articles);
 		view("management/index", request, response);
 
 	}
@@ -48,27 +66,36 @@ public class ManagementServlet extends AbstractServlet {
 	@Override
 	protected void responsePost(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-
+		viderSucces(request);
 		viderErreurs(request);
-		List<String> errors = validateRequest(request);
 
-		if (errors != null && !errors.isEmpty()) {
-			errors.forEach(error -> ajouterErreur(error, request));
-			responseGet(request, response);
-			return;
+		final List<Article> articles = new ArrayList<>();
+		final Map<String, byte[]> images = new HashMap<>();
+
+		for (final Part part : request.getParts()) {
+			final String contentType = part.getContentType();
+
+			if (CSV_TYPES.contains(contentType)) {
+				final List<List<String>> csvLines = extractLines(part.getInputStream());
+
+				// Transformation des lignes en liste de produits
+				articles.addAll(transformArticles(csvLines));
+
+			} else if (IMAGES_TYPES.contains(contentType)) {
+				// Récupération du chemin des fichiers temporaires
+				final String imageName = ServletUtil.getSubmittedFileName(part);
+				images.put(imageName, ServletUtil.toByteArray(part));
+
+			} if (ZIP_TYPES.contains(contentType)) {
+
+				final ZipContent zipContent = ZipContent.extractFromZipPart(part);
+
+				articles.addAll(zipContent.getArticles());
+				images.putAll(zipContent.getImages());
+			}
 		}
 
-		// Récupération du chemin des fichiers temporaires
-		final List<Part> imagesParts = extractImages(request);
-
-		// Chargement des lignes de produits depuis le fichier
-		final Part csvPart = request.getPart("csv");
-		final List<List<String>> csvLines = extractLines(csvPart.getInputStream());
-
-		// Transformation des lignes en liste de produits
-		final List<Article> articles = transformArticles(csvLines);
-
-		errors = validateImages(imagesParts, articles);
+		final List<String> errors = validateRequest(images, articles);
 		if (errors != null && !errors.isEmpty()) {
 			errors.forEach(error -> ajouterErreur(error, request));
 			responseGet(request, response);
@@ -76,14 +103,44 @@ public class ManagementServlet extends AbstractServlet {
 		}
 
 		// Uploader les images
-		ServletUtil.uploadImages(imagesParts, getServletContext());
+		ServletUtil.uploadImages(images, getServletContext());
 
 		// Ajouter les produits
 		articleRepository.createAll(articles);
 
+		// Ajout d'un message de succès
+		ajouterSucces("Produits ajoutés au catalogue", request);
+
 		// Redirection vers page de gestion
 		doGet(request, response);
+	}
 
+	/**
+	 * Extraction des articles contenus dans le CSV du ZIP.
+	 *
+	 * @param inputStream
+	 * @return
+	 * @throws IOException
+	 * @throws CsvValidationException
+	 */
+	private static List<Article> extractArticleListFromZippedCsv(final InputStream inputStream)
+			throws IOException, CsvValidationException {
+		final List<Article> products = new ArrayList<>();
+		try {
+			@SuppressWarnings("resource")
+			final CSVReader reader = new CSVReader(new InputStreamReader(inputStream));
+
+			reader.readNext();
+
+			String[] nextLine;
+			while ((nextLine = reader.readNext()) != null) {
+				products.add(ArticleMapper.INSTANCE.listToArticle(Arrays.asList(nextLine)));
+			}
+		} catch (final Exception e) {
+
+		}
+
+		return products;
 	}
 
 	/**
@@ -125,82 +182,108 @@ public class ManagementServlet extends AbstractServlet {
 	}
 
 	/**
-	 * Extraction des objets Part concernant les images.
-	 *
-	 * @param request
-	 * @return
-	 * @throws IOException
-	 * @throws ServletException
-	 */
-	private List<Part> extractImages(final HttpServletRequest request) throws IOException, ServletException {
-		return request == null ? new ArrayList<>()
-				: request.getParts().stream().filter(p -> "images".equals(p.getName())).toList();
-	}
-
-	/**
 	 * Validation du formulaire avec fichier.
 	 *
-	 * @param request
-	 * @return
-	 */
-	private List<String> validateRequest(final HttpServletRequest request) {
-		final List<String> errors = new ArrayList<>();
-		try {
-			// vérifier que des images d'articles aient été fournies
-			final List<Part> parts = extractImages(request);
-			if (parts.stream().filter(part -> part.getSize() > 0).count() <= 0) {
-				errors.add("Vous devez fournir les images des articles");
-
-			} else if (request.getPart("csv") == null || request.getPart("csv").getSize() <= 0) {
-				// vérifier que le fichier a été fourni
-				errors.add("Vous devez fournir un fichier CSV avant de continuer");
-			}
-
-		} catch (IOException | ServletException e) {
-			errors.add("Une erreur est survenue, veuillez réessayer plus tard");
-		}
-
-
-		return errors;
-	}
-
-	/**
-	 * Validation des images à uploader.
-	 *
-	 * @param imagesParts
+	 * @param imagesMap
 	 * @param articles
 	 * @param request
 	 * @return
 	 */
-	private List<String> validateImages(final List<Part> imagesParts, final List<Article> articles) {
+	private List<String> validateRequest(final Map<String, byte[]> imagesMap, final List<Article> articles) {
 
 		// Vérifier que les images fournies correspondent et les noms
 		final List<String> errors = new ArrayList<>();
 
-		if (imagesParts != null && articles != null) {
-			if (imagesParts.size() != articles.size()) {
-				errors.add("Le nombre d'images fourni ne correspond pas ");
-			} else {
-				final List<String> nomsImages = imagesParts.stream()
-						.map(ServletUtil::getSubmittedFileName)
-						.toList();
+		if (imagesMap == null || imagesMap.isEmpty()) {
+			errors.add("Vous devez fournir les images des articles");
 
-				final List<String> nomsImagesArticles = articles.stream()
-						.map(Article::getCheminImage)
-						.toList();
+		} else if (articles == null || articles.isEmpty()) {
+			errors.add("Vous devez fournir un fichier CSV avant de continuer");
 
-				final boolean isExact = nomsImages.containsAll(nomsImagesArticles)
-						&& nomsImagesArticles.containsAll(nomsImages);
+		} else if (imagesMap.size() != articles.size()) {
+			errors.add("Le nombre d'images fourni ne correspond pas ");
 
-				if (!isExact) {
-					errors.add("Les images fournies doivent avoir les mêmes noms que ceux du fichier CSV");
-				}
+		} else {
+			final List<String> nomsImages = imagesMap.keySet()
+					.stream()
+					.map(String::strip)
+					.toList();
 
+			final List<String> nomsImagesArticles = articles.stream()
+					.map(Article::getCheminImage)
+					.map(String::strip)
+					.toList();
+
+			final boolean isExact = nomsImages.containsAll(nomsImagesArticles)
+					&& nomsImagesArticles.containsAll(nomsImages);
+
+			if (!isExact) {
+				errors.add("Les images fournies doivent avoir les mêmes noms que ceux du fichier CSV");
 			}
 
 		}
 
+
 		return errors;
 	}
 
+	private static class ZipContent {
+
+		private List<Article> articles = new ArrayList<>();
+		private Map<String, byte[]> images = new HashMap<>();
+
+		/**
+		 * @return the articles
+		 */
+		public List<Article> getArticles() {
+			return articles;
+		}
+
+
+		/**
+		 * @return the images
+		 */
+		public Map<String, byte[]> getImages() {
+			return images;
+		}
+
+		/**
+		 * Extraction d'un objet contenant les articles et images d'un fichier ZIP.
+		 *
+		 * @param part
+		 * @return
+		 * @throws IOException
+		 */
+		public static ZipContent extractFromZipPart(final Part part) throws IOException {
+
+			ZipContent zipContent = null;
+
+			if (part != null) {
+				zipContent = new ZipContent();
+				try (final ZipInputStream zis = new ZipInputStream(part.getInputStream())) {
+					ZipEntry entry;
+					while ((entry = zis.getNextEntry()) != null) {
+
+						if (!entry.isDirectory()) {
+							final String entryName = entry.getName();
+							final List<String> imageExtensions = Arrays.asList(".jpg", ".jpeg", ".png");
+
+							if (entryName.endsWith(".csv")) {
+								zipContent.getArticles().addAll(extractArticleListFromZippedCsv(zis));
+
+							} else if (imageExtensions.stream().anyMatch(ext -> entryName.endsWith(ext))) {
+								zipContent.getImages().put(entryName, IOUtils.toByteArray(zis));
+							}
+						}
+					}
+				} catch (final CsvValidationException e) {
+					zipContent = null;
+				}
+
+			}
+
+			return zipContent;
+		}
+
+	}
 }
