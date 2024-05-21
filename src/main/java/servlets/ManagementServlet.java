@@ -108,8 +108,14 @@ public class ManagementServlet extends AbstractServlet {
 		// Enlever les images des articles enlevés.
 		images = filterOnlyNonExistingImages(images, articles);
 
+		// Modifier le chemin d'acces des images d'articles
+		for (final Article article : articles) {
+			final String nouveauChemin = "images/articles/" + article.getCheminImage();
+			article.setCheminImage(nouveauChemin);
+		}
+
 		// Uploader les images
-		ServletUtil.uploadImages(images, getServletContext());
+		ServletUtil.uploadImages(images, getProperty("projectPath"));
 
 		// Ajouter les produits
 		articleRepository.createAll(articles);
