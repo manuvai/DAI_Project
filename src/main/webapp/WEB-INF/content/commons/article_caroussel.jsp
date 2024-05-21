@@ -42,18 +42,20 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 										<p class="price">
 											<%= article.getPrixUnitaire() %>€
 										</p>
-										<i id="enleverButton"
-											class="fas fa-arrow-alt-circle-left ison"
-											onclick="enleverAuPanier('<%= article.getId() %>')"
-											title="moins"></i> 
-										<span
-											id="article<%= article.getId() %>">
-											<%=nbr == null ? 0 : nbr%> 
-										</span> 
-										<i id="ajouterButton"
-											class="fas fa-arrow-alt-circle-right icon" 
-											onclick="ajouterAuPanier('<%= article.getId() %>')"
-											title="plus"></i>
+										<div id="gestionPanier">
+											<i id="enleverButton"
+												class="boutonPanier fas fa-arrow-alt-circle-left ison"
+												onclick="enleverAuPanier('<%= article.getId() %>')"
+												title="moins"></i> 
+											<span
+												id="article<%= article.getId() %>">
+												<%=nbr == null ? 0 : nbr%> 
+											</span> 
+											<i id="ajouterButton"
+												class="boutonPanier fas fa-arrow-alt-circle-right icon" 
+												onclick="ajouterAuPanier('<%= article.getId() %>')"
+												title="plus"></i>
+										</div>
 									</div>
 								</div>
 							</div>

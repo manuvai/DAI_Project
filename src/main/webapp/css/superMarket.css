@@ -130,3 +130,8 @@ h2{
     color: #666666;
     cursor: not-allowed;
 }
+
+.boutonPanier{
+	cursor:pointer;
+	z-index:1000;
+}

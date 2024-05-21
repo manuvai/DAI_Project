@@ -42,8 +42,9 @@
 	                	<div class="articleDetails">
 	                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
 	        			<span class ="prixArticle"><%= article.getPrixUnitaire() %>€</span><br/>
-	    				<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/>
-	    				<i id="enleverButton" class="fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>
+	    				<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/></a>
+   						<div id="gestionPanier">
+	    				<i id="enleverButton" class="boutonPanier fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>
                             	<span id="article<%= article.getId() %>">
                             	<% Integer nbr = (Integer) session.getAttribute(article.getId().toString());
 									 if (nbr != null ){%>
@@ -52,8 +53,8 @@
 									 0
 										 <% }%>
 								</span>
-                    <i id="ajouterButton" class="fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i></a>
-	            
+                    <i id="ajouterButton" class="boutonPanier fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
+	            </div>
 	    				</div>
 	                </div> 
 	                <% }
