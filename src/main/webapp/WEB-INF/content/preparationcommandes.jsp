@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%
 request.setAttribute("pageTitle", "preparationcommandes");
-
+request.setAttribute("isHeaderDisabled", true);
 
 List<String> cssFiles = new ArrayList<>();
 cssFiles.add("css/preparationcommandes.css");
@@ -34,5 +34,6 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 	    <% } %>
 	</tbody>
 </table>
+<a id="a-historique" href="./PreparationCommandesServlet">Historique des commandes préparées</a>
 	
 <%@ include file="../template/end.jsp" %>

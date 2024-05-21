@@ -8,6 +8,7 @@
 
 <% 
 request.setAttribute("pageTitle", "Préparation de commandes"); 
+request.setAttribute("isHeaderDisabled", true);
 
 List<String> cssFiles = new ArrayList<>();
 cssFiles.add("css/preparationcommandes.css");

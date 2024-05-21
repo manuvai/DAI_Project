@@ -80,3 +80,27 @@ button {
 a {
 	margin-left: 30px;
 }
+
+#a-historique {
+	margin-top: 50px;
+}
+
+
+/* Styles spécifiques pour les petits écrans */
+@media (max-width: 600px) {
+  input[type="checkbox"] {
+    width: 40px; /* Augmente encore plus la taille sur petits écrans */
+    height: 40px; /* Augmente encore plus la taille sur petits écrans */
+  }
+
+  label {
+    padding: 15px; /* Augmente la zone cliquable sur petits écrans */
+    font-size: 18px; /* Augmente la taille du texte pour une meilleure lisibilité */
+  }
+  table.blueTable td, table.blueTable th {
+  border: 1px solid #AAAAAA;
+  padding: 20px 15px;
+}
+  
+}
+

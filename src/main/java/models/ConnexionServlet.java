@@ -1,3 +1,4 @@
+package models;
 
 
 import java.io.IOException;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import models.Utilisateur;
 import models.Utilisateur.Role;
 import repositories.UtilisateurRepository;
 
