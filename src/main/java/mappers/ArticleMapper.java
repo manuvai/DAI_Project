@@ -49,6 +49,7 @@ public class ArticleMapper {
 			article.setNutriscore(colonnes.get(2));
 			article.setPoids(Integer.parseInt(colonnes.get(3)));
 			article.setPrixUnitaire(Float.parseFloat(colonnes.get(4)));
+			article.setPromotion(0);
 
 			final SousCategorie sousCategorie = new SousCategorie();
 			sousCategorie.setIdSousCat(Integer.parseInt(colonnes.get(5)));
