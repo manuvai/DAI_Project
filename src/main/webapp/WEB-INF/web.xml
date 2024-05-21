@@ -56,14 +56,13 @@
   <servlet-mapping>
     <servlet-name>choixMagasin</servlet-name>
     <url-pattern>/choixMagasin</url-pattern>
-   </servlet-mapping>
-    <servlet>
-      <description></description>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>panier</display-name>
     <servlet-name>panier</servlet-name>
     <jsp-file>/WEB-INF/content/panier.jsp</jsp-file>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>panier</servlet-name>
     <url-pattern>/panier</url-pattern>
@@ -117,5 +116,15 @@
   <servlet-mapping>
     <servlet-name>ArticleServlet</servlet-name>
     <url-pattern>/ArticleServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>preparationhistorique</display-name>
+    <servlet-name>preparationhistorique</servlet-name>
+    <jsp-file>/WEB-INF/content/preparationhistorique.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>preparationhistorique</servlet-name>
+    <url-pattern>/preparationhistorique</url-pattern>
   </servlet-mapping>
 </web-app>
