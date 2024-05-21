@@ -29,66 +29,72 @@ import repositories.UtilisateurRepository;
 @WebServlet("/PayerServlet")
 public class PayerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    PanierRepository pr = new PanierRepository();
-    CreneauRepository  cr = new CreneauRepository();
-    UtilisateurRepository ur = new UtilisateurRepository();
-    ArticleRepository ar = new ArticleRepository();
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PayerServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	PanierRepository pr = new PanierRepository();
+	CreneauRepository cr = new CreneauRepository();
+	UtilisateurRepository ur = new UtilisateurRepository();
+	ArticleRepository ar = new ArticleRepository();
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public PayerServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//recuperation des différentes infos
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// recuperation des différentes infos
 		doGet(request, response);
 		String creneauS = request.getParameter("creneau");
 		HttpSession session = request.getSession();
 		session.setAttribute("creneau", creneauS);
 		String magasin = (String) session.getAttribute("magasinRetrait");
 		Utilisateur user = (Utilisateur) session.getAttribute("user");
-		Creneau creneau = cr.findById( Integer.parseInt(creneauS));
+		Creneau creneau = cr.findById(Integer.parseInt(creneauS));
 		int ptconso = (int) session.getAttribute("ptfidelConso");
-				
-		
+
 		Panier p = new Panier(user, creneau);
 		pr.create(p);
 		ArrayList<String> numeros = (ArrayList<String>) session.getAttribute("numeros");
-		
-		//ajouter element au panier
-		for(String num: numeros) {
+
+		// ajouter element au panier
+		for (String num : numeros) {
 			Composer c = new Composer();
 			c.setQte((int) session.getAttribute(num));
 			ComposerKey composerKey = new ComposerKey(Integer.parseInt(num), p.getId());
 			c.setKey(composerKey);
-			
+
 			p.getComposers().put(ar.findById(Integer.parseInt(num)), c);
-			
-			session.setAttribute(num, 0);			
+
+			session.removeAttribute(num);
 		}
+		numeros.clear();
+		session.setAttribute("numeros", numeros);
 		session.setAttribute("nbrArticleTotal", 0);
-		//ajout des pt de fidelites 
+		// ajout des pt de fidelites
 		double totalPayer = (double) session.getAttribute("apayer");
-		
+
 		int ajoutFidelite = (int) (totalPayer / 5);
-		user.setPtFidelite(user.getPtFidelite()-ptconso*10 + ajoutFidelite);
+		user.setPtFidelite(user.getPtFidelite() - ptconso * 10 + ajoutFidelite);
 		ur.update(user);
-		
-		//mettre a jour panier
+
+		// mettre a jour panier
 		pr.update(p);
 		RequestDispatcher rd = request.getRequestDispatcher("panierEnregistrer");
 		rd.forward(request, response);

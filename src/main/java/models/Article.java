@@ -67,18 +67,16 @@ public class Article {
 	@Column(name = "Bio")
 	private Boolean bio = false;
 
-
 	/**
 	 * Nutriscore de l'article
 	 */
 	@Enumerated(EnumType.STRING)
 	private Nutriscore nutriscore;
 
-
 	/**
 	 * Promotion de l'article
 	 */
-	@Column(name = "Promotion", columnDefinition="Decimal(10,2) default '10'")
+	@Column(name = "Promotion", columnDefinition = "Decimal(10,2) default '10'")
 
 	private Float promotion;
 
@@ -87,8 +85,6 @@ public class Article {
 	 */
 	@Column(name = "EAN")
 	private String EAN;
-
-
 
 	/**
 	 * sous categorie de l'article
@@ -100,10 +96,10 @@ public class Article {
 	@Transient
 	private float prixKilo;
 
-	//Mapping
+	// Mapping
 	@MapKeyJoinColumn(name = "IdMagasin")
 	@OneToMany(mappedBy = "articleStock", cascade = CascadeType.ALL)
-	private Map<Magasin,Stocker> stockers;
+	private Map<Magasin, Stocker> stockers;
 
 	@MapKeyJoinColumn(name = "IdPanier")
 	@OneToMany(mappedBy = "articleComposer", cascade = CascadeType.ALL)
@@ -125,21 +121,23 @@ public class Article {
 
 	/**
 	 * Constructeur de l'article
-	 * @param id identifiant de l'article
-	 * @param lib libellé de l'article
-	 * @param desc description de l'article
+	 * 
+	 * @param id           identifiant de l'article
+	 * @param lib          libellé de l'article
+	 * @param desc         description de l'article
 	 * @param prixUnitaire prix unitaire de l'article
-	 * @param poids poids de l'article
-	 * @param nutriscore nutriscore de l'article
+	 * @param poids        poids de l'article
+	 * @param nutriscore   nutriscore de l'article
 	 */
-	public Article(final Integer id, final String lib, final String desc, final float prixUnitaire, final int poids, final Nutriscore nutriscore, final float promotion, final String EAN,final Boolean bio) {
+	public Article(final Integer id, final String lib, final String desc, final float prixUnitaire, final int poids,
+			final Nutriscore nutriscore, final float promotion, final String EAN, final Boolean bio) {
 		idArticle = id;
 		this.lib = lib;
 		this.desc = desc;
 		this.prixUnitaire = prixUnitaire;
 		this.poids = poids;
 		this.nutriscore = nutriscore;
-		prixKilo = prixUnitaire*1000/poids;
+		prixKilo = prixUnitaire * 1000 / poids;
 		this.promotion = promotion;
 		this.EAN = EAN;
 		this.bio = bio;
@@ -164,7 +162,6 @@ public class Article {
 		EAN = eAN;
 	}
 
-
 	/**
 	 * Récupération du boolean
 	 *
@@ -176,12 +173,12 @@ public class Article {
 
 	/*
 	 * MAJ du boolean bio
+	 * 
 	 * @param bio
 	 */
 	public void setBio(final Boolean bio) {
 		this.bio = bio;
 	}
-
 
 	/**
 	 * Récupération de la promotion
@@ -192,7 +189,6 @@ public class Article {
 		return promotion;
 	}
 
-
 	/**
 	 * MAJ de la promotion.
 	 *
@@ -201,7 +197,6 @@ public class Article {
 	public void setPromotion(final float promotion) {
 		this.promotion = promotion;
 	}
-
 
 	/**
 	 * Récupération de l'identifiant de l'article.
@@ -361,7 +356,6 @@ public class Article {
 		return Objects.hash(desc, idArticle, lib, nutriscore, poids, prixKilo, prixUnitaire, sousCategorie);
 	}
 
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -377,7 +371,6 @@ public class Article {
 				&& Float.floatToIntBits(prixUnitaire) == Float.floatToIntBits(other.prixUnitaire)
 				&& Objects.equals(sousCategorie, other.sousCategorie);
 	}
-
 
 	/**
 	 * Nutriscore de A à E
