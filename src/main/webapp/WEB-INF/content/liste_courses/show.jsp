@@ -115,7 +115,7 @@ Integer addedArticleId = (Integer) request.getAttribute("addedArticleId");
 						<input type="hidden" name="qty" value="0" />
 						<input type="hidden" name="article-id"
 							value="<%= article.getId() %>" />
-						<button type="submit" class="btn btn-danger">Supprimer</button>
+						<button type="submit" class="btn btn-primary">Modifier quantité</button>
 					</form>
 				</td>
 			</tr>
