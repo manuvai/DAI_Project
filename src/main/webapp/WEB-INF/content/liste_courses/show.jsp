@@ -25,6 +25,9 @@ Integer addedArticleId = (Integer) request.getAttribute("addedArticleId");
 <input type="hidden" name="listeId" id="listeId" value="<%= liste.getId() %>" />
 
 <h1>Liste : <%= liste.getNom() %></h1>
+<a href="<%= request.getContextPath() %>/listes_courses">
+	Retour à mes listes de courses
+</a>
 
 <div class="row">
 
@@ -80,7 +83,7 @@ Integer addedArticleId = (Integer) request.getAttribute("addedArticleId");
 				boolean isAdded = addedArticleId != null && addedArticleId.equals(qty);
 			%>
 
-			<tr <%= isAdded ? "class=\"table-success\"" : "" %>>
+			<tr <%= isAdded ? "class=\"table-success\"" : "" %> id="article-<%= article.getId() %>">
 				<th scope="row">
 					<%= article.getId() %>
 					<i class="fa-solid fa-barcode"></i>
@@ -91,11 +94,26 @@ Integer addedArticleId = (Integer) request.getAttribute("addedArticleId");
 						src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>">
 					<span class="col-8"><%= article.getLib() %></span>
 				</td>
-				<td><%= qty %></td>
 				<td>
-					<form action="<%= request.getContextPath() %>/listes_courses/show?action=delete&id=<%= liste.getId() %>"
+					<input type="number" 
+						class="form-control js-articleQty" 
+						min="0" 
+						name="article-qty" 
+						value="<%= qty %>" />
+				</td>
+				<td>
+					<form class="js-handleQtyChange" 
+						action="<%= request.getContextPath() %>/listes_courses/show?action=editQtyArticle&id=<%= liste.getId() %>"
 						method="post">
-						<input type="hidden" name="post-it-id"
+						<input type="hidden" name="qty" value="<%= qty %>" />
+						<input type="hidden" name="article-id"
+							value="<%= article.getId() %>" />
+						<button type="submit" class="btn btn-primary">Modifier quantité</button>
+					</form>
+					<form method="post"
+						action="<%= request.getContextPath() %>/listes_courses/show?action=editQtyArticle&id=<%= liste.getId() %>">
+						<input type="hidden" name="qty" value="0" />
+						<input type="hidden" name="article-id"
 							value="<%= article.getId() %>" />
 						<button type="submit" class="btn btn-danger">Supprimer</button>
 					</form>
