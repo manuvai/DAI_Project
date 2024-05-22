@@ -3,7 +3,9 @@ package mappers;
 import java.util.Map.Entry;
 
 import dtos.ListeCourseDto;
+import models.Article;
 import models.Concerner;
+import models.Contenir;
 import models.ListeDeCourse;
 import models.PostIt;
 
@@ -27,6 +29,17 @@ public class ListeDeCourseMapper {
 					final int value = concerner.getQuantitePostIt();
 
 					liste.getPostsItsMap().put(postIt, value);
+				}
+			}
+
+			if (inListe.getContenirs() != null) {
+				for (final Entry<Article, Contenir> entry : inListe.getContenirs().entrySet()) {
+					final Contenir contenir = entry.getValue();
+					final Article article = entry.getKey();
+
+					final int value = contenir.getQte();
+
+					liste.getArticlesMap().put(article, value);
 				}
 			}
 

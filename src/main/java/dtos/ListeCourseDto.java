@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import models.Article;
 import models.PostIt;
 
 public class ListeCourseDto {
@@ -14,6 +15,8 @@ public class ListeCourseDto {
 	private String nom;
 
 	private Map<PostIt, Integer> postsItsMap = new HashMap<>();
+
+	private Map<Article, Integer> articlesMap = new HashMap<>();
 
 	/**
 	 * @return the id
@@ -57,6 +60,7 @@ public class ListeCourseDto {
 		this.postsItsMap = postsItsMap;
 	}
 
+
 	public int getNbElements() {
 		int result = 0;
 
@@ -64,12 +68,30 @@ public class ListeCourseDto {
 			result += entry.getValue();
 		}
 
+		for (final Entry<Article, Integer> entry : getArticlesMap().entrySet()) {
+			result += entry.getValue();
+		}
+
 		return result;
+	}
+
+	/**
+	 * @return the articlesMap
+	 */
+	public Map<Article, Integer> getArticlesMap() {
+		return articlesMap;
+	}
+
+	/**
+	 * @param articlesMap the articlesMap to set
+	 */
+	public void setArticlesMap(final Map<Article, Integer> articlesMap) {
+		this.articlesMap = articlesMap;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, nom, postsItsMap);
+		return Objects.hash(id, nom);
 	}
 
 	@Override
@@ -81,8 +103,7 @@ public class ListeCourseDto {
 			return false;
 		}
 		final ListeCourseDto other = (ListeCourseDto) obj;
-		return id == other.id && Objects.equals(nom, other.nom)
-				&& Objects.equals(postsItsMap, other.postsItsMap);
+		return id == other.id && Objects.equals(nom, other.nom);
 	}
 
 }
