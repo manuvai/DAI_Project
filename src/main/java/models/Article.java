@@ -105,6 +105,10 @@ public class Article {
 	@OneToMany(mappedBy = "articleComposer", cascade = CascadeType.ALL)
 	private Map<Panier, Composer> composers;
 
+	@MapKeyJoinColumn(name = "IdListeCourse")
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+	private Map<ListeDeCourse, Contenir> contenirs;
+
 	/**
 	 * Association vers l'approvisionnement d'articles
 	 */
@@ -121,7 +125,7 @@ public class Article {
 
 	/**
 	 * Constructeur de l'article
-	 * 
+	 *
 	 * @param id           identifiant de l'article
 	 * @param lib          libellé de l'article
 	 * @param desc         description de l'article
@@ -173,7 +177,7 @@ public class Article {
 
 	/*
 	 * MAJ du boolean bio
-	 * 
+	 *
 	 * @param bio
 	 */
 	public void setBio(final Boolean bio) {
@@ -313,6 +317,20 @@ public class Article {
 	 */
 	public void setSousCategorie(final SousCategorie sousCategorie) {
 		this.sousCategorie = sousCategorie;
+	}
+
+	/**
+	 * @return the contenirs
+	 */
+	public Map<ListeDeCourse, Contenir> getContenirs() {
+		return contenirs;
+	}
+
+	/**
+	 * @param contenirs the contenirs to set
+	 */
+	public void setContenirs(final Map<ListeDeCourse, Contenir> contenirs) {
+		this.contenirs = contenirs;
 	}
 
 	/**

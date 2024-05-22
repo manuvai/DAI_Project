@@ -38,6 +38,10 @@ public class ListeDeCourse {
 	@OneToMany(mappedBy = "liste", cascade = CascadeType.ALL)
 	private Map<PostIt, Concerner> concerners;
 
+	@MapKeyJoinColumn(name = "IdArticle")
+	@OneToMany(mappedBy = "listeCourse", cascade = CascadeType.ALL)
+	private Map<Article, Contenir> contenirs;
+
 	public ListeDeCourse() {
 	}
 
@@ -108,6 +112,20 @@ public class ListeDeCourse {
 	 */
 	public void setConcerners(final Map<PostIt, Concerner> concerners) {
 		this.concerners = concerners;
+	}
+
+	/**
+	 * @return the contenirs
+	 */
+	public Map<Article, Contenir> getContenirs() {
+		return contenirs;
+	}
+
+	/**
+	 * @param contenirs the contenirs to set
+	 */
+	public void setContenirs(final Map<Article, Contenir> contenirs) {
+		this.contenirs = contenirs;
 	}
 
 	@Override
