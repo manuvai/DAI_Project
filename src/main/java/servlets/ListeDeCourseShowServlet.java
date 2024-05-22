@@ -98,10 +98,60 @@ public class ListeDeCourseShowServlet extends AbstractServlet {
 		} else if ("replacePostIt".equals(action)) {
 			processReplace(request, response);
 
+		} else if ("editQtyArticle".equals(action)) {
+			processEditQty(request, response);
+
 		} else {
-			response.sendRedirect(request.getContextPath() + "listes_courses");
+			response.sendRedirect(request.getContextPath() + "/listes_courses");
 
 		}
+	}
+
+	/**
+	 * Gestion de la MAJ de la quantité d'un article.
+	 *
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void processEditQty(final HttpServletRequest request, final HttpServletResponse response)
+			throws ServletException, IOException {
+		// Récupération des variables
+		final Integer listeId = request.getParameter("id") == null || request.getParameter("id").isBlank()
+				? null
+				: Integer.parseInt(request.getParameter("id"));
+		final Integer articleId = request.getParameter("article-id") == null
+					|| request.getParameter("article-id").isBlank()
+				? null
+				: Integer.parseInt(request.getParameter("article-id"));
+
+		final Integer qty = request.getParameter("qty") == null || request.getParameter("qty").isBlank()
+				? null
+				: Integer.parseInt(request.getParameter("qty"));
+
+		if (listeId == null || articleId == null || qty == null) {
+			ajouterErreur("Une erreur est survenue veuillez réessayer ultérieurement", request);
+			doGet(request, response);
+			return;
+		}
+
+		final Session session = listeDeCourseRepository.getSession();
+		final Transaction transaction = session.beginTransaction();
+
+		final Article article = articleRepository.findById(articleId, session);
+		final ListeDeCourse liste = listeDeCourseRepository.findById(listeId, session);
+		final Contenir contenir = liste.getContenirs().get(article);
+		contenir.setQte(qty);
+		liste.getContenirs().put(article, contenir);
+
+		listeDeCourseRepository.update(liste, session);
+
+		transaction.commit();
+
+		ajouterSucces("La quantité a été modifiée avec succès", request);
+		responseGet(request, response);
+
 	}
 
 	/**
@@ -137,14 +187,14 @@ public class ListeDeCourseShowServlet extends AbstractServlet {
 		final Transaction transaction = session.beginTransaction();
 
 		final ListeDeCourse liste = listeDeCourseRepository.findById(listeId, session);
-		// TODO Suppression de la post-it à la liste
+		// Suppression de la post-it à la liste
 		final PostIt postIt = postItRepository.findById(postItId, session);
 		final Concerner concerner = postIt.getStockers().get(liste);
 		final int qty = concerner.getQuantitePostIt();
 
 		postItRepository.delete(postIt, session);
 
-		// TODO Ajout de l'article à la liste
+		// Ajout de l'article à la liste
 		final Article article = articleRepository.findById(articleId, session);
 		final ContenirKey key = new ContenirKey(articleId, listeId);
 		final Contenir contenir = new Contenir();

@@ -1,5 +1,16 @@
 
 $(window).on('load', () => {
+	$('form.js-handleQtyChange').submit(function() {
+		let articleId = $(this).find("input[name=article-id]").val();
+		
+		let qtyElement = $(this).find("input[name=qty]");
+		
+		let actualQty = $(`#article-${articleId} .js-articleQty`).val();
+		
+		qtyElement.val(actualQty);
+		
+		return true;
+	});
 	
 	$('.js-handleArticlesProposal').click(function() {
 		let postItId = $(this).find("input[type=hidden][name=postIt-id]").val();
@@ -18,7 +29,7 @@ $(window).on('load', () => {
 			let html = ""
 			$('.modal-body').html(html);
 			
-            if (!nuplets || nuplets.length <= 0) {
+			if (!nuplets || nuplets.length <= 0) {
 				$('.modal-body').text(`Aucun article correspondant à "${postItLabel}"`);
 				
 			} else {
@@ -37,6 +48,9 @@ $(window).on('load', () => {
 	
 })
 
+/**
+ * Création d'un élément card par postIt
+ */
 function createCardElement(dto, postItId, rootPath) {
 	let listeId = $('#listeId').val();
 	
@@ -92,21 +106,9 @@ function createCardElement(dto, postItId, rootPath) {
 	return cardElement;
 }
 
-function replacePostIt(postItId, articleId, listeId) {
-	console.log(postItId);
-	console.log(articleId);
-	let rootPath = $('#rootPath').val();
-	
-	postItId = encodeURIComponent(postItId)
-	articleId = encodeURIComponent(articleId)
-	
-	let url = `${rootPath}/post-its?action=replace&post-it-id=${postItId}&article-id=${articleId}&liste-id=${listeId}`
-	
-	post(url, xhr => {
-		console.log()
-	})
-}
-
+/**
+ * Transformation d'un noeud XML article en dictionnaire JS.
+ */
 function xmlToDto(xmlNode) {
 	let result = {};
 	
@@ -123,17 +125,25 @@ function xmlToDto(xmlNode) {
 	return result;
 }
 
+/**
+ * Méthode pour effectuer un appel HTTP GET
+ */
 function get(url, onSuccess) {
     ajax("GET", url, onSuccess);
 }
 
+/**
+ * Méthode pour effectuer un appel HTTP POST
+ */
 function post(url, onSuccess) {
     ajax("POST", url, onSuccess);
 
 }
 
+/**
+ * Implémentation des appels AJAX
+ */
 function ajax(verb, url, onSuccess, onFail = null) {
-    // Objet XMLHttpRequest.
     let xhr = new XMLHttpRequest();
 
     xhr.open(verb, url);
