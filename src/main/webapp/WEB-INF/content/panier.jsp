@@ -48,8 +48,9 @@ if (numeros != null && !numeros.isEmpty()) {
 
 
 	<div class="row">
-		<img class="imgArticle" src="<%=article.getCheminImage()%>"> <span
-			class="nomArticle"><%=article.getLib()%></span><br /> <span
+		<a href="<%="Article?idArticle="+article.getId() %>">
+		<img class="imgArticle" src="<%=article.getCheminImage()%>"></a>
+		 <span class="nomArticle"><%=article.getLib()%></span><br /> <span
 			class="prixArticle"> <span
 			id="prixUnitaire<%=article.getId()%>"><%=article.getPrixUnitaire()%></span>€
 		</span><br /> <i id="enleverButton"

@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function ajouterAuPanier(articleId) {
-
 	var nbrPanierElement = document.getElementById("nbrPanier");
     var nbrPanier = parseInt(nbrPanierElement.textContent.trim(), 10);
     
