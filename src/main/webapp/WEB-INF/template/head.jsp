@@ -37,9 +37,7 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
 				aria-haspopup="true" 
 				aria-expanded="false"
 	        	id="searchInput">
-	        <div id="searchResults" 
-	        	class="dropdown-menu dropdown-menu-right" 
-	        	aria-labelledby="searchInput"></div>
+	     
 	    </form>
         <a class="nav-item nav-link" href="<%= request.getContextPath() %>/panier">
             <i class="fas fa-shopping-cart"></i>
