@@ -70,7 +70,7 @@ Float promotionArticle = article.getPromotion();
 		</span><br/>
 		<img class="img-nutriscore" src="<%= "images/nutriscores/" + article.getNutriscore() + ".png" %>">
 		<div id="gestionPanier">
-			<i id="enleverButton" class="boutonPanier fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>
+			<i id="enleverButton" class="boutonPanier fas fa-minus icon"  onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>
                   	<span id="article<%= article.getId() %>">
                       	<% Integer nbr = (Integer) session.getAttribute(article.getId().toString());
 					 if (nbr != null ){%>
@@ -79,7 +79,7 @@ Float promotionArticle = article.getPromotion();
 					 0
 						 <% }%>
 				</span>
-            <i id="ajouterButton" class="boutonPanier fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
+            <i id="ajouterButton"  class="boutonPanier fas fa-plus icon"  title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
 		</div>
 	</div>
 <% 

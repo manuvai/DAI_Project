@@ -13,11 +13,7 @@
 List<String> jsFiles = (List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY);
 
 jsFiles = jsFiles == null ? new ArrayList<>() : jsFiles;
-/*
-	Cette partie traite l'ajout des CDN des librairies JS
-	Pour ajouter une nouvelle librairie :
-		jsFiles.add("js/example.js");
-*/
+jsFiles.add("js/mesCommandes.js");
 
 request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 %>
@@ -25,6 +21,17 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 <h2>Mes commandes</h2>
 
 <div id="commandes" class="container">
+	
+	<select id="etatFiltre"class="form-select"> 
+	    <option value="Tous">TOUS</option>
+	    <option value="ATTENTE">ATTENTE</option>
+	    <option value="VALIDEE">VALIDEE</option>
+	    <option value="PRETE">PRETE</option>
+	    <option value="LIVRE">LIVRE</option>
+	</select>
+	
+	<br>
+	<br>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -44,7 +51,7 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
                 for (Panier commande : commandes) {
                 	
             %>
-                    <tr>
+                    <tr id="<%= commande.getId() %>">
                         <td><%= commande.getId() %></td>
                          <td>
                             <% 

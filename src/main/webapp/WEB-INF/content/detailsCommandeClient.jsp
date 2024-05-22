@@ -60,10 +60,10 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 				</td>
 		        <td><%= article.getDesc() %></td>
 		        <td><%= quantite %></td>
-		        <td><%= article.getPrixUnitaire() %></td>
-		        <td style='color:red'><%= article.getPromotion() %> %</td>
+		        <td><%= article.getPrixUnitaire() %> €</td>
+		        <td style='color:red'>- <%= article.getPromotion() %> %</td>
 		        <td><strong>
-		        <%=String.format("%.2f", article.getPrixUnitaire()*quantite*(1-article.getPromotion()/100))%>€
+		        <%=String.format("%.2f", article.getPrixUnitaire()*quantite*(1-article.getPromotion()/100))%> €
 		       </strong></td>
 		    </tr>
 		<%
@@ -74,8 +74,8 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="5" class="text-end"><strong>Total:</strong></td>
-            <td colspan="2" class="text-end" style="font-size: 1.5em;"><strong><%= String.format("%.2f", totalPanier) %>€</strong></td>
+            <td colspan="5" class="text-end"></td>
+            <td colspan="2" class="text-end" style="font-size: 1.5em;"><strong>Total:<%= String.format("%.2f", totalPanier) %>€</strong></td>
         </tr>
     </tfoot>
     </table>

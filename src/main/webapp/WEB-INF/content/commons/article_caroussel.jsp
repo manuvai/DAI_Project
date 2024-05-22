@@ -73,7 +73,7 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 										</div>
 										<div id="gestionPanier">
 											<i id="enleverButton"
-												class="boutonPanier fas fa-arrow-alt-circle-left ison"
+												class="boutonPanier fas fa-minus icon"
 												onclick="enleverAuPanier('<%= article.getId() %>')"
 												title="moins"></i> 
 											<span
@@ -81,7 +81,7 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 												<%=nbr == null ? 0 : nbr%> 
 											</span> 
 											<i id="ajouterButton"
-												class="boutonPanier fas fa-arrow-alt-circle-right icon" 
+												class="boutonPanier fas fa-plus icon" 
 												onclick="ajouterAuPanier('<%= article.getId() %>')"
 												title="plus"></i>
 										</div>
