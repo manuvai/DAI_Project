@@ -53,19 +53,19 @@ if (numeros != null && !numeros.isEmpty()) {
 			class="prixArticle"> <span
 			id="prixUnitaire<%=article.getId()%>"><%=article.getPrixUnitaire()%></span>€
 		</span><br /> <i id="enleverButton"
-			class="fas fa-arrow-alt-circle-left ison"
+			class="boutonPanier fas fa-minus icon"
 			onclick="enleverAuPanier('<%=article.getId()%>')" title="moins">
 		</i>
 		<%
 		Integer nbr = (Integer) session.getAttribute(article.getId().toString());
 		%>
 		<span id="article<%=article.getId()%>"> <%=nbr != null ? nbr : 0%>
-		</span> <i id="ajouterButton" class="fas fa-arrow-alt-circle-right icon"
+		</span> <i id="ajouterButton" class="boutonPanier fas fa-plus icon" 
 			title="plus" onclick="ajouterAuPanier('<%=article.getId()%>')"> </i>
 		<%
 		if (article.getPromotion() > 0) {
 		%>
-		<span class="promotion">- <span
+		<span class="promotion" style="color:red">- <span
 			id="promotion<%=article.getId()%>"> <%=article.getPromotion()%>
 		</span>%
 		</span><br />

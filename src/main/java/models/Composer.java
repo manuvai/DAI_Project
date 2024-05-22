@@ -19,6 +19,7 @@ public class Composer {
 	@ManyToOne
 	@JoinColumn(name = "IdArticle", insertable = false, updatable = false)
 	private Article articleComposer;
+	
 	@ManyToOne
 	@JoinColumn(name = "IdPanier", insertable = false, updatable = false)
 	private Panier panierComposer;
