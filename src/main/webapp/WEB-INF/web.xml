@@ -157,4 +157,24 @@
     <servlet-name>commandePourMagasin</servlet-name>
     <url-pattern>/commandePourMagasin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>commandeFournisseurEnvoyee</display-name>
+    <servlet-name>commandeFournisseurEnvoyee</servlet-name>
+    <jsp-file>/WEB-INF/content/commandeFournisseurEnvoyee.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>commandeFournisseurEnvoyee</servlet-name>
+    <url-pattern>/commandeFournisseurEnvoyee</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>voirCommande</display-name>
+    <servlet-name>voirCommande</servlet-name>
+    <jsp-file>/WEB-INF/content/voirCommande.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>voirCommande</servlet-name>
+    <url-pattern>/voirCommande</url-pattern>
+  </servlet-mapping>
 </web-app>

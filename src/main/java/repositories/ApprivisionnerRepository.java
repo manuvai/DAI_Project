@@ -1,12 +1,12 @@
 package repositories;
 
-import models.Concerner;
-import models.keys.ConcernerKey;
+import models.Approvisionner;
+import models.keys.ApprovisionnerKey;
 
-public class ApprivisionnerRepository extends AbstractRepository<Concerner, ConcernerKey> {
+public class ApprivisionnerRepository extends AbstractRepository<Approvisionner, ApprovisionnerKey > {
 
 	public ApprivisionnerRepository() {
-		super(Concerner.class);
+		super(Approvisionner.class);
 	}
 
 }

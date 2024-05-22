@@ -60,7 +60,7 @@ td {
     background-color: #ffffff;
 }
 
-input[type="number"] {
+input[type="number"]{
     width: 60px;
     padding: 5px;
     margin: 0;
@@ -68,9 +68,18 @@ input[type="number"] {
     border-radius: 4px;
 }
 
+
+input[type="date"] {
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
 .btn-rayon {
     display: block;
-    width: 100%;
     padding: 10px;
     background-color: #007bff;
     color: #ffffff;
@@ -82,4 +91,6 @@ input[type="number"] {
 
 .btn-rayon:hover {
     background-color: #0056b3;
+    color: white;
+    margin: 20 px;
 }

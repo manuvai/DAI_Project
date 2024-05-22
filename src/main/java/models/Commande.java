@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -77,13 +78,11 @@ public class Commande {
 	 * @param magasin
 	 * @param articleApprovisionner
 	 */
-	public Commande(final Integer id, final Date dateArrivee, final Date dateCreation, final Magasin magasin,
-			final Map<Article, Approvisionner> articleApprovisionner) {
-		this.id = id;
+	public Commande(final Date dateArrivee, final Magasin magasin) {
 		this.dateArrivee = dateArrivee;
-		this.dateCreation = dateCreation;
+		this.dateCreation = new Date();
 		this.magasin = magasin;
-		this.articleApprovisionner = articleApprovisionner;
+		this.articleApprovisionner = new HashMap<Article, Approvisionner>();
 	}
 
 	/**
