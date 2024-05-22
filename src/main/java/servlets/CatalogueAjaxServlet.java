@@ -59,7 +59,7 @@ public class CatalogueAjaxServlet extends HttpServlet {
 			
 			//PAR CATEGORIE
 			else if(request.getParameter("categorie")!=null) {
-				for (Article article : repoArticles.getArticlesByCategorieName(request.getParameter("sousCategorie"))) {
+				for (Article article : repoArticles.getArticlesByCategorieName(request.getParameter("categorie"))) {
 					out.println("<article>");
 						out.println("<imgArticle>"+article.getCheminImage()+"</imgArticle>");
 						out.println("<nomArticle>"+article.getLib()+"</nomArticle>");
@@ -82,7 +82,8 @@ public class CatalogueAjaxServlet extends HttpServlet {
 			}
 			out.println("/<liste_articles>");
 			}
-		catch (ClassNotFoundException | SQLException ex){
+		catch (Exception ex){
+			PrintWriter out = response.getWriter();
 			out.println("<article>Erreur - " + ex.getMessage() + "</article>");
 		}
 

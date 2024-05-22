@@ -25,7 +25,7 @@
 			        List<Categorie> categories = (List<Categorie>) request.getAttribute("categories");
 			        if (categories != null) {
 			            for (Categorie categorie : categories) {
-			    %><option value="<%=categorie.getNomCategorie() %>"><%=categorie.getNomCategorie() %></option>
+			    %><option id="categorie" value="<%=categorie.getNomCategorie() %>"><%=categorie.getNomCategorie() %></option>
 			    <% 
 			            }
 			        } 
@@ -34,7 +34,7 @@
 	    </div>.
 	</div>
 	<div id="catalogue">
-	<% if (request.getAttribute("articles") != null) {%>
+		<% if (request.getAttribute("articles") != null) {%>
 	            <% for (Article article : (List<Article>)request.getAttribute("articles")) {%>
 	            <%Float prixArticle = article.getPrixUnitaire();
 				Float prixReduit=0.0f;
@@ -55,37 +55,37 @@
 					    <% } %>
 	                	<img class ="imgArticle" src="<%= article.getCheminImage() %>">
 	                	<div class="articleDetails">
-	                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
-	                	<div class="price-container">
-							<% if (promo >0) { %>
-								<p class="price promotion">
-									<%= prixArticle %>€
-								</p>
-								
-								<p class="price discount">
-									<%=String.format("%.2f",prixReduit)%>€
-								</p>
-							<%}else{ %>
-								<p class="price">
-									<%= prixArticle %>€
-								</p>
-							<%} %>
-						</div>
-	    				<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/>
-                            	<span id="article<%= article.getId() %>">
-                            	<% Integer nbr = (Integer) session.getAttribute(article.getId().toString());
-									 if (nbr != null ){%>
-									<%= nbr %>
-									 <%} else {%>
-									 0
-										 <% }%>
-								</span>
-						<div id="gestionPanier">
-							<i id="enleverButton" class="boutonPanier fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>			
-							<i id="ajouterButton" class="boutonPanier fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
-						</div>
-	    				</div>
-	                </div> 
+		                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
+		                	<div class="price-container">
+								<% if (promo >0) { %>
+									<p class="price promotion">
+										<%= prixArticle %>€
+									</p>
+									
+									<p class="price discount">
+										<%=String.format("%.2f",prixReduit)%>€
+									</p>
+								<%}else{ %>
+									<p class="price">
+										<%= prixArticle %>€
+									</p>
+								<%} %>
+							</div>
+		    				<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/>
+	                            	<span id="article<%= article.getId() %>">
+	                            	<% Integer nbr = (Integer) session.getAttribute(article.getId().toString());
+										 if (nbr != null ){%>
+										<%= nbr %>
+										 <%} else {%>
+										 0
+											 <% }%>
+									</span>
+							<div id="gestionPanier">
+								<i id="enleverButton" class="boutonPanier fas fa-arrow-alt-circle-left ison" onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>			
+								<i id="ajouterButton" class="boutonPanier fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
+							</div>
+    					</div>
+                	</div> 
 	                <% }
 		}
 	%>
