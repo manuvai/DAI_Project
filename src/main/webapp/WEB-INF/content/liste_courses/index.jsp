@@ -63,11 +63,11 @@ Integer addedListeId = (Integer) request.getAttribute("addedListeId");
 				<td><%=liste.getNom()%></td>
 				<td><%=liste.getNbElements()%> éléments</td>
 				<td><a
-					href="<%=request.getContextPath()%>/liste_courses/show?id=<%=liste.getId()%>"
-					class="btn btn-secondary disabled">Voir la liste</a> <a
-					href="<%=request.getContextPath()%>/liste_courses/edit?id=<%=liste.getId()%>"
+					href="<%=request.getContextPath()%>/listes_courses/show?id=<%=liste.getId()%>"
+					class="btn btn-secondary">Voir la liste</a> <a
+					href="<%=request.getContextPath()%>/listes_courses/edit?id=<%=liste.getId()%>"
 					class="btn btn-primary disabled">Modifier</a>
-					<form action="<%=request.getContextPath()%>/liste_courses/delete"
+					<form action="<%=request.getContextPath()%>/listes_courses/delete"
 						method="post">
 						<input type="hidden" name="liste-courses-id"
 							value="<%=liste.getId()%>" />
