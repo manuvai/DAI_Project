@@ -86,10 +86,10 @@ Integer addedArticleId = (Integer) request.getAttribute("addedArticleId");
 					<i class="fa-solid fa-barcode"></i>
 				</th>
 				<td>
-					<img class="img-thumbnail"
+					<img class="img-thumbnail col-4"
 						alt="Image <%= article.getLib() %>" 
 						src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>">
-					<%= article.getLib() %>
+					<span class="col-8"><%= article.getLib() %></span>
 				</td>
 				<td><%= qty %></td>
 				<td>
@@ -142,27 +142,7 @@ Integer addedArticleId = (Integer) request.getAttribute("addedArticleId");
 			%>
 		</tbody>
 	</table>
-	<div class="modal fade" id="js-modalArticlesProposal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">
-						Remplacer la post-it par un article
-					</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body card-deck"></div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Annuler</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<%@ include file="modal_articles_proposal.html" %>
 </div>
 
 <%@ include file="../../template/end.jsp"%>
