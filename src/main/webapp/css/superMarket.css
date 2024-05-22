@@ -154,6 +154,10 @@ h2{
     cursor: not-allowed;
 }
 
+.boutonPanier{
+	cursor:pointer;
+	z-index:1000;
+}
 .price {
     font-size: 15px; 
     color: #333; 

@@ -24,6 +24,15 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 	}
 
 	/**
+	 * Récupération d'une session.
+	 *
+	 * @return
+	 */
+	public Session getSession() {
+		return HibernateUtil.getSessionFactory().getCurrentSession();
+	}
+
+	/**
 	 * Exécution et récupération des résultats de la requête passée en paramètre.
 	 *
 	 * @param query
@@ -225,15 +234,6 @@ public abstract class AbstractRepository<T, K extends Serializable> {
 	 */
 	public void delete(final T entity, final Session session) {
 		session.delete(entity);
-	}
-
-	/**
-	 * Récupération d'une session.
-	 *
-	 * @return
-	 */
-	protected Session getSession() {
-		return HibernateUtil.getSessionFactory().getCurrentSession();
 	}
 
 }

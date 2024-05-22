@@ -63,6 +63,7 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
                 <a class="dropdown-item" href="<%= request.getContextPath() %>/dashboard">Tableau de bord</a>
                 <a class="dropdown-item" href="<%= request.getContextPath() %>/CommandesClientServlet">Commandes</a>
+                <a class="dropdown-item" href="<%= request.getContextPath() %>/listes_courses">Mes listes de course</a>
                 <a class="dropdown-item" href="#">Paramètres</a>
             </div>
         <% } %>

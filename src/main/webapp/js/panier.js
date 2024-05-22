@@ -48,8 +48,10 @@ function ajouterAuPanier(articleId) {
 			{			    
 		    nbrPanierElement.innerText = nbrPanier;
 		    nbrArticleElement.innerText = nbrArticle;
-		    nbrPrixElement.innerText = nbrArticle*prix*(1-promo/100) +"€";
-		    totalElement.innerText = total + prix*(1-promo/100);
+		    var newElementPrice = (nbrArticle*prix*(1-promo/100)).toFixed(2)
+		    nbrPrixElement.innerText = newElementPrice +"€";
+		    var newTotal = (total + prix*(1-promo/100)).toFixed(2)
+		    totalElement.innerText = newTotal + "€";
 			}
 		};
 	xhr.send();
@@ -97,8 +99,15 @@ function enleverAuPanier(articleId) {
 					{			    
 				    nbrPanierElement.innerText = nbrPanier;
 				    nbrArticleElement.innerText = nbrArticle;
-				    nbrPrixElement.innerText = nbrArticle*prix*(1-promo/100) +"€";
-				    totalElement.innerText = total - prix*(1-promo/100);
+				    
+				    var newElementPrice = (nbrArticle*prix*(1-promo/100)).toFixed(2)
+				    nbrPrixElement.innerText = newElementPrice +"€";
+				    var newTotal = (total - prix*(1-promo/100).toFixed(2)).toFixed(2)
+				    totalElement.innerText = newTotal + "€";
+		    
+				    if(nbrPanier === 0){
+						totalElement.innerText = 0 + "€";
+					}
 					}
 				};
 			xhr.send();
