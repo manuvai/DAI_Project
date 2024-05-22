@@ -42,14 +42,17 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 							Integer nbr = (Integer) session.getAttribute(article.getId().toString());
 						%>
 						<div class="col-md-3">
-							<div class="card">
+						 	
+							<div class="card"> 
 								<div class="card-body">
 								 <% if (article != null && Boolean.TRUE.equals(article.getBio())) { %>
 							        <img class="img-bio" src="images/bio.png">
 							    <% } %>
-									<img class="img-item"
-										src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>" 
-										alt="Image <%= article.getLib() %>/">
+							      <a href="<%="Article?idArticle="+article.getId() %>">
+										<img class="img-item"
+											src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>" 
+											alt="Image <%= article.getLib() %>/">
+									</a>
 									<p class="card-text"><%= article.getDesc() %></p>
 									<img class="img-nutriscore"
 										src="<%= request.getContextPath() %>/images/nutriscores/<%= article.getNutriscore() %>.png"

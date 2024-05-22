@@ -158,7 +158,7 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 					+ " AND c.panierComposer = p "
 					+ " AND p.utilisateur = :userId "
 					+ "GROUP BY a.idArticle "
-					+ "ORDER BY SUM(c.qte) "
+					+ "ORDER BY SUM(c.qte)"
 					+ "LIMIT :limit";
 
 			final Map<String, Object> mappedValues = new HashMap<>();

@@ -55,8 +55,9 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 		    	 <% if (article != null && Boolean.TRUE.equals(article.getBio())) { %>
 							        <img class="img-bio-catalogue" src="images/bio.png">
 							    <% } %>
+				<a href="<%="Article?idArticle="+article.getId() %>">
 		    	<img class="img-item"
-				src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>" >
+				src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>" ></a>
 				</td>
 		        <td><%= article.getDesc() %></td>
 		        <td><%= quantite %></td>

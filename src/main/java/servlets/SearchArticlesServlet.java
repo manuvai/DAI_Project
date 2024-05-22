@@ -16,7 +16,7 @@ import repositories.ArticleRepository;
 /**
  * Servlet implementation class SearchArticles
  */
-@WebServlet("/articles/search")
+@WebServlet("/search")
 public class SearchArticlesServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -27,7 +27,7 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
 	    <form class="form-inline my-2 my-lg-0 dropdown-toggle" 
 	    	id="searchForm" 
 	    	method="POST"
-	    	action="<%= request.getContextPath() %>/articles/search">
+	    	action="<%= request.getContextPath() %>/search">
 	        <input class="form-control mr-sm-2 dropdown-toggle" 
 	        	type="search" 
 	        	name="query"
