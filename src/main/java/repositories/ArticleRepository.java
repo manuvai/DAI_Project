@@ -64,8 +64,8 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		Article article = null;
 
 		if (inName != null && session != null) {
-			final String query = "SELECT a " 
-					+ "FROM Article a " 
+			final String query = "SELECT a "
+					+ "FROM Article a "
 					+ "WHERE a.lib = :lib";
 			final Map<String, Object> mappedValues = Collections.singletonMap("lib", inName);
 			final List<Article> results = getQueryResults(query, mappedValues, session);
@@ -158,7 +158,7 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 					+ " AND c.panierComposer = p "
 					+ " AND p.utilisateur = :userId "
 					+ "GROUP BY a.idArticle "
-					+ "ORDER BY SUM(c.qte)"
+					+ "ORDER BY SUM(c.qte) DESC "
 					+ "LIMIT :limit";
 
 			final Map<String, Object> mappedValues = new HashMap<>();
