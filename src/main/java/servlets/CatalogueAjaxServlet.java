@@ -2,7 +2,6 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +35,7 @@ public class CatalogueAjaxServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		ArticleRepository repoArticles = new ArticleRepository();
+		List<Article> listeArticles;
 		response.setContentType("application/xml;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
@@ -47,44 +47,39 @@ public class CatalogueAjaxServlet extends HttpServlet {
 			/*----- Récupération des paramètres -----*/
 			//PAR SOUS-CATEGORIE
 			if(request.getParameter("sousCategorie")!=null) {
-				for (Article article : repoArticles.getArticlesBySousCategorieName(request.getParameter("sousCategorie"))) {
-					out.println("<article>");
-						out.println("<imgArticle>"+article.getCheminImage()+"</imgArticle>");
-						out.println("<nomArticle>"+article.getLib()+"</nomArticle>");
-						out.println("<prixArticle>"+article.getPrixUnitaire()+"</prixArticle>");
-						out.println("<poidsArticle>"+article.getPoids()+"</poidsArticle>");
-					out.println("</article>");
-				}
+				listeArticles = repoArticles.getArticlesBySousCategorieName(request.getParameter("sousCategorie"));
 			}
 			
 			//PAR CATEGORIE
 			else if(request.getParameter("categorie")!=null) {
-				for (Article article : repoArticles.getArticlesByCategorieName(request.getParameter("categorie"))) {
-					out.println("<article>");
-						out.println("<imgArticle>"+article.getCheminImage()+"</imgArticle>");
-						out.println("<nomArticle>"+article.getLib()+"</nomArticle>");
-						out.println("<prixArticle>"+article.getPrixUnitaire()+"</prixArticle>");
-						out.println("<poidsArticle>"+article.getPoids()+"</poidsArticle>");
-					out.println("</article>");
-				}
+				listeArticles = repoArticles.getArticlesByCategorieName(request.getParameter("categorie"));
 			}
 			
 			//PAR RAYON
 			else if(request.getParameter("rayon")!=null) {
-				for (Article article : repoArticles.getArticlesByRayonName(request.getParameter("rayon"))) {
-					out.println("<article>");
-						out.println("<imgArticle>"+article.getCheminImage()+"</imgArticle>");
-						out.println("<nomArticle>"+article.getLib()+"</nomArticle>");
-						out.println("<prixArticle>"+article.getPrixUnitaire()+"</prixArticle>");
-						out.println("<poidsArticle>"+article.getPoids()+"</poidsArticle>");
-					out.println("</article>");
-				}
+				listeArticles = repoArticles.getArticlesByRayonName(request.getParameter("rayon"));
 			}
-			out.println("/<liste_articles>");
+			
+			else listeArticles = new ArrayList<Article>();
+			
+			for(Article article : listeArticles) {
+				
+				System.out.println(article.getLib());
+				out.println("<article>");
+					out.println("<nomArticle>"+article.getLib()+"</nomArticle>");
+					out.println("<imgArticle>"+article.getCheminImage()+"</imgArticle>");
+					out.println("<prixArticle>"+article.getPrixUnitaire()+"</prixArticle>");
+					out.println("<poidsArticle>"+article.getPoids()+"</poidsArticle>");
+					out.println("<isBioArticle>"+article.getBio()+"</isBioArticle>");
+					out.println("<promotionArticle>"+article.getPrixApresPromotion()+"</promotionArticle>");
+				out.println("</article>");
 			}
+			out.println("</liste_articles>");
+		}
 		catch (Exception ex){
 			PrintWriter out = response.getWriter();
 			out.println("<article>Erreur - " + ex.getMessage() + "</article>");
+			out.println("</liste_articles>");
 		}
 
 	}

@@ -147,15 +147,13 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 	 * @return
 	 */
 	public List<Article> getArticlesByCategorieName(final String nomCategorie) {
-
 		final String query = "SELECT a "
-				+ "FROM Article a , SousCategorie sc, Categorie c"
+				+ "FROM Article a , SousCategorie sc, Categorie c "
 				+ "WHERE a.sousCategorie = sc.idSousCat "
-				+ "	AND sc.categorie = c.idCat "
-				+ "	AND c.nomCategorie = :nomCategorie ";
+				+ "AND sc.categorie = c.idCat "
+				+ "AND c.nomCategorie = :nomCategorie ";
 
 		final Map<String, Object> mappedValues = Collections.singletonMap("nomCategorie", nomCategorie);
-
 		return getQueryResults(query, mappedValues);
 	}
 	
@@ -165,9 +163,8 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 	 * @return
 	 */
 	public List<Article> getArticlesBySousCategorieName(final String nomSousCategorie) {
-
 		final String query = "SELECT a "
-				+ "FROM Article a , SousCategorie sc, Categorie c"
+				+ "FROM Article a , SousCategorie sc, Categorie c "
 				+ "WHERE a.sousCategorie = sc.idSousCat "
 				+ "	AND sc.nomSousCategorie = :nomSousCategorie ";
 
@@ -254,7 +251,7 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 	 * @return
 	 */
 	private List<ArticleStockDto> constructArticleDtos(final List<Panier> paniersSurDeuxSemaines,
-			final List<Commande> commandesApprovisionnement, final Map<Article, Stocker> articles) {
+		final List<Commande> commandesApprovisionnement, final Map<Article, Stocker> articles) {
 		final List<ArticleStockDto> resultList = new ArrayList<>();
 
 		if (articles != null && !articles.isEmpty()) {
