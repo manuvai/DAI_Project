@@ -57,7 +57,7 @@
     <servlet-name>choixMagasin</servlet-name>
     <url-pattern>/choixMagasin</url-pattern>
   </servlet-mapping>
- <servlet>
+  <servlet>
     <description></description>
     <display-name>commandesClient</display-name>
     <servlet-name>commandesClient</servlet-name>
@@ -67,7 +67,7 @@
     <servlet-name>commandesClient</servlet-name>
     <url-pattern>/commandesClient</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>detailsCommandeClient</display-name>
     <servlet-name>detailsCommandeClient</servlet-name>
@@ -146,5 +146,15 @@
   <servlet-mapping>
     <servlet-name>preparationhistorique</servlet-name>
     <url-pattern>/preparationhistorique</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>commandePourMagasin</display-name>
+    <servlet-name>commandePourMagasin</servlet-name>
+    <jsp-file>/WEB-INF/content/commandePourMagasin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>commandePourMagasin</servlet-name>
+    <url-pattern>/commandePourMagasin</url-pattern>
   </servlet-mapping>
 </web-app>
