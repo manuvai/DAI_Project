@@ -24,6 +24,7 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
     </a>
     <div class="navbar-nav ml-auto">
     
+    	<% if (role != Role.PREPARATEUR) { %>
 	    <form class="form-inline my-2 my-lg-0 dropdown-toggle" 
 	    	id="searchForm" 
 	    	method="POST"
@@ -41,12 +42,15 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
 	        	class="dropdown-menu dropdown-menu-right" 
 	        	aria-labelledby="searchInput"></div>
 	    </form>
+	    <% } %>
+	    <% if (role != Role.PREPARATEUR) { %>
         <a class="nav-item nav-link" href="<%= request.getContextPath() %>/panier">
             <i class="fas fa-shopping-cart"></i>
             <span class="badge badge-pill badge-danger" id="nbrPanier"><%= nbrArticleString %></span>
         </a>
+        <% } %>
         
-       	<% if (role != null) { %>
+       	<% if (role != null && role != Role.PREPARATEUR) { %>
         <a class="nav-item nav-link" href="<%= request.getContextPath() %>/MagasinServlet">
             <i class="fas fa-store"></i>
         </a>
@@ -56,7 +60,7 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
         	<a class="nav-item nav-link" href="<%= request.getContextPath() %>/connexion">
                 <i class="fas fa-user"></i>
             </a>
-       	<% } else { %>
+       	<% } else if (role != Role.PREPARATEUR){ %>
             <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user"></i>
             </a>
@@ -66,6 +70,14 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
                 <a class="dropdown-item" href="<%= request.getContextPath() %>/listes_courses">Mes listes de course</a>
                 <a class="dropdown-item" href="#">Paramètres</a>
             </div>
+        <% } else {%>
+	        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                <i class="fas fa-user"></i>
+	            </a>
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+	                <a class="dropdown-item" href="<%= request.getContextPath() %>/PreparationCommandesServlet">Préparation des commandes</a>
+	                <a class="dropdown-item" href="<%= request.getContextPath() %>/PreparationCommandesHistoriqueServlet">Historique des commandes</a>
+	        	</div>
         <% } %>
         </div>
        	<% if (role != null) { %>

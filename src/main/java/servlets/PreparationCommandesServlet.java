@@ -32,6 +32,9 @@ public class PreparationCommandesServlet extends HttpServlet {
 			PanierRepository panierRepository = new PanierRepository();
 			final List<Panier> paniers = panierRepository.findPanierByStatut(Etat.VALIDEE);			
 			
+			String idCommande = request.getParameter("idCommande");
+			
+			request.setAttribute("idCommande", idCommande);
 			request.setAttribute("paniers", paniers);
 						
 			//Tri par date heure pour afficher en premier les plus urgents
@@ -42,7 +45,7 @@ public class PreparationCommandesServlet extends HttpServlet {
 	                if (dateComparison != 0) {
 	                    return dateComparison; // Si les dates sont différentes, retourne la comparaison de dates
 	                } else {
-	                    // Si les dates sont les mêmes, compare les heures
+	                    // Si les dates sont les mêmes, compare les heures des créneaux
 	                    return panier1.getCreneau().getHeureCreneau().compareTo(panier2.getCreneau().getHeureCreneau());
 	                }
 	            }
@@ -50,8 +53,6 @@ public class PreparationCommandesServlet extends HttpServlet {
 	        
 			rd = request.getRequestDispatcher("preparationcommandes");
 			rd.forward(request,response);
-		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
