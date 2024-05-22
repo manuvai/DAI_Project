@@ -17,7 +17,7 @@ String idCommande = (String) request.getAttribute("idCommande");
 	
 	
 	<% if (idCommande != null) { %>
-	<H2>La préparation de la commande est validée</H2>
+	<H2>La pr&eacute;paration de la commande est valid&eacute;e</H2>
 	<% } %>
 	
 	<table class="blueTable">
