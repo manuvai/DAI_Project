@@ -375,7 +375,7 @@ public class Article {
 	/**
 	 * Nutriscore de A à E
 	 */
-	enum Nutriscore {
+	public enum Nutriscore {
 		A, B, C, D, E
 	}
 }
