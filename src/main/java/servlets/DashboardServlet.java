@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import models.Article;
 import models.Utilisateur;
 import repositories.ArticleRepository;
+import repositories.UtilisateurRepository;
 
 /**
  * Servlet implementation class DashboardServlet
@@ -21,6 +22,7 @@ import repositories.ArticleRepository;
 public class DashboardServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	ArticleRepository articleRepository = new ArticleRepository();
+	UtilisateurRepository ur = new UtilisateurRepository();
 
 	@Override
 	protected void responseGet(final HttpServletRequest request, final HttpServletResponse response)
@@ -35,10 +37,17 @@ public class DashboardServlet extends AbstractServlet {
 		}
 
 
+		Long nbrTotal = ur.findNombreArticlesDiffCommandesUser(utilisateur.getId());
+		Long nbrBioTotal = ur.findNombreArticlesBIODiffCommandesUser(utilisateur.getId());
+		
+		
 		final List<Article> articlesFrequentlyOrdered = articleRepository
 				.findFrequentlyOrdered(utilisateur, 5);
 
 		request.setAttribute("articlesCaroussel", articlesFrequentlyOrdered);
+		session.setAttribute("bioArticle",nbrBioTotal);
+		session.setAttribute("nonBioArticle",nbrTotal - nbrBioTotal);
+		session.setAttribute("articleDash",nbrTotal);
 
 		view("dashboard/index", request, response);
 
