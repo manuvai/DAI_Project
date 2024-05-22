@@ -23,7 +23,7 @@ import models.PostIt;
 import models.keys.ConcernerKey;
 import models.keys.ContenirKey;
 import repositories.ArticleRepository;
-import repositories.ConcernerRepository;
+import repositories.ContenirRepository;
 import repositories.ListeDeCourseRepository;
 import repositories.PostItRepository;
 
@@ -38,7 +38,7 @@ public class ListeDeCourseShowServlet extends AbstractServlet {
 
 	ListeDeCourseRepository listeDeCourseRepository = new ListeDeCourseRepository();
 	PostItRepository postItRepository = new PostItRepository();
-	ConcernerRepository concernerRepository = new ConcernerRepository();
+	ContenirRepository contenirRepository = new ContenirRepository();
 	ArticleRepository articleRepository = new ArticleRepository();
 	ListeDeCourseMapper mapper = ListeDeCourseMapper.INSTANCE;
 
@@ -142,14 +142,32 @@ public class ListeDeCourseShowServlet extends AbstractServlet {
 		final Article article = articleRepository.findById(articleId, session);
 		final ListeDeCourse liste = listeDeCourseRepository.findById(listeId, session);
 		final Contenir contenir = liste.getContenirs().get(article);
-		contenir.setQte(qty);
-		liste.getContenirs().put(article, contenir);
+
+		if (contenir == null) {
+			ajouterErreur("Cet article ne fait pas partie de cette liste", request);
+
+			session.close();
+			doGet(request, response);
+			return;
+		}
+
+		String message;
+		if (qty <= 0) {
+			message = "L'article a bien été retiré de la liste";
+			liste.getContenirs().remove(article);
+			contenirRepository.delete(contenir, session);
+
+		} else {
+			message = "La quantité a été modifiée avec succès";
+			contenir.setQte(qty);
+			liste.getContenirs().put(article, contenir);
+		}
 
 		listeDeCourseRepository.update(liste, session);
 
 		transaction.commit();
 
-		ajouterSucces("La quantité a été modifiée avec succès", request);
+		ajouterSucces(message, request);
 		responseGet(request, response);
 
 	}
