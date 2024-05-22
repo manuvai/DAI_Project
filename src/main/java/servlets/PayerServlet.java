@@ -93,7 +93,6 @@ public class PayerServlet extends HttpServlet {
 		int ajoutFidelite = (int) (totalPayer / 5);
 		user.setPtFidelite(user.getPtFidelite() - ptconso * 10 + ajoutFidelite);
 		ur.update(user);
-
 		// mettre a jour panier
 		pr.update(p);
 		RequestDispatcher rd = request.getRequestDispatcher("panierEnregistrer");
