@@ -56,21 +56,16 @@ if (creneauRetrait == null) {
 %>
 
 	<form action="PayerServlet" method="post">
-	    <label for="creneau">Choisir un creneau :</label>
-	    <select name="creneau" id="creneau">
 	        <% 
 	            List<Creneau> tousCreneaux = (List<Creneau>) session.getAttribute("creneaux");
 	            for (Creneau creneau: tousCreneaux) { 
-	        %>
-	                <option value="<%= creneau.getCodeCreneau() %>">
-	                	<%= creneau.getHeureCreneau().toString().replace("_","-").substring(1) %> le <%= creneau.getDateCreneau() %>
-	               	</option>
+	        %>             	
+	            <input type="hidden" name="creneau" value="<%= creneau.getCodeCreneau() %>">
+		    	<input type="submit" id="bt-creneauSelector" value="<%= creneau.getHeureCreneau().toString().replace("_","-").substring(1) %> le <%= creneau.getDateCreneau() %>">
 	        <% 
 	            } 
 	        %>
-	    </select>
-	    
-	    <input type="submit" value="Payer">
+	     
 	</form>
 <% String nombreArrondi = String.format("%.2f", apayer);%>
 	<p>A Payer : <span id="apayer" ><%= nombreArrondi %></span> Euro</p>
