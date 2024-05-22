@@ -2,9 +2,11 @@ package repositories;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import models.Creneau;
 import models.Panier;
 
 public class PanierRepository extends AbstractRepository<Panier, Integer> {
@@ -25,5 +27,24 @@ public class PanierRepository extends AbstractRepository<Panier, Integer> {
 
 			return paniers;
 		}
+	
+	public List<Panier> findPanierByUserId(final int userid) {
+	    final Session session = getSession();
+	    final Transaction transaction = session.beginTransaction();
+	    
+	    List<Panier> paniers = session.createQuery("from Panier where UtilisateurId= :id", Panier.class)
+	                                  .setParameter("id", userid)
+	                                  .list();
+	    
+	    for (Panier panier : paniers) {
+	        Hibernate.initialize(panier.getComposers());
+	       
+	    }
+	    
+	    transaction.commit();
+	    session.close();
+	    
+	    return paniers;
+	}
 
 }

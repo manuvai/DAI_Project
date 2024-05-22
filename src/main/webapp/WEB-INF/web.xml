@@ -67,6 +67,16 @@
     <servlet-name>commandesClient</servlet-name>
     <url-pattern>/commandesClient</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>detailsCommandeClient</display-name>
+    <servlet-name>detailsCommandeClient</servlet-name>
+    <jsp-file>/WEB-INF/content/detailsCommandeClient.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>detailsCommandeClient</servlet-name>
+    <url-pattern>/detailsCommandeClient</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>panier</display-name>
