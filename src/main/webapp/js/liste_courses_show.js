@@ -9,7 +9,7 @@ $(window).on('load', () => {
 		let rootPath = $('#rootPath').val();
 		let q = encodeURIComponent(postItLabel);
 		
-		let url = `${rootPath}/articles/search?q=${q}`;
+		let url = `${rootPath}/search?q=${q}`;
 		get(url, xhr => {
 			let responseXML = xhr.responseXML;
 			
@@ -41,8 +41,7 @@ function createCardElement(dto, postItId, rootPath) {
 	let listeId = $('#listeId').val();
 	
 	const cardElement = document.createElement('div');
-	cardElement.className = 'card';
-	cardElement.style.width = '18rem';
+	cardElement.className = 'card col-4';
 	
 	const imgElement = document.createElement('img');
 	imgElement.className = 'card-img-top';
