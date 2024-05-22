@@ -45,6 +45,11 @@ public class ListeDeCoursesServlet extends AbstractServlet {
 
 		}
 
+		final String redirectError = (String) session.getAttribute(ListeDeCourseShowServlet.LISTE_NOT_FOUND);
+		if (redirectError != null) {
+			ajouterErreur(redirectError, request);
+		}
+
 		// Récupération des listes de courses de l'utilisateur.
 		final Utilisateur utilisateur = (Utilisateur) session.getAttribute("user");
 		final List<ListeCourseDto> listesDtos = recuperationListeUtilisateur(utilisateur);

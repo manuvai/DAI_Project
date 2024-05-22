@@ -23,7 +23,7 @@ public class PostIt {
 	@Column(name = "Label")
 	private String label;
 
-	@MapKeyJoinColumn(name = "IdPostIt")
+	@MapKeyJoinColumn(name = "IdListeDeCourse")
 	@OneToMany(mappedBy = "postit", cascade = CascadeType.ALL)
 	private Map<ListeDeCourse, Concerner> stockers;
 

@@ -34,7 +34,7 @@ public class ListeDeCourse {
 	@JoinColumn(name = "IdUtilisateur")
 	private Utilisateur utilisateur;
 
-	@MapKeyJoinColumn(name = "IdListeDeCourse")
+	@MapKeyJoinColumn(name = "IdPostIt")
 	@OneToMany(mappedBy = "liste", cascade = CascadeType.ALL)
 	private Map<PostIt, Concerner> concerners;
 
@@ -112,7 +112,7 @@ public class ListeDeCourse {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(concerners, idListDeCourse, nom, utilisateur);
+		return Objects.hash(idListDeCourse, nom, utilisateur);
 	}
 
 	@Override
@@ -120,11 +120,11 @@ public class ListeDeCourse {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 		final ListeDeCourse other = (ListeDeCourse) obj;
-		return Objects.equals(concerners, other.concerners) && Objects.equals(idListDeCourse, other.idListDeCourse)
+		return Objects.equals(idListDeCourse, other.idListDeCourse)
 				&& Objects.equals(nom, other.nom) && Objects.equals(utilisateur, other.utilisateur);
 	}
 

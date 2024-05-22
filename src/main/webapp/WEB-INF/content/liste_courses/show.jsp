@@ -7,6 +7,7 @@
 ListeCourseDto liste = (ListeCourseDto) request.getAttribute("liste");
 Map<PostIt, Integer> postItsMap = liste.getPostsItsMap();
 
+Integer addedPostItId = (Integer) request.getAttribute("addedPostItId");
 %>
 <%@ include file="../../template/start.jsp"%>
 
@@ -45,6 +46,7 @@ Map<PostIt, Integer> postItsMap = liste.getPostsItsMap();
 						<input type="number" 
 							name="qty" 
 							id="qty" 
+							min="0"
 							class="form-control"
 							aria-describedby="qtyHelp" 
 							placeholder="Entrez la quantité de la nouvelle postIt" />
@@ -62,7 +64,7 @@ Map<PostIt, Integer> postItsMap = liste.getPostsItsMap();
 			for (Entry<PostIt, Integer> entry : postItsMap.entrySet()) {
 				PostIt postIt = entry.getKey();
 				Integer qty = entry.getValue();
-				boolean isAdded = false;
+				boolean isAdded = addedPostItId != null && addedPostItId.equals(qty);
 			%>
 
 			<tr <%= isAdded ? "class=\"table-success\"" : "" %>>
@@ -70,11 +72,11 @@ Map<PostIt, Integer> postItsMap = liste.getPostsItsMap();
 				<td><%= postIt.getLabel() %></td>
 				<td><%= qty %></td>
 				<td>
-					<form action="<%= request.getContextPath() %>/liste_courses/show?action=delete"
+					<form action="<%= request.getContextPath() %>/listes_courses/show?action=delete&id=<%= liste.getId() %>"
 						method="post">
-						<input type="hidden" name="liste-courses-id"
+						<input type="hidden" name="post-it-id"
 							value="<%= postIt.getIdPostIt() %>" />
-						<button type="submit" disabled class="btn btn-danger">Supprimer</button>
+						<button type="submit" class="btn btn-danger">Supprimer</button>
 					</form>
 				</td>
 			</tr>
