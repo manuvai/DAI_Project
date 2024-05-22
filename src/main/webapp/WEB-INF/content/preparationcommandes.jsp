@@ -8,11 +8,18 @@ request.setAttribute("isHeaderDisabled", false);
 List<String> cssFiles = new ArrayList<>();
 cssFiles.add("css/preparationcommandes.css");
 request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
+
+String idCommande = (String) request.getAttribute("idCommande");
+
 %>
 <%@ include file="../template/start.jsp" %>
-
-<body>
 	<h1>Préparation des commandes</h1> 
+	
+	
+	<% if (idCommande != null) { %>
+	<H2>La préparation de la commande est validée</H2>
+	<% } %>
+	
 	<table class="blueTable">
 		<thead>
 			<tr>
@@ -34,8 +41,5 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 		    <% } %>
 		</tbody>
 	</table>
-	<a id="a-historique" href="./PreparationCommandesHistoriqueServlet">Historique des commandes préparées</a>
-	
-	<div  class="spacer"> . </div>
-</body>		
+	<a id="a-historique" href="./PreparationCommandesHistoriqueServlet">Historique des commandes préparées</a>	
 <%@ include file="../template/end.jsp" %>

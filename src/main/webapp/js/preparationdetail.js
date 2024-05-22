@@ -89,4 +89,7 @@ function enregistrerTempsBd(temps, etat) {
 	            }
 	        }; */
 	    xhr.send();
+	    if (etat == "Fin"){
+	    	window.location.replace("./PreparationCommandesServlet" + "?idCommande=" + idPanier)
+	    }
 }

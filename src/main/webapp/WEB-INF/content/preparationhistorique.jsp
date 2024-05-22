@@ -28,7 +28,7 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 			    	<td>
 				    	<form action="./PreparationCommandeDetailServlet" method="get">
 		    				<input type="hidden" name="idCommande" value="<%= panier.getId() %>">
-		    				<input type="submit" value="<%= panier.getId() %>">
+		    				<input type="submit" id="bt-panierSelector" value="<%= panier.getId() %>">
 						</form>
 			    	</td>
 			    	<td><%= panier.getCreneau().getDateCreneau().toString() %> <br> <%= panier.getCreneau().getHeureCreneau().name().substring(1).replace("_", " à ") %> </td>
@@ -39,8 +39,5 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 	</table>
 	
 	<a id="a-accueil" href="./PreparationCommandesServlet">Retour aux commandes</a>
-	
-	<div  class="spacer"> . </div>
-</body>
 	
 <%@ include file="../template/end.jsp" %>

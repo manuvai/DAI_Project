@@ -21,7 +21,6 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 
 %>
 <%@ include file="../template/start.jsp" %>
-<body>
 	<h1>Commande en cours</h1>
 	<a id="a-accueil" href="./PreparationCommandesServlet">Retour aux commandes</a>
 	<br>
@@ -63,7 +62,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 			        <% } %>
 			        <td><%= article.getDesc() %></td>
 			        <td><%= quantite %></td>
-			        <td><%= article.getPrixUnitaire()*quantite %>€</td>
+			        <td><%= Math.round(article.getPrixUnitaire()*quantite*article.getPromotion()/100 * 100.0) / 100.0 %>€</td>
 			    </tr>
 			<%
 			        }
@@ -74,11 +73,9 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 	</table>
 	
 	<% if (panier.getEtat() == models.Panier.Etat.VALIDEE) { %>
-	<button id="bu-stop">Terminer la préparation</button>
+	    	<button id="bu-stop">Terminer la préparation</button>
 	<%
 		}
 	%>
-<div  class="spacer"> . </div>
-</body>
 
 <%@ include file="../template/end.jsp" %>
