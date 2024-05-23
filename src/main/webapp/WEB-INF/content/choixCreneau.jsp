@@ -58,7 +58,7 @@ if (creneauRetrait == null) {
 <%
 }
 %>
-	<form action="VerifierDispo" method="post">
+	<form  id="choixCreneau" action="VerifierDispo" method="post">
 	    <label for="creneau">Choisir un creneau :</label>
 	    <select name="creneau" id="creneau">
 	        <% 

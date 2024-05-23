@@ -74,7 +74,7 @@ public class Panier {
 	public Panier(
 		final Utilisateur utilisateur, final Creneau creneau) {
 		this.etat = Etat.VALIDEE;
-		this.utilisateur = utilisateur;
+		this.utilisateur = utilisateur; 
 		this.creneau = creneau;
 		this.composers = new HashMap<Article, Composer>();
 	}
@@ -217,7 +217,7 @@ public class Panier {
 	}
 
 	public enum Etat {
-		ATTENTE, VALIDEE, PRETE, LIVRE
+		ENREGISTRE,ATTENTE, VALIDEE, PRETE, LIVRE
 	}
 
 }

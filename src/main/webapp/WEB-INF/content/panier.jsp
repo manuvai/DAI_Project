@@ -22,7 +22,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 %>
 <%@ include file="../template/start.jsp"%>
 
-<h1>Bonjour, voici votre panier</h1>
+<h1>Bonjour, voici votre panier: </h1>
 
 <%
 List<String> numeros = (List<String>) session.getAttribute("numeros");
@@ -110,8 +110,9 @@ if (user.getPtFidelite() > 9) {
 if (total != 0) {
 %>
 <div id="validationOuSuppresion">
-	<a href="ValiderPanierServlet" class="validerP">Valider le panier</a> <a
-		href="SupprimerServlet" class="supprimerP">Supprimer le panier</a>
+	<a href="ValiderPanierServlet" > <button class="btn btn-primary">Valider le panier</button></a> 
+	<a href="EnregistrerPanierServlet"><button class="btn btn-secondary"> Enregistrer panier </button></a>
+	<a href="SupprimerServlet"> <button class="btn btn-danger">Supprimer le panier</button></a>
 </div>
 <%
 }

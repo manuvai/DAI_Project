@@ -1,5 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
+	console.log("LOOOOOOl");
     const selectElement = document.getElementById("etatFiltre");
 
     selectElement.addEventListener("change", function () {

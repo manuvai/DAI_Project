@@ -1,5 +1,5 @@
 
-form {
+#etapeFinale {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -8,16 +8,16 @@ form {
     margin: 20px auto;
 }
 
-form p {
+#etapeFinale p {
     margin: 15px 0;
     color: #333;
 }
 
-form p.label {
+#etapeFinale p.label {
     font-weight: bold;
 }
 
-form input[type="number"] {
+#etapeFinale input[type="number"] {
     width: calc(100% - 24px);
     padding: 10px;
     margin: 5px 0 10px 0;
@@ -25,12 +25,12 @@ form input[type="number"] {
     border-radius: 4px;
 }
 
-form label {
+#etapeFinale label {
     display: block;
     margin: 10px 0 5px;
 }
 
-form .btn {
+#etapeFinale .btn {
     display: inline-block;
     background-color: #28a745;
     color: #fff;
@@ -41,7 +41,7 @@ form .btn {
     text-align: center;
 }
 
-form .btn:hover {
+#etapeFinale .btn:hover {
     background-color: #218838;
 }
 
