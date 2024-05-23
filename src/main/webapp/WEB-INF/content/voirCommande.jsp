@@ -21,14 +21,15 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
         <tr>
             <th>ID</th>
             <th>Date de Création</th>
-            <th>Date de Récupération</th>
+            <th>Date de Livraison</th>
+            <th>Etat</th>
             <th>Détails</th>
         </tr>
     </thead>
     <tbody>
 <%
 CommandeRepository commandeRepository = new CommandeRepository();
-List<Commande> commandes = commandeRepository.findAll();
+List<Commande> commandes = commandeRepository.findAllSorted();
 if (commandes != null) {
                 for (Commande commande : commandes) {
         %>
@@ -36,6 +37,7 @@ if (commandes != null) {
             <td><%= commande.getId() %></td>
             <td><%= commande.getDateCreation() %></td>
             <td><%= commande.getDateArrivee() %></td>
+            <td><%= commande.getEtat() %></td>
             <td><a href='CommandDetailsServlet?id=<%= commande.getId() %>'><button >Détails</button></a></td>
         </tr>
         <%
