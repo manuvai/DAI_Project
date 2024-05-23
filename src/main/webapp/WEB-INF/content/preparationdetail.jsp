@@ -22,7 +22,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 %>
 <%@ include file="../template/start.jsp" %>
 	<h1>Commande en cours</h1>
-	<a id="a-accueil" href="./PreparationCommandesServlet">Retour aux commandes</a>
+	<a id="a-historique" href="./PreparationCommandesServlet">Retour aux commandes</a>
 	<br>
 	<%
 		Panier panier = (Panier) request.getAttribute("panier");
@@ -43,6 +43,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 		        <% if (panier.getEtat() == models.Panier.Etat.VALIDEE) { %>
 	            <th>Validation</th>
 	            <% } %>
+	            <th class="colonneFine">Id</th>
 	            <th>Nom Article</th>
 	            <th>Quantité</th>
 	            <th>Prix</th>
@@ -55,14 +56,31 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 			        for (Map.Entry<Article, Integer> entry : mapArticles.entrySet()) {
 			            Article article = entry.getKey();
 			            int quantite = entry.getValue();
+			            boolean isQuantiteInitialised = false;
 			%>
 			    <tr>
 			    	 <% if (panier.getEtat() == models.Panier.Etat.VALIDEE) { %>
 			        <td><input type="checkbox" class="checkbox"></td>
 			        <% } %>
+			        <td class="colonneFine" id="idArticle<%=article.getId()%>"><%= article.getId() %></td>
 			        <td><%= article.getDesc() %></td>
-			        <td><%= quantite %></td>
-			        <td><%= Math.round(article.getPrixUnitaire()*quantite*article.getPromotion()/100 * 100.0) / 100.0 %>€</td>
+			        <td>
+			        	<div class="editPreparateur">
+			        		<% if (panier.getEtat() == models.Panier.Etat.VALIDEE) { %>
+			        			<i id="enleverButton" class="boutonPanier fas fa-minus icon" onclick="enleverArticle(<%= article.getId() %>, <%= request.getAttribute("idCommande")%>)" title="moins" id="moins"></i>
+			        		<%} %>	
+			        			<% if (!isQuantiteInitialised) { %> 
+			        				<span id="quantite<%=article.getId()%>"><%=quantite %></span>
+			        				<% isQuantiteInitialised = true; %>
+			        			<% } else { %>
+			        				<span id="quantite<%=article.getId()%>"></span>
+			        			<% } %>
+			        		<% if (panier.getEtat() == models.Panier.Etat.VALIDEE) { %>
+			        			<i id="ajouterButton"  class="boutonPanier fas fa-plus icon" onclick="ajouterArticle(<%= article.getId() %>, <%= request.getAttribute("idCommande")%>)" title="plus" id="plus"></i>
+			        		<% } %>
+			        	</div>
+			        </td>
+			        <td><%= quantite %></td><td><%= String.format("%.2f", article.getPrixUnitaire() * quantite * (1 + article.getPromotion() / 100.0)) %>€</td>
 			    </tr>
 			<%
 			        }

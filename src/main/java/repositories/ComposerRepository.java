@@ -30,6 +30,5 @@ public class ComposerRepository extends AbstractRepository<Composer, ComposerKey
 			transaction.commit();
 
 			return composers;
-		}
-
+	}
 }

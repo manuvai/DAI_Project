@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,7 +50,7 @@ public class PayerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -60,40 +61,51 @@ public class PayerServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		// recuperation des différentes infos
-		doGet(request, response);
-		String creneauS = request.getParameter("creneau");
 		HttpSession session = request.getSession();
-		session.setAttribute("creneau", creneauS);
-		String magasin = (String) session.getAttribute("magasinRetrait");
 		Utilisateur user = (Utilisateur) session.getAttribute("user");
-		Creneau creneau = cr.findById(Integer.parseInt(creneauS));
 		int ptconso = (int) session.getAttribute("ptfidelConso");
+		Panier p = (Panier) session.getAttribute("panierAValider");
+		Map<Article, Composer> composition = p.getComposers();
 
-		Panier p = new Panier(user, creneau);
-		pr.create(p);
-		ArrayList<String> numeros = (ArrayList<String>) session.getAttribute("numeros");
+		 List<Integer> produitsId = (List<Integer>) request.getSession().getAttribute("articleRempla");
 
-		// ajouter element au panier
-		for (String num : numeros) {
-			Composer c = new Composer();
-			c.setQte((int) session.getAttribute(num));
-			ComposerKey composerKey = new ComposerKey(Integer.parseInt(num), p.getId());
-			c.setKey(composerKey);
+	        
+	     for (Integer articleId : produitsId) {
+	            int qteAdd = Integer.parseInt(request.getParameter(""+articleId));
+	            if(qteAdd!= 0) {
+	            	Article article = ar.findById(articleId);
+	            	if(composition.containsKey(article)) {
+	            		composition.get(article).setQte(qteAdd + composition.get(article).getQte());
+	            	}else {
+	            		Composer c = new Composer();
+						c.setQte(qteAdd);
+						ComposerKey composerKey = new ComposerKey(articleId, p.getId());
+						c.setKey(composerKey);
+						p.getComposers().put(ar.findById(articleId), c);
+	            	}
+	            }
 
-			p.getComposers().put(ar.findById(Integer.parseInt(num)), c);
 
-			session.removeAttribute(num);
-		}
-		numeros.clear();
-		session.setAttribute("numeros", numeros);
-		session.setAttribute("nbrArticleTotal", 0);
-		// ajout des pt de fidelites
-		double totalPayer = (double) session.getAttribute("apayer");
+	        }
+		
+		double montantFinal = 0;
+		
+		for (Map.Entry<Article, Composer> entry : composition.entrySet()) {
+            Article article = entry.getKey();
+            Composer composer = entry.getValue();
+            int quantity = composer.getQte(); 
+            montantFinal += quantity*article.getPrixUnitaire()*(1+article.getPromotion()/100);
+        }
+		
+		p.setComposers(composition);
+		
+		session.setAttribute("apayer", montantFinal);
 
-		int ajoutFidelite = (int) (totalPayer / 5);
+		int ajoutFidelite = (int) (montantFinal / 5);
 		user.setPtFidelite(user.getPtFidelite() - ptconso * 10 + ajoutFidelite);
 		ur.update(user);
-		// mettre a jour panier
+		
+		
 		pr.update(p);
 		RequestDispatcher rd = request.getRequestDispatcher("panierEnregistrer");
 		rd.forward(request, response);

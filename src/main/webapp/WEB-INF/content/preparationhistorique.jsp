@@ -12,7 +12,7 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 <%@ include file="../template/start.jsp" %>
 <body>
 	<h1>Historique des commandes préparées</h1> 
-	
+	<a id="a-historique" href="./PreparationCommandesServlet">Retour aux commandes</a>
 	 
 	<table class="blueTable">
 		<thead>
@@ -37,7 +37,5 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 		    <% } %>
 		</tbody>
 	</table>
-	
-	<a id="a-accueil" href="./PreparationCommandesServlet">Retour aux commandes</a>
 	
 <%@ include file="../template/end.jsp" %>

@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -28,12 +29,19 @@ public abstract class AbstractServlet extends HttpServlet {
 	public static final String JS_FILES_KEY = "jsFiles";
 	private static final String UTF_8 = "UTF-8";
 
+	protected HttpServletRequest request;
+
 	@Override
 	protected void doGet(
 			final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding(UTF_8);
+
+		this.request = request;
+
+		mergeSessionMessages(request);
+		viderMessagesSession();
 
 		responseGet(request, response);
 	}
@@ -238,6 +246,61 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	/**
+	 * Ajoute des messages à la session.
+	 *
+	 * @param key
+	 * @param message
+	 * @param request
+	 */
+	protected void ajouterMessageSession(final String key, final String message) {
+
+		if (request != null) {
+			ajouterMessageSession(key, message, request.getSession());
+		}
+
+	}
+
+	/**
+	 * Ajoute des messages à la session.
+	 *
+	 * @param key
+	 * @param message
+	 * @param session
+	 */
+	@SuppressWarnings("unchecked")
+	protected void ajouterMessageSession(final String key, final String message, final HttpSession session) {
+		final boolean isParametersValid = Objects.nonNull(key) && Objects.nonNull(message) && Objects.nonNull(session);
+
+		if (isParametersValid) {
+			final List<String> messageList = (List<String>) session.getAttribute(key);
+
+			final List<String> nouvelleMessageList = Objects.isNull(messageList) ? new ArrayList<>()
+					: new ArrayList<>(messageList);
+
+			nouvelleMessageList.add(message);
+
+			session.setAttribute(key, nouvelleMessageList);
+		}
+
+	}
+
+	/**
+	 * Vide le contenu des messages dans le contexte partagé.
+	 *
+	 * @param key
+	 * @param request
+	 */
+	protected void viderMessagesSession() {
+		if (Objects.nonNull(request) && Objects.nonNull(request.getSession())) {
+			final HttpSession session = request.getSession();
+
+			final List<String> keys = Arrays.asList(SUCCESSES_KEY, INFOS_KEY, ERRORS_KEY);
+
+			keys.forEach(key -> session.setAttribute(key, Collections.emptyList()));
+		}
+	}
+
+	/**
 	 * Récupération d'une information du fichier de propriétés.
 	 *
 	 * @param inKey
@@ -272,6 +335,30 @@ public abstract class AbstractServlet extends HttpServlet {
 		}
 
 		return property;
+	}
+
+	@SuppressWarnings("unchecked")
+	private void mergeSessionMessages(final HttpServletRequest request) {
+		final HttpSession session = request.getSession();
+		final List<String> keys = Arrays.asList(SUCCESSES_KEY, INFOS_KEY, ERRORS_KEY);
+
+		for (final String key : keys) {
+			final List<String> requestAttributes = (List<String>) request.getAttribute(key);
+			final List<String> sessionAttributes = (List<String>) session.getAttribute(key);
+
+			final List<String> newAttributes = new ArrayList<>();
+			if (requestAttributes != null) {
+				newAttributes.addAll(requestAttributes);
+
+			}
+			if (sessionAttributes != null) {
+				newAttributes.addAll(sessionAttributes);
+
+			}
+
+			request.setAttribute(key, newAttributes);
+
+		}
 	}
 
 }
