@@ -4,6 +4,7 @@
 <%@page import="java.util.Objects"%>
 <%@page import="models.Utilisateur" %>
 <%@page import="models.Creneau" %>
+<%@page import="repositories.CreneauRepository" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.Date" %>
 <%
@@ -48,6 +49,8 @@ String creneauRetrait = (String) session.getAttribute("creneauRetrait");
 Double apayer = (Double) session.getAttribute("apayer");
 Utilisateur user = (Utilisateur) session.getAttribute("user");
 List<Creneau> cx = (List<Creneau>) session.getAttribute("creneaux");
+CreneauRepository cr = new CreneauRepository();
+
 
 if (creneauRetrait == null) {
 %>
@@ -63,7 +66,7 @@ if (creneauRetrait == null) {
 	            for (Creneau creneau: tousCreneaux) { 
 	        %>
 	                <option value="<%= creneau.getCodeCreneau() %>">
-	                	<%= creneau.getHeureCreneau().toString().replace("_","-").substring(1) %> le <%= creneau.getDateCreneau() %>
+	                	<%= creneau.getHeureCreneau().toString().replace("_","-").substring(1) %> le <%= creneau.getDateCreneau() %> (<%= cr.findDisposParCreneau(creneau) %> places disponibles)
 	               	</option>
 	        <% 
 	            } 
