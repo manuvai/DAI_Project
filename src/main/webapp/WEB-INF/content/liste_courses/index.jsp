@@ -74,11 +74,11 @@ Integer addedListeId = (Integer) request.getAttribute("addedListeId");
 						<button type="submit" class="btn btn-primary">Transformer en panier</button>
 					</form>
 					
-					<form action="<%=request.getContextPath()%>/listes_courses/delete"
+					<form action="<%=request.getContextPath()%>/listes_courses?action=delete"
 						method="post">
 						<input type="hidden" name="liste-courses-id"
 							value="<%=liste.getId()%>" />
-						<button type="submit" disabled class="btn btn-danger">Supprimer</button>
+						<button type="submit" class="btn btn-danger">Supprimer</button>
 					</form>
 				</td>
 			</tr>
