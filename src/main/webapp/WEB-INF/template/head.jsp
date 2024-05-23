@@ -35,7 +35,8 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
 	    	id="searchForm" 
 	    	method="POST"
 	    	action="<%= request.getContextPath() %>/search">
-	        <input class="form-control mr-sm-2 dropdown-toggle" 
+	    	<div>
+	        <input class="form-control mr-sm-2 dropdown-toggle barre" 
 	        	type="search" 
 	        	name="query"
 	        	placeholder="Rechercher" 
@@ -44,7 +45,8 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
 				aria-haspopup="true" 
 				aria-expanded="false"
 	        	id="searchInput">
-	     
+	        <div id="searchResults" class="row"></div>
+	     </div>
 	    </form>
 	    <% } %>
 	    <% if (role != Role.PREPARATEUR) { %>
@@ -92,4 +94,4 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
     </div>
 </nav>
 
-    <div id="searchResults" class="row"></div>
+    

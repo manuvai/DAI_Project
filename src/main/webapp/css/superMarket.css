@@ -248,19 +248,30 @@ h2{
 
 
 #searchResults {
-    display: none; /* initialement caché */
-    flex-direction: row; /* alignement en ligne */
-    flex-wrap: wrap; /* permettre le retour à la ligne si nécessaire */
-    gap: 10px; /* espace entre les éléments */
+	background: white;
+	z-index: 999;
+	position: absolute;
+    display: none; 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    gap: 2px; 
+    width: 400px;
+    max-height: 100px;
+    overflow-y: auto;
+    margin: 5px;
 }
 
 #searchResults .cde {
-    background-color: #add8e6; /* bleu clair */
-    border-radius: 10px; /* bords arrondis */
-    padding: 10px; /* espace intérieur */
-    margin: 5px; /* marge extérieure */
-    display: flex; /* flexbox pour les éléments internes */
-    align-items: center; /* alignement vertical */
-    justify-content: center; /* alignement horizontal */
-    min-width: 100px; /* largeur minimale */
+    background-color: #eeeeee; 
+    border-radius: 10px; 
+    padding: 2px;
+    margin: 2px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-width: 100px; 
+}
+
+.barre{
+	width: 400px !important;
 }
