@@ -74,7 +74,7 @@ public class Panier {
 	public Panier(
 		final Utilisateur utilisateur, final Creneau creneau) {
 		this.etat = Etat.VALIDEE;
-		this.utilisateur = utilisateur;
+		this.utilisateur = utilisateur; 
 		this.creneau = creneau;
 		this.composers = new HashMap<Article, Composer>();
 	}

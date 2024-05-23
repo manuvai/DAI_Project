@@ -15,21 +15,45 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 %>
 <%@ include file="../template/start.jsp" %>
 <h2>Nos rayons</h2>
-<div id="rayon">
-    <% 
+ <div id="rayonCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <% 
         List<Rayon> rayons = (List<Rayon>) request.getAttribute("rayons");
         if (rayons != null) {
-            for (Rayon rayon : rayons) {
-    %>
-                <button onclick="window.location.href='Catalogue?nomRayon=<%=rayon.getNomRayon() %>';" class="btn-rayon" id=<%= rayon.getId() %>> <%= rayon.getNomRayon() %></button>
-    <% 
+            for (int i = 0; i < rayons.size(); i += 5) {
+        %>
+        <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
+            <div class="d-flex justify-content-center flex-wrap">
+                <% 
+                for (int j = i; j < Math.min(i + 5, rayons.size()); j++) {
+                    Rayon rayon = rayons.get(j);
+                %>
+                <div class="flex-item">
+                    <button onclick="window.location.href='Catalogue?nomRayon=<%=rayon.getNomRayon() %>';" 
+                            class="btn btn-primary btn-rayon" id="<%= rayon.getId() %>">
+                        <%= rayon.getNomRayon() %>
+                    </button>
+                </div>
+                <% 
+                }
+                %>
+            </div>
+        </div>
+        <% 
             }
         } 
-    %>       
+        %> 
+    </div>
+    <a class="carousel-control-prev" href="#rayonCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Précédent</span>
+    </a>
+    <a class="carousel-control-next" href="#rayonCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Suivant</span>
+    </a>
 </div>
 
-<div id="couverture-catalogue">
-</div>
 
 <h2>Nos articles en promotion</h2>
 <%@ include file="./commons/article_caroussel.jsp" %>

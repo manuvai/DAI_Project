@@ -30,7 +30,7 @@ public class EnregistrerPanierServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//Récupérer data en sessions
+		//Récupérer data en session
 		HttpSession session = request.getSession();
 		ArrayList<String> numeros = (ArrayList<String>) session.getAttribute("numeros");
 		Utilisateur user = (Utilisateur) session.getAttribute("user");
@@ -66,7 +66,6 @@ public class EnregistrerPanierServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 	
-		//Supprimer data en session 
 	}
 
 	/**

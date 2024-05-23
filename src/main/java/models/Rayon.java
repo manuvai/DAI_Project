@@ -31,6 +31,14 @@ public class Rayon {
 	@Column(name = "NomRayon")
 	private String nomRayon;
 	
+	
+	/**
+	 * chemin image d'un rayon
+	 */
+	@Column(name = "CheminImageRayon")
+	private String cheminImageRayon;
+	
+	
 	@OneToMany(mappedBy = "rayon", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	private Set<Categorie> categories = new HashSet(0);
 
@@ -78,6 +86,25 @@ public class Rayon {
 		return nomRayon;
 	}
 	
+	
+	/**
+	 * Returns the image path of the rayon.
+	 *
+	 * @return the image path of the rayon
+	 */
+	public String getCheminImageRayon() {
+	    return cheminImageRayon;
+	}
+
+	/**
+	 * Sets the image path of the rayon.
+	 *
+	 * @param cheminImageRayon the new image path of the rayon
+	 */
+	public void setCheminImageRayon(String cheminImageRayon) {
+	    this.cheminImageRayon = cheminImageRayon;
+	}
+
 	/**
 	 * hashcode du rayon
 	 * @return la valeur du hash
