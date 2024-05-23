@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,6 @@ import repositories.RayonRepository;
 import repositories.SousCategorieRepository;
 import models.Article;
 import models.Categorie;
-import models.SousCategorie;
 
 @WebServlet("/Catalogue")
 public class CatalogueServlet extends AbstractServlet {
@@ -25,6 +25,7 @@ public class CatalogueServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	ArticleRepository repoArticles = new ArticleRepository();
 	CategorieRepository repoCategories = new CategorieRepository();
+	SousCategorieRepository sousCatRepo = new SousCategorieRepository();
 	RayonRepository repoRayon = new RayonRepository();
 	
 	
@@ -33,7 +34,6 @@ public class CatalogueServlet extends AbstractServlet {
 		
 		List<Article> listeArticles;
 		List<Categorie> listeCategories;
-		List<SousCategorie> listeSousCat;
 		
 		if(request.getParameter("nomRayon")!=null) {
 			listeArticles = repoArticles.getArticlesByRayonName(request.getParameter("nomRayon"));

@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.Article;
+import models.Categorie;
+import models.SousCategorie;
 import repositories.ArticleRepository;
+import repositories.CategorieRepository;
+import repositories.SousCategorieRepository;
 
 /**
  * Servlet implementation class CatalogueAjaxServlet
@@ -36,14 +40,18 @@ public class CatalogueAjaxServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		ArticleRepository repoArticles = new ArticleRepository();
-		List<Article> listeArticles;
+		CategorieRepository repoCategories = new CategorieRepository();
+		SousCategorieRepository repoSousCategories = new SousCategorieRepository();
+		List<Article> listeArticles = new ArrayList<Article>();
+		List<SousCategorie> listeSousCat = new ArrayList<SousCategorie>();
+
 		response.setContentType("application/xml;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
 		try (PrintWriter out = response.getWriter()){
 			/*----- Ecriture de la page XML -----*/
 			out.println("<?xml version=\"1.0\"?>");
-			out.println("<liste_articles>");
+			out.println("<liste_data>");
 
 			/*----- Récupération des paramètres -----*/
 			//PAR SOUS-CATEGORIE
@@ -54,18 +62,17 @@ public class CatalogueAjaxServlet extends HttpServlet {
 			//PAR CATEGORIE
 			else if(request.getParameter("categorie")!=null) {
 				listeArticles = repoArticles.getArticlesByCategorieName(request.getParameter("categorie"));
+				listeSousCat = repoSousCategories.getSousCategoriesByCategorieName(request.getParameter("categorie"));
 			}
 			
 			//PAR RAYON
 			else if(request.getParameter("rayon")!=null) {
 				listeArticles = repoArticles.getArticlesByRayonName(request.getParameter("rayon"));
 			}
+
 			
-			else listeArticles = new ArrayList<Article>();
 			HttpSession session = request.getSession();
 			for(Article article : listeArticles) {
-				
-				System.out.println(article.getLib());
 				out.println("<article>");
 					out.println("<nomArticle>"+article.getLib()+"</nomArticle>");
 					out.println("<imgArticle>"+article.getCheminImage()+"</imgArticle>");
@@ -77,12 +84,20 @@ public class CatalogueAjaxServlet extends HttpServlet {
 					out.println("<nbArticlePanier>"+(session.getAttribute(article.getId().toString())!=null?session.getAttribute(article.getId().toString()):"0")+"</nbArticlePanier>");
 				out.println("</article>");
 			}
-			out.println("</liste_articles>");
+			
+			for(SousCategorie souscat : listeSousCat) {
+				System.out.println("OUAIS : "+souscat.getNomSousCategorie());
+				out.println("<sousCategorie>");
+					out.println("<nomCategorie>"+souscat.getNomSousCategorie()+"</nomCategorie>");
+				out.println("</sousCategorie>");
+			}
+			
+			out.println("</liste_data>");
 		}
 		catch (Exception ex){
 			PrintWriter out = response.getWriter();
 			out.println("<article>Erreur - " + ex.getMessage() + "</article>");
-			out.println("</liste_articles>");
+			out.println("</liste_data>");
 		}
 
 	}

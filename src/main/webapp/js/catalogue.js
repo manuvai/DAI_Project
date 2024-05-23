@@ -8,16 +8,42 @@
 6 : id
 7 : nbrArticlePanier
 */
+$("#sousCategories").change(function() {
+	console.log("test");
+	$.ajax({
+        url: "CatalogueAjaxServlet?sousCategorie="+document.getElementById('sousCategories').value,
+        type: 'GET',
+        success: function(res){
+			refreshCatalogue(res);
+		}
+    });
+});
 
-$("#categories").change(function() {
+$("#categories").change(function() {	
 	$.ajax({
         url: "CatalogueAjaxServlet?categorie="+document.getElementById('categories').value,
         type: 'GET',
         success: function(res){
 	refreshCatalogue(res);
+	refreshSousCategories(res);
 	}
     });
 });
+
+function refreshSousCategories(res){
+	
+	let sousCats = res.getElementsByTagName("sousCategorie");
+	let divSousCats = document.getElementById("sousCategories");
+	for(i=0; i<sousCats.length; i++){
+		let sousCat = sousCats[i];
+		console.log(sousCat.children[0].textContent);
+		let divOption = document.createElement("option");
+		divOption.className = "categorie";
+		divOption.value = sousCat.children[0].textContent;
+		divOption.textContent = sousCat.children[0].textContent;
+		divSousCats.append(divOption);
+	}
+}
 
 function refreshCatalogue(res){
 	let catalogue = document.getElementById("catalogue");
@@ -112,7 +138,7 @@ function refreshCatalogue(res){
 				divPanier.append(quantitePanier);
 				
 				let boutonEnlever = document.createElement("i");
-				boutonEnlever.className="boutonPanier fas fa-arrow-alt-circle-left ison";
+				boutonEnlever.className="boutonPanier fas fa-minus icon";
 				boutonEnlever.id = "enleverButton";
 				boutonEnlever.onclick=function(){enleverAuPanier(article.children[6].textContent)};
 				boutonEnlever.title="moins";
@@ -120,7 +146,7 @@ function refreshCatalogue(res){
 					
 				let boutonAjouter = document.createElement("i");
 				boutonAjouter.id = "ajouterButton";
-				boutonAjouter.className="boutonPanier fas fa-arrow-alt-circle-right icon";
+				boutonAjouter.className="boutonPanier boutonPanier fas fa-plus icon";
 				boutonAjouter.onclick=function(){ajouterAuPanier(article.children[6].textContent)};
 				boutonAjouter.title="plus";
 				divPanier.append(boutonAjouter);

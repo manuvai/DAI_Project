@@ -246,9 +246,9 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 	 */
 	public List<Article> getArticlesBySousCategorieName(final String nomSousCategorie) {
 		final String query = "SELECT a "
-				+ "FROM Article a , SousCategorie sc, Categorie c "
+				+ "FROM Article a , SousCategorie sc "
 				+ "WHERE a.sousCategorie = sc.idSousCat "
-				+ "	AND sc.nomSousCategorie = :nomSousCategorie ";
+				+ "AND sc.nomSousCategorie = :nomSousCategorie ";
 
 		final Map<String, Object> mappedValues = Collections.singletonMap("nomSousCategorie", nomSousCategorie);
 

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import models.Article;
 import models.Categorie;
+import models.SousCategorie;
 
 public class CategorieRepository extends AbstractRepository<Categorie, Integer> {
 
@@ -19,7 +20,7 @@ public class CategorieRepository extends AbstractRepository<Categorie, Integer> 
 	 * @param nomRayon
 	 * @return
 	 */
-	public List<Categorie>getCategoriesByRayonName(final String nomRayon) {
+	public List<Categorie> getCategoriesByRayonName(final String nomRayon) {
 
 		final String query = "SELECT c "
 				+ "FROM Categorie c, Rayon r "
@@ -27,25 +28,6 @@ public class CategorieRepository extends AbstractRepository<Categorie, Integer> 
 				+ "	AND r.nomRayon = :nomRayon ";
 
 		final Map<String, Object> mappedValues = Collections.singletonMap("nomRayon", nomRayon);
-
-		return getQueryResults(query, mappedValues);
-
-	}
-	
-	/**
-	 * Récupération des sous-catégories concernant une catégorie donnée.
-	 *
-	 * @param nomRayon
-	 * @return
-	 */
-	public List<Categorie>getSousCategoriesByCategorieName(final String nomCategorie) {
-
-		final String query = "SELECT sc "
-				+ "FROM SousCategorie sc, Categorie c "
-				+ "WHERE a.sousCategorie = sc.idSousCat "
-				+ "AND sc.categorie = c.idCat";
-
-		final Map<String, Object> mappedValues = Collections.singletonMap("nomCategorie", nomCategorie);
 
 		return getQueryResults(query, mappedValues);
 
