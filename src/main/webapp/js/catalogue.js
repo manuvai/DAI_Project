@@ -34,6 +34,7 @@ function refreshSousCategories(res){
 	
 	let sousCats = res.getElementsByTagName("sousCategorie");
 	let divSousCats = document.getElementById("sousCategories");
+	divSousCats.innerHTML="";
 	for(i=0; i<sousCats.length; i++){
 		let sousCat = sousCats[i];
 		console.log(sousCat.children[0].textContent);

@@ -15,6 +15,7 @@ import repositories.RayonRepository;
 import repositories.SousCategorieRepository;
 import models.Article;
 import models.Categorie;
+import models.Rayon;
 
 @WebServlet("/Catalogue")
 public class CatalogueServlet extends AbstractServlet {
@@ -34,6 +35,7 @@ public class CatalogueServlet extends AbstractServlet {
 		
 		List<Article> listeArticles;
 		List<Categorie> listeCategories;
+		List<Rayon> listeRayons;
 		
 		if(request.getParameter("nomRayon")!=null) {
 			listeArticles = repoArticles.getArticlesByRayonName(request.getParameter("nomRayon"));
@@ -45,10 +47,11 @@ public class CatalogueServlet extends AbstractServlet {
 			listeCategories = repoCategories.findAll();
 		}
 		
+		listeRayons = repoRayon.findAll();
 		
+		request.setAttribute("rayons", listeRayons);
 		request.setAttribute("articles", listeArticles);
 		request.setAttribute("categories", listeCategories);
-		request.setAttribute("rayons", listeCategories);
 
 		view("catalogue", request, response);
 	}

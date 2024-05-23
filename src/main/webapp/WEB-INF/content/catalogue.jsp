@@ -9,14 +9,48 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
 <link rel="stylesheet" type="text/css" href="css/header.css">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="css/superMarket.css">
 <title>Online Shop</title>
-</head>
 <script src="js/home.js"></script>
-  <body>
 <%@ include file="../template/head.jsp" %>
+
+</head>
+ <body>
+ <div id="rayonCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <% 
+        List<Rayon> rayons = (List<Rayon>) request.getAttribute("rayons");
+        if (rayons != null) {
+            for (int i = 0; i < rayons.size(); i += 5) {
+        %>
+        <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
+            <div class="d-flex justify-content-center flex-wrap">
+                <% 
+                for (int j = i; j < Math.min(i + 5, rayons.size()); j++) {
+                    Rayon rayon = rayons.get(j);
+                %>
+                <div class="flex-item">
+                    <button onclick="window.location.href='Catalogue?nomRayon=<%=rayon.getNomRayon() %>';" 
+                            class="btn-rayon" id="<%= rayon.getId() %>">
+                           <img class="img-rayon"
+											src="<%= request.getContextPath() %>/<%= rayon.getCheminImageRayon() %>" 
+											alt="rayon">
+                       <p><%= rayon.getNomRayon() %></p>
+                    </button>
+                </div>
+                <% 
+                }
+                %>
+            </div>
+        </div>
+        <% 
+            }
+        } 
+        %> 
+
+	</div>
+</div>
 <main>
 	<div id="sidebar">
 		<div id="contentSidebar">

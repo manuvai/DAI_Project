@@ -95,7 +95,7 @@ main{
 }
 
 .article:hover{
-background-color:rgb(210, 210, 210);
+	border:solid #68b2fa 3px;
 }
 
 #contentSidebar{
@@ -118,11 +118,21 @@ background-color:rgb(210, 210, 210);
 	text-align:center;
 	background-color:rgb(250, 250, 250);
 	padding:0;
-	width: 75%;
-	font-family: inherit;
-	font-size: inherit;
 	cursor:pointer;
 	line-height: inherit;
+	width:100%;
+    border-color: #5f6368;
+    font-weight: 700;
+    font-family: Ubuntu, sans-serif;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid;
+}
+	
+	
+option{
+	padding-top:2px;
+	padding-bottom:2px;
 }
 
 select:hover{
@@ -144,4 +154,8 @@ select:hover{
 
 .gestionPanier{
 	margin-top:5px;
+}
+
+.rayonCarousel, .carousel-inner{
+	margin:auto;
 }
