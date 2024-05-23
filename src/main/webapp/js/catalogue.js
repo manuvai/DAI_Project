@@ -36,7 +36,6 @@ function refreshSousCategories(res){
 	divSousCats.innerHTML="";
 	for(i=0; i<sousCats.length; i++){
 		let sousCat = sousCats[i];
-		console.log(sousCat.children[0].textContent);
 		let divOption = document.createElement("option");
 		divOption.className = "categorie";
 		divOption.value = sousCat.children[0].textContent;
