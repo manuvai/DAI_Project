@@ -126,9 +126,10 @@ public class ArticleServlet extends AbstractServlet {
 		final ListeDeCourse liste = listeDeCourseRepository.findById(listeId, session);
 		final Article article = articleRepository.findById(articleId, session);
 
-		final ContenirKey key = new ContenirKey(article.getId(), liste.getIdListDeCourse());
-		final Contenir contenir = new Contenir();
-		contenir.setKey(key);
+		final Contenir actualContenir = article.getContenirs().get(liste);
+		final Contenir contenir = actualContenir != null
+				? actualContenir
+				: valueContenir(liste, article);
 
 		String message;
 		if (qty <= 0) {
@@ -136,10 +137,16 @@ public class ArticleServlet extends AbstractServlet {
 			article.getContenirs().remove(liste);
 			contenirRepository.delete(contenir, session);
 
-		} else {
-			message = "L'article a bien été ajouté à la liste";
+		} else if (actualContenir == null) {
 			contenir.setQte(qty);
 			article.getContenirs().put(liste, contenir);
+
+			message = "L'article a bien été ajouté à la liste";
+		} else {
+			contenir.setQte(qty);
+			article.getContenirs().put(liste, contenir);
+
+			message = "La quantité de l'article a bien été modifiée dans la liste";
 		}
 
 		articleRepository.update(article, session);
@@ -149,6 +156,14 @@ public class ArticleServlet extends AbstractServlet {
 		ajouterSucces(message, request);
 		responseGet(request, response);
 
+	}
+
+
+	private Contenir valueContenir(final ListeDeCourse liste, final Article article) {
+		final Contenir contenir = new Contenir();
+		final ContenirKey key = new ContenirKey(article.getId(), liste.getIdListDeCourse());
+		contenir.setKey(key);
+		return contenir;
 	}
 
 }
