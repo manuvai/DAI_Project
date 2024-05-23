@@ -23,7 +23,17 @@ h2{
     justify-content: center; 
     align-items: center;
 }
+.img-rayon {
+    width: 30px; 
+    height: auto; 
+    vertical-align: middle; 
+}
 
+.btn-rayon p {
+    display: inline; 
+    vertical-align: middle; 
+    margin-left: 5px; 
+}
 .btn-rayon {
     background-color: #fff;
     color: #5f6368;
@@ -42,7 +52,7 @@ h2{
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+   
     width: 100%; 
     padding: 0.5rem 1rem; 
 }
