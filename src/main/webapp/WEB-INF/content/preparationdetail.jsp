@@ -61,8 +61,8 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 			        <td><input type="checkbox" class="checkbox"></td>
 			        <% } %>
 			        <td><%= article.getDesc() %></td>
-			        <td><%= quantite %></td>
-			        <td><%= Math.round(article.getPrixUnitaire()*quantite*article.getPromotion()/100 * 100.0) / 100.0 %>€</td>
+			        <td><%= quantite %></td><td><%= String.format("%.2f", article.getPrixUnitaire() * quantite * (1 + article.getPromotion() / 100.0)) %>€</td>
+
 			    </tr>
 			<%
 			        }

@@ -24,6 +24,7 @@ import models.Commande;
 import models.Creneau;
 import models.Magasin;
 import models.Panier;
+import models.SousCategorie;
 import models.Stocker;
 import models.Utilisateur;
 
@@ -267,6 +268,23 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		return articles;
 	}
 
+	public List<Article> memeSousCategorie(final int idArticle, final SousCategorie sousCategorie) {
+		List<Article> articles = new ArrayList<>();
+
+			final String query = "SELECT a "
+					+ "FROM Article a "
+					+ "WHERE a.sousCategorie = :sousCategorie "
+					+ "and a.idArticle != :id";
+					
+
+			final Map<String, Object> mappedValues = new HashMap<>();
+			mappedValues.put("sousCategorie", sousCategorie);
+			mappedValues.put("id", idArticle);
+
+			articles = getQueryResults(query, mappedValues);
+
+		return articles;
+	}
 	/**
 	 * Extraction de la liste des articles et leur stocks en fonction d'un magasin
 	 * donné.
