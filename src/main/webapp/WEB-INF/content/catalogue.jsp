@@ -72,9 +72,12 @@
 									 0
 										 <% }%>
 								</span>
-							<i id="ajouterButton" class="boutonPanier fas fa-arrow-alt-circle-right icon" title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
-						</div>		
-         </div> 
+						<div id="gestionPanier">
+							<i id="enleverButton"  class="boutonPanier fas fa-minus icon"  onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>			
+							<i id="ajouterButton"  class="boutonPanier fas fa-plus icon"  title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
+						</div>
+	    				</div>
+	                </div> 
 	                <% }
 		}
 	%>

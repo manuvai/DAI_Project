@@ -1,11 +1,22 @@
 @charset "UTF-8";
 
+body {
+	font-family: Arial, sans-serif;
+	min-height: 1%;
+    margin-bottom: 100px;
+    clear: both;
+}
+
+
 H1 {
-	color: red;	
+	margin : 20px auto;
+	text-align: center;
+	color: #007bff;
+		color: #00BFFF;
+    font-weight: 700;
 }
 
 table.blueTable {
-  font-family: Arial, Helvetica, sans-serif;
   border: 1px solid #1C6EA4;
   background-color: #EEEEEE;
   width: 90%;
@@ -82,25 +93,88 @@ a {
 }
 
 #a-historique {
-	margin-top: 50px;
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 20px 100px;
+  font-size: 16px;
+  text-decoration: none;
+  color: white;
+  background-color: #007BFF;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Changement de couleur au survol */
+#a-historique:hover {
+  background-color: #0056b3;
+  color: #ffffff;
 }
 
 
-/* Styles spécifiques pour les petits écrans */
-@media (max-width: 600px) {
-  input[type="checkbox"] {
-    width: 40px; /* Augmente encore plus la taille sur petits écrans */
-    height: 40px; /* Augmente encore plus la taille sur petits écrans */
-  }
 
-  label {
-    padding: 15px; /* Augmente la zone cliquable sur petits écrans */
-    font-size: 18px; /* Augmente la taille du texte pour une meilleure lisibilité */
-  }
-  table.blueTable td, table.blueTable th {
-  border: 1px solid #AAAAAA;
-  padding: 20px 15px;
+#bt-panierSelector {
+	padding: 5px 70px;
+	margin-left: 8px;
 }
+
+
+@media (max-width: 1025px) {
+	
+	input[type="checkbox"] {
+		width: 100%; 
+	    height: 100%;
+	    padding: 30px;
+	    transform: scale(4)
+	}
+	
+	label {
+		padding: 15px; 
+	    font-size: 18px; 
+	}
+	
+	table.blueTable td, table.blueTable th {
+	  border: 1px solid #AAAAAA;
+	  padding: 20px 15px;
+	}
+	
+	#bt-panierSelector {
+		width: 100%;
+		height: 100%;
+		padding: 25px;
+		font-size: 20px;
+	}
+	#affichageHeure {
+		font-size: 20px;
+	}
+	
+	td {
+		font-size: 100px;
+	}
+}
+
+@media (max-width: 768px) {
+  #a-historique {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+  }
+  
+  .boutonPanier {
+  	transform: scale(1.5);
+  }
   
 }
 
+@media (max-width: 480px) {
+  #a-historique {
+    font-size: 20px;
+    padding: 10px;
+    margin: auto;
+  }
+ 
+    .colonneFine {
+  	max-width: 50px;
+  }
+}

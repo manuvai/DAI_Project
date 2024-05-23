@@ -42,14 +42,17 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 							Integer nbr = (Integer) session.getAttribute(article.getId().toString());
 						%>
 						<div class="col-md-3">
-							<div class="card">
+						 	
+							<div class="card"> 
 								<div class="card-body">
 								 <% if (article != null && Boolean.TRUE.equals(article.getBio())) { %>
 							        <img class="img-bio" src="images/bio.png">
 							    <% } %>
-									<img class="img-item"
-										src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>" 
-										alt="Image <%= article.getLib() %>/">
+							      <a href="<%="Article?idArticle="+article.getId() %>">
+										<img class="img-item"
+											src="<%= request.getContextPath() %>/<%= article.getCheminImage() %>" 
+											alt="Image <%= article.getLib() %>/">
+									</a>
 									<p class="card-text"><%= article.getDesc() %></p>
 									<img class="img-nutriscore"
 										src="<%= request.getContextPath() %>/images/nutriscores/<%= article.getNutriscore() %>.png"
@@ -73,7 +76,7 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 										</div>
 										<div id="gestionPanier">
 											<i id="enleverButton"
-												class="boutonPanier fas fa-arrow-alt-circle-left ison"
+												class="boutonPanier fas fa-minus icon"
 												onclick="enleverAuPanier('<%= article.getId() %>')"
 												title="moins"></i> 
 											<span
@@ -81,7 +84,7 @@ List<Article> articles = (List<Article>) request.getAttribute("articlesCaroussel
 												<%=nbr == null ? 0 : nbr%> 
 											</span> 
 											<i id="ajouterButton"
-												class="boutonPanier fas fa-arrow-alt-circle-right icon" 
+												class="boutonPanier fas fa-plus icon" 
 												onclick="ajouterAuPanier('<%= article.getId() %>')"
 												title="plus"></i>
 										</div>

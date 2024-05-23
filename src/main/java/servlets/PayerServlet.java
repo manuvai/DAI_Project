@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,66 +30,82 @@ import repositories.UtilisateurRepository;
 @WebServlet("/PayerServlet")
 public class PayerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    PanierRepository pr = new PanierRepository();
-    CreneauRepository  cr = new CreneauRepository();
-    UtilisateurRepository ur = new UtilisateurRepository();
-    ArticleRepository ar = new ArticleRepository();
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PayerServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	PanierRepository pr = new PanierRepository();
+	CreneauRepository cr = new CreneauRepository();
+	UtilisateurRepository ur = new UtilisateurRepository();
+	ArticleRepository ar = new ArticleRepository();
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	public PayerServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//recuperation des différentes infos
-		doGet(request, response);
-		String creneauS = request.getParameter("creneau");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// recuperation des différentes infos
 		HttpSession session = request.getSession();
-		session.setAttribute("creneau", creneauS);
-		String magasin = (String) session.getAttribute("magasinRetrait");
 		Utilisateur user = (Utilisateur) session.getAttribute("user");
-		Creneau creneau = cr.findById( Integer.parseInt(creneauS));
 		int ptconso = (int) session.getAttribute("ptfidelConso");
-				
+		Panier p = (Panier) session.getAttribute("panierAValider");
+		Map<Article, Composer> composition = p.getComposers();
+
+		 List<Integer> produitsId = (List<Integer>) request.getSession().getAttribute("articleRempla");
+
+	        
+	     for (Integer articleId : produitsId) {
+	            int qteAdd = Integer.parseInt(request.getParameter(""+articleId));
+	            if(qteAdd!= 0) {
+	            	Article article = ar.findById(articleId);
+	            	if(composition.containsKey(article)) {
+	            		composition.get(article).setQte(qteAdd + composition.get(article).getQte());
+	            	}else {
+	            		Composer c = new Composer();
+						c.setQte(qteAdd);
+						ComposerKey composerKey = new ComposerKey(articleId, p.getId());
+						c.setKey(composerKey);
+						p.getComposers().put(ar.findById(articleId), c);
+	            	}
+	            }
+
+
+	        }
 		
-		Panier p = new Panier(user, creneau);
-		pr.create(p);
-		ArrayList<String> numeros = (ArrayList<String>) session.getAttribute("numeros");
+		double montantFinal = 0;
 		
-		//ajouter element au panier
-		for(String num: numeros) {
-			Composer c = new Composer();
-			c.setQte((int) session.getAttribute(num));
-			ComposerKey composerKey = new ComposerKey(Integer.parseInt(num), p.getId());
-			c.setKey(composerKey);
-			
-			p.getComposers().put(ar.findById(Integer.parseInt(num)), c);
-			
-			session.setAttribute(num, 0);			
-		}
-		session.setAttribute("nbrArticleTotal", 0);
-		//ajout des pt de fidelites 
-		double totalPayer = (double) session.getAttribute("apayer");
+		for (Map.Entry<Article, Composer> entry : composition.entrySet()) {
+            Article article = entry.getKey();
+            Composer composer = entry.getValue();
+            int quantity = composer.getQte(); 
+            montantFinal += quantity*article.getPrixUnitaire()*(1+article.getPromotion()/100);
+        }
 		
-		int ajoutFidelite = (int) (totalPayer / 5);
-		user.setPtFidelite(user.getPtFidelite()-ptconso*10 + ajoutFidelite);
+		p.setComposers(composition);
+		
+		session.setAttribute("apayer", montantFinal);
+
+		int ajoutFidelite = (int) (montantFinal / 5);
+		user.setPtFidelite(user.getPtFidelite() - ptconso * 10 + ajoutFidelite);
 		ur.update(user);
 		
-		//mettre a jour panier
+		
 		pr.update(p);
 		RequestDispatcher rd = request.getRequestDispatcher("panierEnregistrer");
 		rd.forward(request, response);

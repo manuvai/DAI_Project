@@ -24,5 +24,18 @@ public class CreneauRepository extends AbstractRepository<Creneau, Integer> {
 		session.close();
 		return creneaux;
 	}
+	
+	public int findDisposParCreneau(final Creneau creneau) {
+		
+		final Session session = getSession();
+		final Transaction transaction = session.beginTransaction();	
+		
+		long nbOccupes = (long) session.createQuery("SELECT COUNT(*) "
+												+ "FROM Panier "
+												+ "WHERE IdCreneau = :id").setParameter("id", creneau.getCodeCreneau()).getSingleResult();
+		
+		session.close();
+		return (creneau.getCapacite() - (int) nbOccupes);
+	}
 
 }

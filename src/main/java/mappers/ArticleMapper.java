@@ -28,6 +28,7 @@ public class ArticleMapper {
 
 			xmlNode.addNode(new XmlNode("id", Integer.toString(article.getId())));
 			xmlNode.addNode(new XmlNode("nom", article.getLib()));
+			xmlNode.addNode(new XmlNode("imagePath", article.getCheminImage()));
 		}
 
 		return xmlNode;

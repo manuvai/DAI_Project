@@ -1,7 +1,8 @@
-package models;
+package servlets;
 
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import models.Utilisateur;
 import models.Utilisateur.Role;
 import repositories.UtilisateurRepository;
 
@@ -18,48 +20,56 @@ import repositories.UtilisateurRepository;
  * Servlet implementation class ConnexionServlet
  */
 @WebServlet("/ConnexionServlet")
-public class ConnexionServlet extends HttpServlet {
+public class ConnexionServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
-	UtilisateurRepository utilisateurRepository = new UtilisateurRepository(); 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ConnexionServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	public static final String AUTH_ERRORS_KEY = "authErrors";
+	UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void responseGet(final HttpServletRequest request, final HttpServletResponse response)
+			throws ServletException, IOException {
+
+		final HttpSession session = request.getSession();
+		final List<String> errors = (List<String>) session.getAttribute(AUTH_ERRORS_KEY);
+
+		if (errors != null) {
+			errors.forEach(error -> ajouterErreur(error, request));
+		}
+		session.setAttribute(AUTH_ERRORS_KEY, null);
+
+		view("connexion", request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String email = request.getParameter("email");
-	    String mdp = request.getParameter("mdp");
+	@Override
+	protected void responsePost(final HttpServletRequest request, final HttpServletResponse response)
+			throws ServletException, IOException {
+	    final String email = request.getParameter("email");
+	    final String mdp = request.getParameter("mdp");
 
-		HttpSession session = request.getSession();
-		
+		final HttpSession session = request.getSession();
+
        System.out.println(email + mdp);
-        
-        boolean emailAlreadyExists =  utilisateurRepository.findMail(email);
+
+        final boolean emailAlreadyExists =  utilisateurRepository.findMail(email);
         if(emailAlreadyExists) {
-        	int mdpHashed = mdp.hashCode();
-            Utilisateur utilisateur = utilisateurRepository.findUserByMail(email);
-            
+        	final int mdpHashed = mdp.hashCode();
+            final Utilisateur utilisateur = utilisateurRepository.findUserByMail(email);
+
             if(Integer.toString(mdpHashed).equals(utilisateur.getMotDePasse())) {
             	session.setAttribute("nom", utilisateur.getNom());
                 session.setAttribute("prenom", utilisateur.getPrenom());
                 session.setAttribute("email", email);
                 session.setAttribute("role",  utilisateur.getRole());
                 session.setAttribute("user",utilisateur);
-                
-                Role role = utilisateur.getRole();
+
+                final Role role = utilisateur.getRole();
                 RequestDispatcher rd;
 	                if (role.equals(Role.CLIENT)){
 	                	rd = request.getRequestDispatcher("home");
@@ -70,22 +80,22 @@ public class ConnexionServlet extends HttpServlet {
 	                	rd = request.getRequestDispatcher("PreparationCommandesServlet");
 	                	rd.forward(request, response);
 	                }
-                
-            	
-        		
+
+
+
             }else {
             	request.setAttribute("wrongMdp", true);
-            	RequestDispatcher rd = request.getRequestDispatcher("connexion");
+            	final RequestDispatcher rd = request.getRequestDispatcher("connexion");
         		rd.forward(request, response);
             }
-    		
+
         } else {
     		request.setAttribute("wrongMail", true);
-        	RequestDispatcher rd = request.getRequestDispatcher("connexion");
+        	final RequestDispatcher rd = request.getRequestDispatcher("connexion");
     		rd.forward(request, response);
         }
-        
-		
+
+
 	}
 
 }

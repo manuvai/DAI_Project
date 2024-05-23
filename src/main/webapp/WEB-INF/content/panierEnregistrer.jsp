@@ -35,6 +35,8 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 %>
 <h2><%= user.getPrenom()%> <%= user.getNom()%></h2>
 <p>Votre panier a été enregistré, vous pourrez venir le récupérer au créneau choisi.</p>
+
+<p>Le total est de <%=String.format("%.2f", session.getAttribute("apayer"))%> € </p>
  <a href="<%= request.getContextPath() %>/home">
         Retourner à l'accueil
     </a>

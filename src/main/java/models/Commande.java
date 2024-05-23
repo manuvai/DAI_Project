@@ -1,12 +1,15 @@
 package models;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -58,9 +61,12 @@ public class Commande {
 	 * Liaison vers l'association d'approvisionnements
 	 */
 	@MapKeyJoinColumn(name = "IdArticle")
-	@OneToMany(mappedBy = "commande", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Map<Article, Approvisionner> articleApprovisionner;
 
+	@Column(name = "Etat")
+	@Enumerated(EnumType.STRING)
+	private Etat etat;
 	/**
 	 * Constructeur vide.
 	 */
@@ -77,13 +83,12 @@ public class Commande {
 	 * @param magasin
 	 * @param articleApprovisionner
 	 */
-	public Commande(final Integer id, final Date dateArrivee, final Date dateCreation, final Magasin magasin,
-			final Map<Article, Approvisionner> articleApprovisionner) {
-		this.id = id;
+	public Commande(final Date dateArrivee, final Magasin magasin) {
 		this.dateArrivee = dateArrivee;
-		this.dateCreation = dateCreation;
+		this.dateCreation = new Date();
 		this.magasin = magasin;
-		this.articleApprovisionner = articleApprovisionner;
+		this.articleApprovisionner = new HashMap<Article, Approvisionner>();
+		this.etat = Etat.CREE;
 	}
 
 	/**
@@ -93,6 +98,14 @@ public class Commande {
 	 */
 	public Integer getId() {
 		return id;
+	}
+
+	public Etat getEtat() {
+		return etat;
+	}
+
+	public void setEtat(Etat etat) {
+		this.etat = etat;
 	}
 
 	/**
@@ -194,6 +207,8 @@ public class Commande {
 				&& Objects.equals(id, other.id) && Objects.equals(magasin, other.magasin);
 	}
 
-
+	public enum Etat {
+		CREE, LIVREE
+	}
 
 }

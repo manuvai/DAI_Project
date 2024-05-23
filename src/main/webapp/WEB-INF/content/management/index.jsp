@@ -1,3 +1,4 @@
+<%@page import="java.util.concurrent.TimeUnit"%>
 <%@page import="models.Article"%>
 <%@page import="java.util.List"%>
 <%@page import="models.Magasin"%>
@@ -15,6 +16,7 @@ List<Integer> articlesAddedIds = (List<Integer>) request.getAttribute("articlesA
 if (articlesAddedIds == null) {
 	articlesAddedIds = new ArrayList<>();
 }
+
 %>
 
 <%@include file="../../template/start.jsp" %>
@@ -37,8 +39,28 @@ if (roleManagement == null) {
 } else {
 	List<Article> articles = (List<Article>) request.getAttribute("articles");
 %>
+	<h1>Gestion des Commandes aux fournisseurs</h1>
+	<div class="container mb-2">
+		<a href="../PasserUneCommandeServlet" 
+			class="btn btn-primary">
+			Passer une commande
+		</a>
+		<a href="../voirCommande" 
+			class="btn btn-primary">
+			Voir les commandes
+		</a>
+	</div>
+	
+	<h1>Dashboard</h1>
+	<div class="container mb-2">
+		<a class="btn btn-outline-primary"
+			href="<%= request.getContextPath() %>/management/dashboard">
+			Voir mon dashboard
+		</a>
+	</div>
 	
 	<h1>Gestion des articles</h1>
+
 	<div class="container">
 		<h2>Ajout de nouveaux articles</h2>
 		<div class="row blockquote">

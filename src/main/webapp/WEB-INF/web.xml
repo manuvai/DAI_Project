@@ -59,6 +59,26 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>commandesClient</display-name>
+    <servlet-name>commandesClient</servlet-name>
+    <jsp-file>/WEB-INF/content/commandesClient.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>commandesClient</servlet-name>
+    <url-pattern>/commandesClient</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>detailsCommandeClient</display-name>
+    <servlet-name>detailsCommandeClient</servlet-name>
+    <jsp-file>/WEB-INF/content/detailsCommandeClient.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>detailsCommandeClient</servlet-name>
+    <url-pattern>/detailsCommandeClient</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>panier</display-name>
     <servlet-name>panier</servlet-name>
     <jsp-file>/WEB-INF/content/panier.jsp</jsp-file>
@@ -86,6 +106,26 @@
   <servlet-mapping>
     <servlet-name>choixCreneau</servlet-name>
     <url-pattern>/choixCreneau</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>modificationCreneau</display-name>
+    <servlet-name>modificationCreneau</servlet-name>
+    <jsp-file>/WEB-INF/content/modificationCreneau.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>modificationCreneau</servlet-name>
+    <url-pattern>/modificationCreneau</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>confirmationCreneau</display-name>
+    <servlet-name>confirmationCreneau</servlet-name>
+    <jsp-file>/WEB-INF/content/confirmationCreneau.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>confirmationCreneau</servlet-name>
+    <url-pattern>/confirmationCreneau</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -126,5 +166,75 @@
   <servlet-mapping>
     <servlet-name>preparationhistorique</servlet-name>
     <url-pattern>/preparationhistorique</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>commandePourMagasin</display-name>
+    <servlet-name>commandePourMagasin</servlet-name>
+    <jsp-file>/WEB-INF/content/commandePourMagasin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>commandePourMagasin</servlet-name>
+    <url-pattern>/commandePourMagasin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>commandeFournisseurEnvoyee</display-name>
+    <servlet-name>commandeFournisseurEnvoyee</servlet-name>
+    <jsp-file>/WEB-INF/content/commandeFournisseurEnvoyee.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>commandeFournisseurEnvoyee</servlet-name>
+    <url-pattern>/commandeFournisseurEnvoyee</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>voirCommande</display-name>
+    <servlet-name>voirCommande</servlet-name>
+    <jsp-file>/WEB-INF/content/voirCommande.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>voirCommande</servlet-name>
+    <url-pattern>/voirCommande</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>detailsCommandeFournisseur</display-name>
+    <servlet-name>detailsCommandeFournisseur</servlet-name>
+    <jsp-file>/WEB-INF/content/detailsCommandeFournisseur.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>detailsCommandeFournisseur</servlet-name>
+    <url-pattern>/detailsCommandeFournisseur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>etapeFinale</display-name>
+    <servlet-name>etapeFinale</servlet-name>
+    <jsp-file>/WEB-INF/content/etapeFinale.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>etapeFinale</servlet-name>
+    <url-pattern>/etapeFinale</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>articlesCroissants</display-name>
+    <servlet-name>articlesCroissants</servlet-name>
+    <jsp-file>/WEB-INF/content/articlesCroissants.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>articlesCroissants</servlet-name>
+    <url-pattern>/articlesCroissants</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>articlesDecroissants</display-name>
+    <servlet-name>articlesDecroissants</servlet-name>
+    <jsp-file>/WEB-INF/content/articlesDecroissants.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>articlesDecroissants</servlet-name>
+    <url-pattern>/articlesDecroissants</url-pattern>
   </servlet-mapping>
 </web-app>

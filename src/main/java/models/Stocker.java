@@ -104,8 +104,18 @@ public class Stocker {
     public void setQuantite(int quantite) {
         this.quantite = quantite;
     }
+    
+    
 
-    /**
+    public StockerKey getKey() {
+		return key;
+	}
+
+	public void setKey(StockerKey key) {
+		this.key = key;
+	}
+
+	/**
      * Calcule un code de hachage pour cet objet Stocker.
      *
      * @return une valeur de code de hachage pour cet objet.

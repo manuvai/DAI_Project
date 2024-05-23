@@ -3,14 +3,16 @@ var stop = document.getElementById("bu-stop");
 var annuler = document.getElementById("bu-annuler");
 
 var isStarted = false;
+var isModified = false;
 var checkboxes = document.querySelectorAll('.checkbox');
 var startTime;
 var endTime;
 
-
 var idPanierRaw = document.getElementById("affichageCommande").textContent;
 var regex = /\d+/; 
 var idPanier = idPanierRaw.match(regex);
+
+var boutonsPM = document.getElementsByClassName("boutonPanier");
 
 //Etats initiaux
 annuler.disabled = true;
@@ -19,12 +21,21 @@ checkboxes.forEach(function(checkbox) {
     checkbox.disabled = true;
 });
 
+var initialDisplay = window.getComputedStyle(boutonsPM[0]).display;
+
+for (var i = 0; i < boutonsPM.length; i++) {
+    boutonsPM[i].style.display = "none";
+}
+
 //Gestion du bouton démarer
 start.addEventListener("click", function() {
     start.disabled = true;
     annuler.disabled = false;
     isStarted = true;
     startTime = Date.now();
+    for (var i = 0; i < boutonsPM.length; i++) {
+        boutonsPM[i].style.display = initialDisplay;
+    }
 
     checkboxes.forEach(function(checkbox) {
         checkbox.disabled = false;
@@ -39,6 +50,9 @@ annuler.addEventListener("click", function() {
     stop.disabled = true;
     annuler.disabled = true;
     isStarted = false;
+    for (var i = 0; i < boutonsPM.length; i++) {
+        boutonsPM[i].style.display = "none";
+    }
 
     checkboxes.forEach(function(checkbox) {
         checkbox.disabled = true;
@@ -46,13 +60,20 @@ annuler.addEventListener("click", function() {
     });
 });
 
+
+//Gestion du bouton terminer la commande
 stop.addEventListener("click", function() {
 	endTime = Date.now();
 	stop.disabled = true
 	annuler.disabled = true
+    for (var i = 0; i < boutonsPM.length; i++) {
+        boutonsPM[i].style.display = "none";
+    }
+
 	enregistrerTempsBd(endTime, "Fin")
 });
 
+//Gestion de l'état des boutons en fonction des checkboxs
 checkboxes.forEach(function(checkbox) {
     checkbox.addEventListener('change', function() {
         var toutesCoches = Array.from(checkboxes).every(function(cb) {
@@ -67,26 +88,61 @@ checkboxes.forEach(function(checkbox) {
     });
 });
 
+/*******************
+ * 
+ * Changements en bd
+ * 
+ ******************/
+
+function ajouterArticle(idArticle, idPanier) {
+    var quantiteElement = document.getElementById("quantite" + idArticle);
+    var quantite = parseInt(quantiteElement.textContent, 10);
+
+    quantite++;
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "GestionPreparation?idArticle=" + idArticle + "&idPanier=" + idPanier + "&quantite=" + quantite);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            quantiteElement.innerText = quantite;
+        }
+    };
+
+    xhr.send();
+}
+
+function enleverArticle(idArticle, idPanier) {
+    var quantiteElement = document.getElementById("quantite" + idArticle);
+    var quantite = parseInt(quantiteElement.textContent, 10);
+
+    if (quantite > 0) {
+        quantite--;
+    }
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "GestionPreparation?idArticle=" + idArticle + "&idPanier=" + idPanier + "&quantite=" + quantite);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            quantiteElement.innerText = quantite;
+        }
+    };
+
+    xhr.send();
+}
+
+
 
 function enregistrerTempsBd(temps, etat) {
 
 	var xhr = new XMLHttpRequest();
-	
 	    // Requête au serveur avec les paramètres éventuels.
 	    xhr.open("GET","PreparationDateCommandeServlet?idPanier="+idPanier+"&Date"+etat+"="+temps);
-	
-        // On précise ce que l'on va faire quand on aura reçu la réponse du serveur.
-	    /*
-        xhr.onload = function()
-	        {
-	        // Si la requête http s'est bien passée.
-	        if (xhr.status === 200)
-	            {                
-	            nbrPanierElement.innerText = nbrPanier;
-	            nbrArticleElement.innerText = nbrArticle;
-	            nbrPrixElement.innerText = nbrArticle*prix*(1-promo/100) +"€";
-	            totalElement.innerText = total + prix*(1-promo/100);
-	            }
-	        }; */
 	    xhr.send();
+	    if (etat == "Fin"){
+	    	window.location.replace("./PreparationCommandesServlet" + "?idCommande=" + idPanier)
+	    }
 }

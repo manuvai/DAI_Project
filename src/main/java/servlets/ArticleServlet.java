@@ -5,66 +5,166 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import models.Article;
-import models.Categorie;
+import models.Contenir;
+import models.ListeDeCourse;
+import models.Utilisateur;
+import models.keys.ContenirKey;
 import repositories.ArticleRepository;
+import repositories.ContenirRepository;
+import repositories.ListeDeCourseRepository;
 
 /**
  * Servlet implementation class Article
  */
 @WebServlet("/Article")
 public class ArticleServlet extends AbstractServlet {
-	
+
 	private static final long serialVersionUID = 1L;
-       
-	
-	ArticleRepository repoArticles = new ArticleRepository();
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ArticleServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	ListeDeCourseRepository listeDeCourseRepository = new ListeDeCourseRepository();
+	ArticleRepository articleRepository = new ArticleRepository();
+	ContenirRepository contenirRepository = new ContenirRepository();
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-		Article article = repoArticles.findById(Integer.parseInt(request.getParameter("idArticle")));		
+	protected void responseGet(final HttpServletRequest request, final HttpServletResponse response)
+			throws ServletException, IOException {
+
+		final Integer articleId = Integer.parseInt(request.getParameter("idArticle"));
+
+		final Session session = articleRepository.getSession();
+		session.beginTransaction();
+
+		final Article article = articleRepository.findById(articleId, session);
+
 		request.setAttribute("article", article);
 
+		final Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
+
+		if (utilisateur != null) {
+			Hibernate.initialize(article.getContenirs());
+			final List<ListeDeCourse> listes = listeDeCourseRepository.findByUtilisateurId(
+					utilisateur.getId(),
+					session);
+			request.setAttribute("listesDeCourse", listes);
+		}
+
+		session.close();
 		view("article", request, response);
+
+	}
+
+
+	@Override
+	protected void responsePost(final HttpServletRequest request, final HttpServletResponse response)
+			throws ServletException, IOException {
+		final String action = request.getParameter("action");
+
+		if ("editListeDeCourse".equals(action)) {
+			processEditListeDeCourse(request, response);
+			return;
+
+		}
+
+		doGet(request, response);
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Gestion de l'ajout de l'article à une liste de courses
+	 *
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-	
-	@Override
-	protected void responseGet(HttpServletRequest request, HttpServletResponse response)
+	private void processEditListeDeCourse(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+		final String listeIdString = request.getParameter("listeDeCourse-id");
+		final String articleIdString = request.getParameter("article-id");
+		final String qtyString = request.getParameter("qty");
+
+		final Integer listeId = listeIdString == null || listeIdString.isBlank()
+				? null
+				: Integer.parseInt(listeIdString);
+
+		final Integer articleId = articleIdString == null || articleIdString.isBlank()
+				? null
+				: Integer.parseInt(articleIdString);
+
+		final Integer qty = qtyString == null || qtyString.isBlank()
+				? null
+				: Integer.parseInt(qtyString);
+
+		if (articleId == null) {
+			response.sendRedirect(request.getContextPath() + "/home");
+			return;
+		}
+
+		if (listeId == null) {
+			ajouterErreur("Veuillez choisir une liste", request);
+			doGet(request, response);
+			return;
+		}
+
+		if (qty == null) {
+			ajouterErreur("Vous devez fournir une quantité pour la liste", request);
+			doGet(request, response);
+			return;
+		}
+
+		final Session session = articleRepository.getSession();
+		final Transaction transaction = session.beginTransaction();
+
+		final ListeDeCourse liste = listeDeCourseRepository.findById(listeId, session);
+		final Article article = articleRepository.findById(articleId, session);
+
+		final Contenir actualContenir = article.getContenirs().get(liste);
+		final Contenir contenir = actualContenir != null
+				? actualContenir
+				: valueContenir(liste, article);
+
+		String message;
+		if (qty <= 0) {
+			message = "L'article a bien été retiré de la liste";
+			article.getContenirs().remove(liste);
+			contenirRepository.delete(contenir, session);
+
+		} else if (actualContenir == null) {
+			contenir.setQte(qty);
+			article.getContenirs().put(liste, contenir);
+
+			message = "L'article a bien été ajouté à la liste";
+		} else {
+			contenir.setQte(qty);
+			article.getContenirs().put(liste, contenir);
+
+			message = "La quantité de l'article a bien été modifiée dans la liste";
+		}
+
+		articleRepository.update(article, session);
+
+		transaction.commit();
+
+		ajouterSucces(message, request);
+		responseGet(request, response);
+
 	}
 
 
-	@Override
-	protected void responsePost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+	private Contenir valueContenir(final ListeDeCourse liste, final Article article) {
+		final Contenir contenir = new Contenir();
+		final ContenirKey key = new ContenirKey(article.getId(), liste.getIdListDeCourse());
+		contenir.setKey(key);
+		return contenir;
 	}
 
 }
