@@ -37,8 +37,17 @@ if (roleManagement == null) {
 } else {
 	List<Article> articles = (List<Article>) request.getAttribute("articles");
 %>
-	
+	<h1>Gestion des Commandes aux fournisseurs</h1>
+	<a href="../PasserUneCommandeServlet" 
+						class="btn btn-primary">
+						Passer une commande
+	</a>
+	<a href="../voirCommande" 
+						class="btn btn-primary">
+						Voir les commandes
+	</a>
 	<h1>Gestion des articles</h1>
+
 	<div class="container">
 		<h2>Ajout de nouveaux articles</h2>
 		<div class="row blockquote">

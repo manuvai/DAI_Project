@@ -57,7 +57,7 @@
     <servlet-name>choixMagasin</servlet-name>
     <url-pattern>/choixMagasin</url-pattern>
   </servlet-mapping>
- <servlet>
+  <servlet>
     <description></description>
     <display-name>commandesClient</display-name>
     <servlet-name>commandesClient</servlet-name>
@@ -67,7 +67,7 @@
     <servlet-name>commandesClient</servlet-name>
     <url-pattern>/commandesClient</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>detailsCommandeClient</display-name>
     <servlet-name>detailsCommandeClient</servlet-name>
@@ -146,5 +146,45 @@
   <servlet-mapping>
     <servlet-name>preparationhistorique</servlet-name>
     <url-pattern>/preparationhistorique</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>commandePourMagasin</display-name>
+    <servlet-name>commandePourMagasin</servlet-name>
+    <jsp-file>/WEB-INF/content/commandePourMagasin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>commandePourMagasin</servlet-name>
+    <url-pattern>/commandePourMagasin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>commandeFournisseurEnvoyee</display-name>
+    <servlet-name>commandeFournisseurEnvoyee</servlet-name>
+    <jsp-file>/WEB-INF/content/commandeFournisseurEnvoyee.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>commandeFournisseurEnvoyee</servlet-name>
+    <url-pattern>/commandeFournisseurEnvoyee</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>voirCommande</display-name>
+    <servlet-name>voirCommande</servlet-name>
+    <jsp-file>/WEB-INF/content/voirCommande.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>voirCommande</servlet-name>
+    <url-pattern>/voirCommande</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>detailsCommandeFournisseur</display-name>
+    <servlet-name>detailsCommandeFournisseur</servlet-name>
+    <jsp-file>/WEB-INF/content/detailsCommandeFournisseur.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>detailsCommandeFournisseur</servlet-name>
+    <url-pattern>/detailsCommandeFournisseur</url-pattern>
   </servlet-mapping>
 </web-app>
