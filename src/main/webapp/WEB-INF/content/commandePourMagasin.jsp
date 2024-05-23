@@ -44,7 +44,7 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 			%>
 		</div>
 		<div>
-			<h3>Choisissez une date de livrfaison</h3>
+			<h3>Choisissez une date de livraison</h3>
 			<input type="date" id="date" name="date" required>
 		</div>
 		<div>

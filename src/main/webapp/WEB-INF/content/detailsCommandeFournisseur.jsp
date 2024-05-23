@@ -44,7 +44,7 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
         %>
     </tbody>
 </table>
-
+<a href="ValiderRecuCommande?id=<%= commande.getId() %>" class="btn-back">Commande Recue</a>
 <a href="voirCommande" class="btn-back">Retour</a>
 
 <%@ include file="../template/end.jsp" %>

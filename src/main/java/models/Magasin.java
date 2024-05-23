@@ -1,5 +1,6 @@
 package models;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
@@ -83,6 +84,7 @@ public class Magasin {
         this.nomMagasin = nomMagasin;
         this.horairesMagasin= horairesMagasin;
         this.adresseMagasin=adresseMagasin;
+        this.stockers = new HashMap<Article, Stocker>();
     }
 
     // Getters et setters
