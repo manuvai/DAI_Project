@@ -26,7 +26,7 @@ request.setAttribute(AbstractServlet.CSS_LIBS_KEY, cssFiles);
 
 <%@ include file="../../template/start.jsp"%>
 
-<h2>Articles commandés le plus fréquemment</h2>
+<span><h2>Articles commandés le plus fréquemment</h2> <a href="articlesClasses">Voir Tous</a></span>
 <% if (request.getAttribute("articlesCaroussel") == null || ((List<Article>) request.getAttribute("articlesCaroussel")).isEmpty()) { %>
 	<div class="container">
 		Cette liste est vide. <a class="text-mute" href="<%= request.getContextPath() %>/home">Voir quoi ajouter ?</a>

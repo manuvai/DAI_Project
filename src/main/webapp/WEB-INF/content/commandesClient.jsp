@@ -24,6 +24,7 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 	
 	<select id="etatFiltre"class="form-select"> 
 	    <option value="Tous">TOUS</option>
+	     <option value="ENREGISTRE">ENREGISTRE</option>
 	    <option value="ATTENTE">ATTENTE</option>
 	    <option value="VALIDEE">VALIDEE</option>
 	    <option value="PRETE">PRETE</option>
@@ -57,6 +58,9 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
                             Panier.Etat etat = commande.getEtat();
                             String badgeClass = "";
                             switch (etat) {
+                            	case ENREGISTRE:
+	                                badgeClass = "badge bg-warning text-dark";
+	                                break;
                                 case ATTENTE:
                                     badgeClass = "badge bg-warning text-dark";
                                     break;
@@ -76,9 +80,17 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
                             %>
                             <span class="<%= badgeClass %>"><%= etat.name() %></span>
                         </td>
-                        <td><%= commande.getCreneau().getMagasin().getNomMagasin() %>
-                        <br><%= commande.getCreneau().getMagasin().getAdresseMagasin() %>
-                        <br><%= commande.getCreneau().getDateCreneau().toString() %> <%= commande.getCreneau().getHeureCreneau().name().substring(1).replace("_", " à ") %></td>
+                       <td>
+						    <%= commande.getCreneau() != null && commande.getCreneau().getMagasin() != null && commande.getCreneau().getMagasin().getNomMagasin() != null 
+						        ? commande.getCreneau().getMagasin().getNomMagasin() : "" %><br>
+						    <%= commande.getCreneau() != null && commande.getCreneau().getMagasin() != null && commande.getCreneau().getMagasin().getAdresseMagasin() != null 
+						        ? commande.getCreneau().getMagasin().getAdresseMagasin() : "" %><br>
+						    <%= commande.getCreneau() != null && commande.getCreneau().getDateCreneau() != null 
+						        ? commande.getCreneau().getDateCreneau().toString() : "" %> 
+						    <%= commande.getCreneau() != null && commande.getCreneau().getHeureCreneau() != null 
+						        ? commande.getCreneau().getHeureCreneau().name().substring(1).replace("_", " à ") : "" %>
+						</td>
+
                        <td>
 						    <form action="./DetailsCommandeClientServlet" method="get">
 						        <input type="hidden" name="idCommande" value="<%= commande.getId() %>">
@@ -91,7 +103,7 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 								 </button>
 						    </form>
 						 	<br>
-						 	<% if (commande.getEtat() != Panier.Etat.LIVRE){ %>
+						 	<% if (commande.getEtat() != Panier.Etat.LIVRE && commande.getEtat() != Panier.Etat.ENREGISTRE ){ %>
 						 	<form action="./CreneauClientServlet" method="get">
 						 	 	<input type="hidden" name="idCommande" value="<%= commande.getId() %>">
 						 		<button type="submit" class="btn btn-primary">

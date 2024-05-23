@@ -1,6 +1,7 @@
 
-<%@page import="repositories.ArticleRepository"%>
+<%@page import="models.Utilisateur"%>
 <%@page import="models.Article"%>
+<%@page import="repositories.ArticleRepository"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -17,21 +18,23 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 %>
 <%@ include file="../template/start.jsp"%>
 
-<h1>Articles Triés par Ordre Décroissant du prix au kg</h1>
-
+<h1>Articles Triés par Ordre De Préférence</h1>
+<a href="<%= request.getContextPath() %>/dashboard">Retour</a>
 <div>
-	<a class="tri" href="articlesCroissants">Croissant</a>
+	
 	<%
-	List<Article> articles = ar.articlesDecroissants();
+
+	Utilisateur user = (Utilisateur) session.getAttribute("user");
+	List<Article> articles = ar.findFrequentlyOrderedNoLimit(user);
 	%>
 
-	<table class="articles-table">
+	<table  class="articles-table">
 		<thead>
 			<tr>
 				<th>Image de l'article</th>
 				<th>Libellé</th>
 				<th>Prix au kilo</th>
-				<th>Ajouter au panier</th>				
+				<th>Ajouter au panier</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -53,8 +56,8 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 					class="boutonPanier fas fa-minus icon"
 					onclick="enleverAuPanier('<%=article.getId()%>')" title="moins">
 				</i> <%
-					 Integer nbr = (Integer) session.getAttribute(article.getId().toString());
-					 %> <span id="article<%=article.getId()%>"> <%=nbr != null ? nbr : 0%>
+ Integer nbr = (Integer) session.getAttribute(article.getId().toString());
+ %> <span id="article<%=article.getId()%>"> <%=nbr != null ? nbr : 0%>
 				</span> <i id="ajouterButton" class="boutonPanier fas fa-plus icon"
 					title="plus" onclick="ajouterAuPanier('<%=article.getId()%>')">
 				</i></td>
