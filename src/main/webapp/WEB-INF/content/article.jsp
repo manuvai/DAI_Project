@@ -21,13 +21,15 @@ jsFiles.add("js/home.js");
 request.setAttribute(AbstractServlet.CSS_LIBS_KEY, cssFiles);
 request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 
-
 %>
 <%@ include file="../template/start.jsp" %>
 	<div id="article">
 <% 
 if (request.getAttribute("article") != null) {
 Article article = (Article)request.getAttribute("article");
+
+List<ListeDeCourse> listes = (List<ListeDeCourse>) request.getAttribute("listesDeCourse");
+
 Float prixArticle = article.getPrixUnitaire();
 Float prixReduit=0.0f;
 Float promo = 0.0f;
@@ -46,6 +48,44 @@ Float promotionArticle = article.getPromotion();
 	<img class ="imgArticle" src="<%= article.getCheminImage() %>">
 	<div class="articleDetails">
 		<h1 class ="nomArticle"><%= article.getLib() %></h1><br/>
+		
+		<% if (listes != null) { %>
+			<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+				Ajouter à une liste
+			</button>
+			<div class="collapse" id="collapseExample">
+				<form action="?idArticle=<%= article.getId() %>&action=editListeDeCourse" method="post">
+					<input type="hidden" name="article-id" value="<%= article.getId() %>">
+					<div class="card card-body">
+						<div class="form-group">
+						  <label for="">Liste de course</label>
+						  <select class="form-control" name="listeDeCourse-id" id="listeDeCourse-id">
+						  	<option value="">Ajouter à une liste</option>
+						  	<%
+						  	for (ListeDeCourse liste : listes) {
+						  	%>
+							<option value="<%= liste.getIdListDeCourse() %>"><%= liste.getNom() %></option>
+							<% } %>
+						  </select>
+						</div>
+						<div class="form-group">
+						  <label for="qty">Quantité</label>
+						  <input type="text"
+						  		class="form-control" 
+						  		name="qty" 
+						  		id="qty" 
+						  		min="0"
+						  		aria-describedby="helpId" 
+						  		placeholder="">
+						  <small id="helpId" class="form-text text-muted">Help text</small>
+						</div>
+						<button type="submit" class="btn btn-outline-primary">Ajouter</button>
+					</div>
+				</form>
+			</div>
+		
+		<% } %>
+		
 		<div class="price-container">
 			<% if (promo >0) { %>
 				<p class="price promotion">
