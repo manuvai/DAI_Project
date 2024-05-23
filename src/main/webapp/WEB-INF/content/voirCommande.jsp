@@ -8,6 +8,8 @@ request.setAttribute("pageTitle", "Voir Commande");
 request.setAttribute("isHeaderDisabled", true);
 
 List<String> cssFiles = new ArrayList<>();
+
+
 cssFiles.add("css/voirCommande.css");
 request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 %>
@@ -33,7 +35,7 @@ if (commandes != null) {
             <td><%= commande.getId() %></td>
             <td><%= commande.getDateCreation() %></td>
             <td><%= commande.getDateArrivee() %></td>
-            <td><a href="voirDetailsCommandeFournisseur"><button href='commandDetails?id=<%= commande.getId() %>'">Détails</button></a></td>
+            <td><a href='CommandDetailsServlet?id=<%= commande.getId() %>'><button >Détails</button></a></td>
         </tr>
         <%
                 }

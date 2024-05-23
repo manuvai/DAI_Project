@@ -177,4 +177,14 @@
     <servlet-name>voirCommande</servlet-name>
     <url-pattern>/voirCommande</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>detailsCommandeFournisseur</display-name>
+    <servlet-name>detailsCommandeFournisseur</servlet-name>
+    <jsp-file>/WEB-INF/content/detailsCommandeFournisseur.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>detailsCommandeFournisseur</servlet-name>
+    <url-pattern>/detailsCommandeFournisseur</url-pattern>
+  </servlet-mapping>
 </web-app>

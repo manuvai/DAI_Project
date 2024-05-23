@@ -59,7 +59,7 @@ public class Commande {
 	 * Liaison vers l'association d'approvisionnements
 	 */
 	@MapKeyJoinColumn(name = "IdArticle")
-	@OneToMany(mappedBy = "commande", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Map<Article, Approvisionner> articleApprovisionner;
 
 	/**
