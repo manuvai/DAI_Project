@@ -255,3 +255,33 @@ h2{
 #rayonCarousel{
 	margin-bottom:5%;
 }
+
+
+#searchResults {
+	background: white;
+	z-index: 999;
+	position: absolute;
+    display: none; 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    gap: 2px; 
+    width: 400px;
+    max-height: 100px;
+    overflow-y: auto;
+    margin: 5px;
+}
+
+#searchResults .cde {
+    background-color: #eeeeee; 
+    border-radius: 10px; 
+    padding: 2px;
+    margin: 2px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-width: 100px; 
+}
+
+.barre{
+	width: 400px !important;
+}
