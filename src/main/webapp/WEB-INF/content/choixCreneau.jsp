@@ -4,7 +4,9 @@
 <%@page import="java.util.Objects"%>
 <%@page import="models.Utilisateur" %>
 <%@page import="models.Creneau" %>
+<%@page import="repositories.CreneauRepository" %>
 <%@page import="java.util.List" %>
+<%@page import="java.util.Date" %>
 <%
 // =============================
 // GESTION DES FICHIERS JS
@@ -47,6 +49,8 @@ String creneauRetrait = (String) session.getAttribute("creneauRetrait");
 Double apayer = (Double) session.getAttribute("apayer");
 Utilisateur user = (Utilisateur) session.getAttribute("user");
 List<Creneau> cx = (List<Creneau>) session.getAttribute("creneaux");
+CreneauRepository cr = new CreneauRepository();
+
 
 if (creneauRetrait == null) {
 %>
@@ -54,7 +58,6 @@ if (creneauRetrait == null) {
 <%
 }
 %>
-
 	<form action="PayerServlet" method="post">
 	    <label for="creneau">Choisir un creneau :</label>
 	    <select name="creneau" id="creneau">
@@ -63,7 +66,7 @@ if (creneauRetrait == null) {
 	            for (Creneau creneau: tousCreneaux) { 
 	        %>
 	                <option value="<%= creneau.getCodeCreneau() %>">
-	                	<%= creneau.getHeureCreneau().toString().replace("_","-").substring(1) %> le <%= creneau.getDateCreneau() %>
+	                	<%= creneau.getHeureCreneau().toString().replace("_","-").substring(1) %> le <%= creneau.getDateCreneau() %> (<%= cr.findDisposParCreneau(creneau) %> places disponibles)
 	               	</option>
 	        <% 
 	            } 
@@ -71,7 +74,8 @@ if (creneauRetrait == null) {
 	    </select>
 	    
 	    <input type="submit" value="Payer">
-	</form>
+	</form>	     
+	
 <% String nombreArrondi = String.format("%.2f", apayer);%>
 	<p>A Payer : <span id="apayer" ><%= nombreArrondi %></span> Euro</p>
 
