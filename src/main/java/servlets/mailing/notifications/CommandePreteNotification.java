@@ -29,17 +29,21 @@ public class CommandePreteNotification extends AbstractNotification {
 	 */
 	private void computeBasketContent(final Panier panier) {
 
-		final String message = getMessage();
+		String message = getMessage();
 
-		message.concat("<br><table class=\"table\">\r\n"
-				+ "    <thead>\r\n"
+		message = message.concat("<table style=\"width: 31%; margin-right: calc(69%);\">\r\n"
+				+ "    <tbody>\r\n"
 				+ "        <tr>\r\n"
-				+ "            <th>#</th>\r\n"
-				+ "            <th>Article</th>\r\n"
-				+ "            <th>Qté</th>\r\n"
-				+ "        </tr>\r\n"
-				+ "    </thead>\r\n"
-				+ "    <tbody>");
+				+ "            <td style=\"width: 27.0153%;\">\r\n"
+				+ "                <div style=\"text-align: center;\"><span style=\"font-family: Verdana, Geneva, sans-serif;\"><strong>#</strong></span></div>\r\n"
+				+ "            </td>\r\n"
+				+ "            <td style=\"width: 45.098%;\">\r\n"
+				+ "                <div style=\"text-align: center;\"><span style=\"font-family: Verdana, Geneva, sans-serif;\"><strong>Article</strong></span></div>\r\n"
+				+ "            </td>\r\n"
+				+ "            <td style=\"width: 27.6654%;\">\r\n"
+				+ "                <div style=\"text-align: center;\"><span style=\"font-family: Verdana, Geneva, sans-serif;\"><strong>Quantit&eacute;</strong></span></div>\r\n"
+				+ "            </td>\r\n"
+				+ "        </tr>");
 
 		final Map<Article, Composer> composers = panier.getComposers();
 
@@ -47,16 +51,22 @@ public class CommandePreteNotification extends AbstractNotification {
 			final Article article = entry.getKey();
 			final Composer composer = entry.getValue();
 
-			message.concat("<tr>\r\n"
-					+ "            <td scope=\"row\">" + article.getId() + "</td>\r\n"
-					+ "            <td>" + article.getLib() + "</td>\r\n"
-					+ "            <td>" + composer.getQte() + "</td>\r\n"
+			message = message.concat("<tr>\r\n"
+					+ "            <td style=\"width: 27.0153%;\">\r\n"
+					+ "                <div style=\"text-align: center;\">" + article.getId() + "</div>\r\n"
+					+ "            </td>\r\n"
+					+ "            <td style=\"width: 45.098%;\">" + article.getLib() + "</td>\r\n"
+					+ "            <td style=\"width: 27.6654%;\">\r\n"
+					+ "                <div style=\"text-align: center;\">" + composer.getQte() + "</div>\r\n"
+					+ "            </td>\r\n"
 					+ "        </tr>");
 		}
 
-		message.concat("\r\n"
+		message = message.concat("\r\n"
 				+ "    </tbody>\r\n"
 				+ "</table>");
+
+		setMessage(message);
 
 	}
 
@@ -71,10 +81,12 @@ public class CommandePreteNotification extends AbstractNotification {
 
 		final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-		final String message = getMessage();
+		String message = getMessage();
 
-		message.concat("<br>Votre date de retrait prévu est le " + format.format(dateCreneau));
-		message.concat(" de " + heure.getValue());
+		message = message.concat("Votre date de retrait est pr&eacute;vue pour le " + format.format(dateCreneau)
+				+ " de " + heure.getValue() + ".<br><br>R&eacute;capitulatif de votre commande :<br>\r\n"
+				+ "    </span>\r\n"
+				+ "</p>");
 
 		setMessage(message);
 	}
@@ -85,8 +97,11 @@ public class CommandePreteNotification extends AbstractNotification {
 	 * @param utilisateur
 	 */
 	private void computeReceipt(final Utilisateur utilisateur) {
-		final String message = getMessage();
-		message.concat("<br>Bonjour " + utilisateur.getPrenom() + ", votre commande est prête");
+		String message = getMessage();
+		message = message.concat("<p>\r\n"
+				+ "    <span style=\"font-family: Verdana, Geneva, sans-serif;\">\r\n"
+				+ "        Bonjour " + utilisateur.getPrenom() + ", votre commande est pr&ecirc;te !<br>\r\n"
+				+ "        <br>");
 
 		setMessage(message);
 
