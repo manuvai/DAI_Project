@@ -18,7 +18,6 @@ import org.hibernate.Transaction;
 import dtos.ListeCourseDto;
 import mappers.ListeDeCourseMapper;
 import models.Article;
-import models.ConnexionServlet;
 import models.Contenir;
 import models.ListeDeCourse;
 import models.Utilisateur;
