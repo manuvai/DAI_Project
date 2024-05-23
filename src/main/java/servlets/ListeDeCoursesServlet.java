@@ -3,6 +3,8 @@ package servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +16,9 @@ import org.hibernate.Session;
 
 import dtos.ListeCourseDto;
 import mappers.ListeDeCourseMapper;
+import models.Article;
 import models.ConnexionServlet;
+import models.Contenir;
 import models.ListeDeCourse;
 import models.Utilisateur;
 import repositories.ListeDeCourseRepository;
@@ -74,6 +78,106 @@ public class ListeDeCoursesServlet extends AbstractServlet {
 
 		}
 
+		final String action = request.getParameter("action");
+		final Utilisateur utilisateur = (Utilisateur) session.getAttribute("user");
+
+		if ("transformToPanier".equals(action)) {
+			processListeTransformToPanier(request, response, utilisateur);
+
+		} else {
+			processListeAdd(request, response, utilisateur);
+
+		}
+
+	}
+
+	/**
+	 * Gestion de la transformation d'une liste de course en panier.
+	 *
+	 * @param request
+	 * @param response
+	 * @param utilisateur
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	@SuppressWarnings("unchecked")
+	private void processListeTransformToPanier(final HttpServletRequest request, final HttpServletResponse response,
+			final Utilisateur utilisateur) throws ServletException, IOException {
+
+
+		final String idListe = request.getParameter("id");
+
+		if (idListe == null || idListe.isBlank()) {
+			ajouterErreur("Veuillez choisir une liste à transformer", request);
+			responseGet(request, response);
+			return;
+		}
+
+		// Check si le panier est déjà vide
+		final HttpSession httpSession = request.getSession();
+
+		final List<String> numeros = httpSession.getAttribute("numeros") == null
+				? new ArrayList<>()
+				: (List<String>) httpSession.getAttribute("numeros");
+
+		if (!numeros.isEmpty()) {
+			ajouterErreur("Vous ne pouvez pas transformer une liste tant qu'un panier est en cours", request);
+			responseGet(request, response);
+			return;
+		}
+
+		final Session session = listeDeCourseRepository.getSession();
+		session.beginTransaction();
+		final ListeDeCourse liste = listeDeCourseRepository.findById(Integer.parseInt(idListe), session);
+
+		// Check si elle contient des post-it
+		if (liste.getConcerners() != null && !liste.getConcerners().isEmpty()) {
+			session.close();
+			ajouterErreur("Cette liste contient des post-it et ne peut donc pas constituer un panier", request);
+			responseGet(request, response);
+			return;
+		}
+
+		// Ajouter chaque article en session
+		final Map<Article, Contenir> contenirMap = liste.getContenirs();
+
+		int nbrArticleTotal = 0;
+
+		for (final Entry<Article, Contenir> entry : contenirMap.entrySet()) {
+			final Article article = entry.getKey();
+			final Contenir contenir = entry.getValue();
+
+			final String idArticle = article.getId().toString();
+			final Integer qte = contenir.getQte();
+
+			numeros.add(idArticle);
+			httpSession.setAttribute(idArticle, qte);
+			nbrArticleTotal += qte;
+		}
+
+		session.close();
+
+		httpSession.setAttribute("nbrArticleTotal", nbrArticleTotal);
+		httpSession.setAttribute("numeros", numeros);
+
+		// Redirect vers panier
+		ajouterMessageSession(SUCCESSES_KEY, "La liste de course a été transformée en panier.");
+		response.sendRedirect(request.getContextPath() + "/PanierServlet");
+
+	}
+
+	/**
+	 * Gestion de l'ajout d'une liste de course.
+	 *
+	 * @param request
+	 * @param response
+	 * @param utilisateur
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void processListeAdd(final HttpServletRequest request, final HttpServletResponse response,
+			final Utilisateur utilisateur)
+			throws ServletException, IOException {
 		final String listeName = request.getParameter("listeName");
 
 		if (listeName == null || listeName.isBlank()) {
@@ -82,7 +186,6 @@ public class ListeDeCoursesServlet extends AbstractServlet {
 			return;
 		}
 
-		final Utilisateur utilisateur = (Utilisateur) session.getAttribute("user");
 		final ListeDeCourse listeDeCourse = new ListeDeCourse(listeName.strip(), utilisateur);
 		listeDeCourseRepository.create(listeDeCourse);
 
@@ -91,7 +194,6 @@ public class ListeDeCoursesServlet extends AbstractServlet {
 		request.setAttribute("addedListeId", listeDeCourse.getIdListDeCourse());
 
 		doGet(request, response);
-
 	}
 
 	/**

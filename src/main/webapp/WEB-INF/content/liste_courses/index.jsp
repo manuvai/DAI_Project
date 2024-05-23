@@ -62,17 +62,25 @@ Integer addedListeId = (Integer) request.getAttribute("addedListeId");
 				<th scope="row"><%=liste.getId()%></th>
 				<td><%=liste.getNom()%></td>
 				<td><%=liste.getNbElements()%> éléments</td>
-				<td><a
-					href="<%=request.getContextPath()%>/listes_courses/show?id=<%=liste.getId()%>"
-					class="btn btn-secondary">Voir la liste</a> <a
-					href="<%=request.getContextPath()%>/listes_courses/edit?id=<%=liste.getId()%>"
-					class="btn btn-primary disabled">Modifier</a>
+				<td>
+					<a
+						href="<%=request.getContextPath()%>/listes_courses/show?id=<%=liste.getId()%>"
+						class="btn btn-secondary">
+						Voir la liste
+					</a> 
+					
+					<form method="POST"
+						action="<%=request.getContextPath()%>/listes_courses?action=transformToPanier&id=<%=liste.getId()%>">
+						<button type="submit" class="btn btn-primary">Transformer en panier</button>
+					</form>
+					
 					<form action="<%=request.getContextPath()%>/listes_courses/delete"
 						method="post">
 						<input type="hidden" name="liste-courses-id"
 							value="<%=liste.getId()%>" />
 						<button type="submit" disabled class="btn btn-danger">Supprimer</button>
-					</form></td>
+					</form>
+				</td>
 			</tr>
 
 			<%
