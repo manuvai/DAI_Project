@@ -8,6 +8,8 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -62,6 +64,9 @@ public class Commande {
 	@OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Map<Article, Approvisionner> articleApprovisionner;
 
+	@Column(name = "Etat")
+	@Enumerated(EnumType.STRING)
+	private Etat etat;
 	/**
 	 * Constructeur vide.
 	 */
@@ -83,6 +88,7 @@ public class Commande {
 		this.dateCreation = new Date();
 		this.magasin = magasin;
 		this.articleApprovisionner = new HashMap<Article, Approvisionner>();
+		this.etat = Etat.CREE;
 	}
 
 	/**
@@ -92,6 +98,14 @@ public class Commande {
 	 */
 	public Integer getId() {
 		return id;
+	}
+
+	public Etat getEtat() {
+		return etat;
+	}
+
+	public void setEtat(Etat etat) {
+		this.etat = etat;
 	}
 
 	/**
@@ -193,6 +207,8 @@ public class Commande {
 				&& Objects.equals(id, other.id) && Objects.equals(magasin, other.magasin);
 	}
 
-
+	public enum Etat {
+		CREE, LIVREE
+	}
 
 }
