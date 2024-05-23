@@ -14,7 +14,7 @@ String idCommande = (String) request.getAttribute("idCommande");
 %>
 <%@ include file="../template/start.jsp" %>
 	<h1>Préparation des commandes</h1> 
-	
+	<a id="a-historique" href="./PreparationCommandesHistoriqueServlet">Historique des commandes préparées</a>
 	
 	<% if (idCommande != null) { %>
 	<H2>La pr&eacute;paration de la commande est valid&eacute;e</H2>
@@ -41,5 +41,4 @@ String idCommande = (String) request.getAttribute("idCommande");
 		    <% } %>
 		</tbody>
 	</table>
-	<a id="a-historique" href="./PreparationCommandesHistoriqueServlet">Historique des commandes préparées</a>	
 <%@ include file="../template/end.jsp" %>

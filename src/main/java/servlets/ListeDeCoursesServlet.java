@@ -14,7 +14,6 @@ import org.hibernate.Session;
 
 import dtos.ListeCourseDto;
 import mappers.ListeDeCourseMapper;
-import models.ConnexionServlet;
 import models.ListeDeCourse;
 import models.Utilisateur;
 import repositories.ListeDeCourseRepository;
