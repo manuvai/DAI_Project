@@ -15,6 +15,7 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 %>
 <%@ include file="../template/start.jsp" %>
 <h1>Commandes</h1>
+<a href="management/">Retour à la page d'accueil</a>
 <table class="commandes-table">
     <thead>
         <tr>

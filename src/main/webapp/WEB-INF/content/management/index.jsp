@@ -42,6 +42,10 @@ if (roleManagement == null) {
 						class="btn btn-primary">
 						Passer une commande
 	</a>
+	<a href="../voirCommande" 
+						class="btn btn-primary">
+						Voir les commandes
+	</a>
 	<h1>Gestion des articles</h1>
 
 	<div class="container">
