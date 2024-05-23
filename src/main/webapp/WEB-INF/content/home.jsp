@@ -31,6 +31,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
                 <div class="flex-item">
                     <button onclick="window.location.href='Catalogue?nomRayon=<%=rayon.getNomRayon() %>';" 
                             class="btn btn-primary btn-rayon" id="<%= rayon.getId() %>">
+                           
                         <%= rayon.getNomRayon() %>
                     </button>
                 </div>

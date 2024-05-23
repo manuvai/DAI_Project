@@ -28,7 +28,7 @@ session.setAttribute("articleRempla", produitsId);
 
 <h1>Vérification des Articles Manquants</h1>
 <% if (articlesManquants != null && !articlesManquants.isEmpty()) { %>
-    <form action="PayerServlet" method="post">
+    <form  id="etapeFinale" action="PayerServlet" method="post">
         Produits Manquants:
                 <% for (Article articleManquant : articlesManquants) {
                 	

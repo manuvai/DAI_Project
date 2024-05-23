@@ -85,8 +85,8 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
    	 <a href="<%= request.getContextPath() %>/CommandesClientServlet"><button  class="btn btn-primary">Retour sur mes commandes</button></a>
      
      <form action="ReprendrePanierServlet" method="post">
-     	<input type="hidden" id="idPanier" name="idPanier" value=<%=request.getAttribute("idCommande")  %>>
-     	<a href=""><button  type="submit" class="btn btn-secondary">Reprendre mon panier</button></a>
+     	<input type="hidden" id="idPanierReprendre" name="idPanierReprendre" value=<%=request.getAttribute("idCommande")  %>>
+     	<button  type="submit" class="btn btn-secondary">Reprendre mon panier</button>
      </form>
    	</div>
    	

@@ -17,7 +17,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 %>
 <%@ include file="../template/start.jsp"%>
 
-<h1>Articles Triés par Ordre Décroissant</h1>
+<h1>Articles Triés par Ordre Décroissant du prix au kg</h1>
 
 <div>
 	<a class="tri" href="articlesCroissants">Croissant</a>
@@ -28,6 +28,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 	<table class="articles-table">
 		<thead>
 			<tr>
+				<th>Image de l'article</th>
 				<th>Libellé</th>
 				<th>Prix au kilo</th>
 				<th>Ajouter au panier</th>				
@@ -38,7 +39,14 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 			for (Article article : articles) {
 			%>
 			<tr>
-				<td><a href="<%="Article?idArticle=" + article.getId()%>"><%=article.getLib()%></a></td>
+				<td style="text-align: center;">
+				    <a href="<%= "Article?idArticle=" + article.getId() %>">
+				        <img class="img-item" src="<%= request.getContextPath() + "/" + article.getCheminImage() %>" 
+				             alt="Image <%= article.getLib() %>"  style="display: block; margin: 0 auto;"/>
+				    </a>
+				</td>
+
+				<td> <%=article.getLib()%></td>
 				<td><%=String.format("%.2f", article.getPrixUnitaire() * 1000 / article.getPoids())%>
 					€/kg</td>
 				<td><i id="enleverButton"
