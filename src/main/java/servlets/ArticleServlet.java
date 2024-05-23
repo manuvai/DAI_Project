@@ -110,6 +110,7 @@ public class ArticleServlet extends AbstractServlet {
 		}
 
 		if (listeId == null) {
+			ajouterErreur("Veuillez choisir une liste", request);
 			doGet(request, response);
 			return;
 		}
