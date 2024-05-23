@@ -83,7 +83,7 @@ public class CreneauClientServlet extends HttpServlet {
 	 
 	  
 	
-	     RequestDispatcher rd = request.getRequestDispatcher("confirmationCreneau");
+	    RequestDispatcher rd = request.getRequestDispatcher("confirmationCreneau");
 		rd.forward(request, response);
 	}
 

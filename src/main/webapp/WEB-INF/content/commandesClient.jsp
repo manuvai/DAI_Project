@@ -91,6 +91,7 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 								 </button>
 						    </form>
 						 	<br>
+						 	<% if (commande.getEtat() != Panier.Etat.LIVRE){ %>
 						 	<form action="./CreneauClientServlet" method="get">
 						 	 	<input type="hidden" name="idCommande" value="<%= commande.getId() %>">
 						 		<button type="submit" class="btn btn-primary">
@@ -100,6 +101,7 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 									</svg> Modifier créneau
 						        </button>
 						 	</form>
+						 	<%} %>
 						 	
 						   
 						    	
