@@ -64,10 +64,8 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		final Session session = getSession();
 		session.beginTransaction();
 
-		final String queryString = "SELECT count(*) "
-				+ "FROM Panier p, Composer c, Article a  "
-				+ "WHERE p = c.panierComposer and c.articleComposer = a  "
-				+ "	AND a.bio = true";
+		final String queryString = "SELECT count(*) " + "FROM Panier p, Composer c, Article a  "
+				+ "WHERE p = c.panierComposer and c.articleComposer = a  " + "	AND a.bio = true";
 
 		final Query<?> query = session.createQuery(queryString);
 
@@ -88,10 +86,8 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		final Session session = getSession();
 		session.beginTransaction();
 
-		final String queryString = "SELECT count(*) "
-				+ "FROM Panier p, Composer c, Article a  "
-				+ "WHERE p = c.panierComposer and c.articleComposer = a  "
-				+ " AND a.nutriscore = :nutri";
+		final String queryString = "SELECT count(*) " + "FROM Panier p, Composer c, Article a  "
+				+ "WHERE p = c.panierComposer and c.articleComposer = a  " + " AND a.nutriscore = :nutri";
 
 		final Query<?> query = session.createQuery(queryString);
 		query.setParameter("nutri", nutri);
@@ -116,8 +112,7 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		final String queryString = "SELECT count(*) "
 				+ "FROM Panier p, Composer c, Article a, Categorie ca, SousCategorie s "
 				+ "WHERE p = c.panierComposer and c.articleComposer = a  "
-				+ "and a.sousCategorie = s and s.categorie = ca "
-				+ "and ca = :categorie";
+				+ "and a.sousCategorie = s and s.categorie = ca " + "and ca = :categorie";
 
 		final Query<?> query = session.createQuery(queryString);
 		query.setParameter("categorie", categorie);
@@ -161,9 +156,7 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		Article article = null;
 
 		if (inName != null && session != null) {
-			final String query = "SELECT a "
-					+ "FROM Article a "
-					+ "WHERE a.lib = :lib";
+			final String query = "SELECT a " + "FROM Article a " + "WHERE a.lib = :lib";
 			final Map<String, Object> mappedValues = Collections.singletonMap("lib", inName);
 			final List<Article> results = getQueryResults(query, mappedValues, session);
 
@@ -187,10 +180,7 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		List<Article> articles = new ArrayList<>();
 
 		if (q != null) {
-			final String query = "SELECT a "
-					+ "FROM Article a "
-					+ "WHERE a.lib "
-					+ "	LIKE :q ";
+			final String query = "SELECT a " + "FROM Article a " + "WHERE a.lib " + "	LIKE :q ";
 			final Map<String, Object> mappedValues = Collections.singletonMap("q", "%" + q + "%");
 
 			articles = getQueryResults(query, mappedValues);
@@ -207,10 +197,8 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 	 * @return
 	 */
 	public List<Article> findArticlePanier(final Integer panierId) {
-		final String query = "SELECT a "
-				+ "FROM Article a, Composer c, Panier p "
-				+ "WHERE a.idArticle = c.articleComposer "
-				+ "AND c.panierComposer = p.idPanier "
+		final String query = "SELECT a " + "FROM Article a, Composer c, Panier p "
+				+ "WHERE a.idArticle = c.articleComposer " + "AND c.panierComposer = p.idPanier "
 				+ "AND p.idPanier = :panierId";
 		final Map<String, Object> mappedValues = Collections.singletonMap("panierId", panierId.toString());
 
@@ -225,11 +213,8 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 	 */
 	public List<Article> getArticlesByRayonName(final String nomRayon) {
 
-		final String query = "SELECT a "
-				+ "FROM Article a , SousCategorie sc, Categorie c, Rayon r "
-				+ "WHERE a.sousCategorie = sc.idSousCat "
-				+ "	AND sc.categorie = c.idCat "
-				+ "	AND c.rayon = r.id "
+		final String query = "SELECT a " + "FROM Article a , SousCategorie sc, Categorie c, Rayon r "
+				+ "WHERE a.sousCategorie = sc.idSousCat " + "	AND sc.categorie = c.idCat " + "	AND c.rayon = r.id "
 				+ "	AND r.nomRayon = :nomRayon ";
 
 		final Map<String, Object> mappedValues = Collections.singletonMap("nomRayon", nomRayon);
@@ -249,14 +234,9 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		List<Article> articles = new ArrayList<>();
 
 		if (utilisateur != null && limit > 0) {
-			final String query = "SELECT a "
-					+ "FROM Article a, Composer c, Panier p, Utilisateur u "
-					+ "WHERE a = c.articleComposer "
-					+ " AND c.panierComposer = p "
-					+ " AND p.utilisateur = :userId "
-					+ "GROUP BY a.idArticle "
-					+ "ORDER BY SUM(c.qte) DESC "
-					+ "LIMIT :limit";
+			final String query = "SELECT a " + "FROM Article a, Composer c, Panier p, Utilisateur u "
+					+ "WHERE a = c.articleComposer " + " AND c.panierComposer = p " + " AND p.utilisateur = :userId "
+					+ "GROUP BY a.idArticle " + "ORDER BY SUM(c.qte) DESC " + "LIMIT :limit";
 
 			final Map<String, Object> mappedValues = new HashMap<>();
 			mappedValues.put("userId", utilisateur.getId());
@@ -268,23 +248,42 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		return articles;
 	}
 
+	public List<Article> articlesCroissants() {
+		List<Article> articles = new ArrayList<>();
+		final String query = "SELECT a " + "FROM Article a " + "ORDER BY a.prixUnitaire ASC ";
+
+		final Map<String, Object> mappedValues = new HashMap<>();
+
+		articles = getQueryResults(query, mappedValues);
+		return articles;
+	}
+	
+	public List<Article> articlesDecroissants() {
+		List<Article> articles = new ArrayList<>();
+		final String query = "SELECT a " + "FROM Article a " + "ORDER BY a.prixUnitaire DESC ";
+
+		final Map<String, Object> mappedValues = new HashMap<>();
+
+		articles = getQueryResults(query, mappedValues);
+		return articles;
+	}
+
+
 	public List<Article> memeSousCategorie(final int idArticle, final SousCategorie sousCategorie) {
 		List<Article> articles = new ArrayList<>();
 
-			final String query = "SELECT a "
-					+ "FROM Article a "
-					+ "WHERE a.sousCategorie = :sousCategorie "
-					+ "and a.idArticle != :id";
-					
+		final String query = "SELECT a " + "FROM Article a " + "WHERE a.sousCategorie = :sousCategorie "
+				+ "and a.idArticle != :id";
 
-			final Map<String, Object> mappedValues = new HashMap<>();
-			mappedValues.put("sousCategorie", sousCategorie);
-			mappedValues.put("id", idArticle);
+		final Map<String, Object> mappedValues = new HashMap<>();
+		mappedValues.put("sousCategorie", sousCategorie);
+		mappedValues.put("id", idArticle);
 
-			articles = getQueryResults(query, mappedValues);
+		articles = getQueryResults(query, mappedValues);
 
 		return articles;
 	}
+
 	/**
 	 * Extraction de la liste des articles et leur stocks en fonction d'un magasin
 	 * donné.
@@ -376,12 +375,9 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		final Date now = new Date();
 		final Date limit = Date.from(now.toInstant().plus(Duration.ofDays(15)));
 
-		return commandeApprovisionnement == null
-				? new ArrayList<>()
-				: commandeApprovisionnement.stream()
-						.filter(commande -> commande.getDateArrivee() != null)
-						.filter(commande -> now.before(commande.getDateArrivee())
-								&& limit.after(commande.getDateArrivee()))
+		return commandeApprovisionnement == null ? new ArrayList<>()
+				: commandeApprovisionnement.stream().filter(commande -> commande.getDateArrivee() != null).filter(
+						commande -> now.before(commande.getDateArrivee()) && limit.after(commande.getDateArrivee()))
 						.toList();
 	}
 
@@ -410,10 +406,8 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 		List<Creneau> creneauxSurDeuxSemaines = new ArrayList<>();
 
 		if (creneaux != null) {
-			creneauxSurDeuxSemaines = creneaux.stream()
-					.filter(creneau -> creneau.getDateCreneau() != null)
-					.filter(creneau -> now.before(creneau.getDateCreneau())
-							&& limit.after(creneau.getDateCreneau()))
+			creneauxSurDeuxSemaines = creneaux.stream().filter(creneau -> creneau.getDateCreneau() != null)
+					.filter(creneau -> now.before(creneau.getDateCreneau()) && limit.after(creneau.getDateCreneau()))
 					.toList();
 		}
 

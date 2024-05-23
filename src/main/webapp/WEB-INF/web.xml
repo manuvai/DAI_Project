@@ -217,4 +217,24 @@
     <servlet-name>etapeFinale</servlet-name>
     <url-pattern>/etapeFinale</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>articlesCroissants</display-name>
+    <servlet-name>articlesCroissants</servlet-name>
+    <jsp-file>/WEB-INF/content/articlesCroissants.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>articlesCroissants</servlet-name>
+    <url-pattern>/articlesCroissants</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>articlesDecroissants</display-name>
+    <servlet-name>articlesDecroissants</servlet-name>
+    <jsp-file>/WEB-INF/content/articlesDecroissants.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>articlesDecroissants</servlet-name>
+    <url-pattern>/articlesDecroissants</url-pattern>
+  </servlet-mapping>
 </web-app>
