@@ -93,7 +93,7 @@ public class PayerServlet extends HttpServlet {
 		for (Map.Entry<Article, Composer> entry : composition.entrySet()) {
             Article article = entry.getKey();
             Composer composer = entry.getValue();
-            int quantity = composer.getQte(); // Assuming Composer has a getQte() method
+            int quantity = composer.getQte(); 
             montantFinal += quantity*article.getPrixUnitaire()*(1+article.getPromotion()/100);
         }
 		
