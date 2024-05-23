@@ -40,15 +40,15 @@ long remainingHours = hours % 24;
 <h2>Habitudes de consommation</h2>
 <div class="container mb-2">
 	<div class="graphDash row d-flex justify-content-center">
-		<div class="bio col-lg-4 col-lg-6">
+		<div class="bio col-lg-3 col-lg-6">
 		<p>		Répartion des articles selon s'ils sont bios</p>
 			<canvas  id="bioChart"></canvas>
 		</div>
-		<div class="nutriscore col-lg-4 col-lg-6">
+		<div class="nutriscore col-lg-3 col-lg-6">
 		<p>		Répartion des articles selon leur nutriscore</p>
 			<canvas  id="nutriChart"></canvas>
 		</div>
-		<div class="cats col-lg-4 col-lg-6">
+		<div class="cats col-lg-3 col-lg-6">
 		<p>		Répartion des articles selon leurs catégories</p>
 		<canvas  id="catsChart"></canvas>
 		</div>
