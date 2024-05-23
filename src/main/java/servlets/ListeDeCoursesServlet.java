@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import dtos.ListeCourseDto;
 import mappers.ListeDeCourseMapper;
@@ -84,11 +85,46 @@ public class ListeDeCoursesServlet extends AbstractServlet {
 		if ("transformToPanier".equals(action)) {
 			processListeTransformToPanier(request, response, utilisateur);
 
+		} else if ("delete".equals(action)) {
+			processListeDelete(request, response);
+
 		} else {
 			processListeAdd(request, response, utilisateur);
 
 		}
 
+	}
+
+	/**
+	 * Gestion de la suppression d'une liste de course.
+	 *
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void processListeDelete(final HttpServletRequest request, final HttpServletResponse response)
+			throws ServletException, IOException {
+
+		final String idListe = request.getParameter("liste-courses-id");
+
+		if (idListe == null || idListe.isBlank()) {
+			ajouterErreur("Veuillez choisir une liste à transformer", request);
+			responseGet(request, response);
+			return;
+		}
+
+		final Session session = listeDeCourseRepository.getSession();
+		final Transaction transaction = session.beginTransaction();
+
+		final ListeDeCourse liste = listeDeCourseRepository.findById(Integer.parseInt(idListe), session);
+
+		listeDeCourseRepository.delete(liste, session);
+
+		transaction.commit();
+
+		ajouterMessage(SUCCESSES_KEY, "La liste a été supprimée avec succès", request);
+		doGet(request, response);
 	}
 
 	/**
@@ -138,9 +174,10 @@ public class ListeDeCoursesServlet extends AbstractServlet {
 			return;
 		}
 
-		// Ajouter chaque article en session
+
 		final Map<Article, Contenir> contenirMap = liste.getContenirs();
 
+		// Ajouter chaque article en session
 		int nbrArticleTotal = 0;
 
 		for (final Entry<Article, Contenir> entry : contenirMap.entrySet()) {
@@ -156,6 +193,14 @@ public class ListeDeCoursesServlet extends AbstractServlet {
 		}
 
 		session.close();
+
+		// Check si elle contient au moins des articles
+		if (nbrArticleTotal <= 0) {
+			ajouterErreur("Cette liste ne comporte aucun article", request);
+			responseGet(request, response);
+			return;
+
+		}
 
 		httpSession.setAttribute("nbrArticleTotal", nbrArticleTotal);
 		httpSession.setAttribute("numeros", numeros);
