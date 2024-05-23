@@ -6,90 +6,117 @@
     <!DOCTYPE html>
 <html>
 <head>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
 <link rel="stylesheet" type="text/css" href="css/header.css">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-   <link rel="stylesheet" type="text/css" href="css/superMarket.css">
+<link rel="stylesheet" type="text/css" href="css/superMarket.css">
 <title>Online Shop</title>
-</head>
 <script src="js/home.js"></script>
-  <body>
 <%@ include file="../template/head.jsp" %>
+
+</head>
+ <body>
+ <div id="rayonCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <% 
+        List<Rayon> rayons = (List<Rayon>) request.getAttribute("rayons");
+        if (rayons != null) {
+            for (int i = 0; i < rayons.size(); i += 5) {
+        %>
+        <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
+            <div class="d-flex justify-content-center flex-wrap">
+                <% 
+                for (int j = i; j < Math.min(i + 5, rayons.size()); j++) {
+                    Rayon rayon = rayons.get(j);
+                %>
+                <div class="flex-item">
+                    <button onclick="window.location.href='Catalogue?nomRayon=<%=rayon.getNomRayon() %>';" 
+                            class="btn-rayon" id="<%= rayon.getId() %>">
+                           <img class="img-rayon"
+											src="<%= request.getContextPath() %>/<%= rayon.getCheminImageRayon() %>" 
+											alt="rayon">
+                       <p><%= rayon.getNomRayon() %></p>
+                    </button>
+                </div>
+                <% 
+                }
+                %>
+            </div>
+        </div>
+        <% 
+            }
+        } 
+        %> 
+
+	</div>
+</div>
 <main>
 	<div id="sidebar">
 		<div id="contentSidebar">
 			<select name="categories" id="categories">
+			  <option value="" selected disabled hidden>Catégorie</option>
 			    <% 
 			        List<Categorie> categories = (List<Categorie>) request.getAttribute("categories");
 			        if (categories != null) {
 			            for (Categorie categorie : categories) {
-			    %><option value="<%=categorie.getNomCategorie() %>"><%=categorie.getNomCategorie() %></option>
-			    <% 
+						    %><option class="categorie" value="<%=categorie.getNomCategorie() %>"><%=categorie.getNomCategorie() %></option>
+						    <% 
 			            }
 			        } 
 			    %>  
 		    </select>
-	    </div>.
+    			<select name="sousCategories" id="sousCategories">
+					<option value="" selected disabled hidden>Sous-Catégorie</option>
+		    	</select>
+	    </div>
 	</div>
 	<div id="catalogue">
-	<% if (request.getAttribute("articles") != null) {%>
-	            <% for (Article article : (List<Article>)request.getAttribute("articles")) {%>
-	            <%Float prixArticle = article.getPrixUnitaire();
-				Float prixReduit=0.0f;
-				Float promo = 0.0f;
-				Float promotionArticle = article.getPromotion();
-	         
-	           
-	            if (promotionArticle != null) {
-	                promo = promotionArticle;
-	            }
-	            if (promo>0){
-	            	prixReduit = prixArticle - (prixArticle * promo / 100);
-	            } %>
-	                <a href="<%="Article?idArticle="+article.getId() %>"> 
-	                <div class="article">
-	                <% if (article != null && Boolean.TRUE.equals(article.getBio())) { %>
-						 <img class="img-bio-catalogue" src="images/bio.png">
+		<% if (request.getAttribute("articles") != null) {%>
+            <% for (Article article : (List<Article>)request.getAttribute("articles")) {%>
+                <div class="article">
+           			<a href="<%="Article?idArticle="+article.getId() %>"> 
+		                <% if (article != null && Boolean.TRUE.equals(article.getBio())) { %>
+							 <img class="img-bio-catalogue" src="images/bio.png">
 					    <% } %>
 	                	<img class ="imgArticle" src="<%= article.getCheminImage() %>">
 	                	<div class="articleDetails">
-	                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
-	                	<div class="price-container">
-							<% if (promo >0) { %>
-								<p class="price promotion">
-									<%= prixArticle %>€
-								</p>
-								
-								<p class="price discount">
-									<%=String.format("%.2f",prixReduit)%>€
-								</p>
-							<%}else{ %>
-								<p class="price">
-									<%= prixArticle %>€
-								</p>
-							<%} %>
-						</div>
+		                	<span class ="nomArticle"><%= article.getLib() %></span><br/>
+		                	<div class="price-container">
+								<% if (article.getPrixUnitaire()!=article.getPrixApresPromotion()) { %>
+									<span class="price promotion">
+										<%= article.getPrixUnitaire() %>€ 
+									</span>
+									<span class="price discount">
+										<%=String.format("%.2f",article.getPrixApresPromotion())%>€
+									</span>
+									<%}else{ %>
+										<span class="price">
+											<%= article.getPrixUnitaire() %>€
+										</span>
+									<%} %>
+							</div>
 	    				<span class ="poidsArticle"><%= article.getPoids()%>g</span><br/>
-                            	<span id="article<%= article.getId() %>">
-                            	<% Integer nbr = (Integer) session.getAttribute(article.getId().toString());
-									 if (nbr != null ){%>
-									<%= nbr %>
-									 <%} else {%>
-									 0
-										 <% }%>
-								</span>
+					</a>
+						</div>
 						<div id="gestionPanier">
-							<i id="enleverButton"  class="boutonPanier fas fa-minus icon"  onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>			
+							<i id="enleverButton"  class="boutonPanier fas fa-minus icon"  onclick="enleverAuPanier('<%= article.getId() %>')" title="moins"></i>
+                            	<span id="article<%= article.getId() %>">
+	                            	<% Integer nbr = (Integer) session.getAttribute(article.getId().toString());
+										 if (nbr != null ){%>
+										<%= nbr %>
+										 <%} else {%>
+										 0
+											 <% }%>
+								</span>			
 							<i id="ajouterButton"  class="boutonPanier fas fa-plus icon"  title="plus" onclick="ajouterAuPanier('<%= article.getId() %>')"></i>
 						</div>
-	    				</div>
-	                </div> 
-	                <% }
+			</div>
+           <% }
 		}
 	%>
 	</div>
 </main>
 </body>
+<script src="js/catalogue.js"></script>
 <%@ include file="../template/footer.jsp" %>

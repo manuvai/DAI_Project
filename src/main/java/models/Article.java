@@ -273,6 +273,16 @@ public class Article {
 	public float getPrixUnitaire() {
 		return prixUnitaire;
 	}
+	
+	/**
+	 * Récupération du prix de l'article avec une promotion appliquée. Return prix Unitaire si pas de promotion.
+	 *	
+	 * @return
+	 */
+	public float getPrixApresPromotion() {
+		if(this.promotion!=null) return (this.prixUnitaire * (1-this.promotion/100));
+		else return this.prixUnitaire;
+	}
 
 	/**
 	 * MAJ du prix unitaire de l'article.

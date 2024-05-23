@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import repositories.ArticleRepository;
 import repositories.CategorieRepository;
+import repositories.RayonRepository;
+import repositories.SousCategorieRepository;
 import models.Article;
 import models.Categorie;
+import models.Rayon;
 
 @WebServlet("/Catalogue")
 public class CatalogueServlet extends AbstractServlet {
@@ -22,6 +26,8 @@ public class CatalogueServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	ArticleRepository repoArticles = new ArticleRepository();
 	CategorieRepository repoCategories = new CategorieRepository();
+	SousCategorieRepository sousCatRepo = new SousCategorieRepository();
+	RayonRepository repoRayon = new RayonRepository();
 	
 	
 	@Override
@@ -29,17 +35,21 @@ public class CatalogueServlet extends AbstractServlet {
 		
 		List<Article> listeArticles;
 		List<Categorie> listeCategories;
+		List<Rayon> listeRayons;
 		
 		if(request.getParameter("nomRayon")!=null) {
 			listeArticles = repoArticles.getArticlesByRayonName(request.getParameter("nomRayon"));
+			listeCategories = repoCategories.getCategoriesByRayonName(request.getParameter("nomRayon"));
 		}
 		
 		else {
 			listeArticles = repoArticles.findAll();
+			listeCategories = repoCategories.findAll();
 		}
 		
-		listeCategories = repoCategories.findAll();
+		listeRayons = repoRayon.findAll();
 		
+		request.setAttribute("rayons", listeRayons);
 		request.setAttribute("articles", listeArticles);
 		request.setAttribute("categories", listeCategories);
 
