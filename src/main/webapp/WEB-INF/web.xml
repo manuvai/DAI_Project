@@ -187,4 +187,14 @@
     <servlet-name>detailsCommandeFournisseur</servlet-name>
     <url-pattern>/detailsCommandeFournisseur</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>etapeFinale</display-name>
+    <servlet-name>etapeFinale</servlet-name>
+    <jsp-file>/WEB-INF/content/etapeFinale.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>etapeFinale</servlet-name>
+    <url-pattern>/etapeFinale</url-pattern>
+  </servlet-mapping>
 </web-app>
