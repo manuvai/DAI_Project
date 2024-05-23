@@ -252,17 +252,29 @@ public abstract class AbstractServlet extends HttpServlet {
 	 * @param message
 	 * @param request
 	 */
-	@SuppressWarnings("unchecked")
 	protected void ajouterMessageSession(final String key, final String message) {
-		final boolean isParametersValid = Objects.nonNull(key) && Objects.nonNull(message) && Objects.nonNull(request)
-				&& Objects.nonNull(request.getSession());
+
+		if (request != null) {
+			ajouterMessageSession(key, message, request.getSession());
+		}
+
+	}
+
+	/**
+	 * Ajoute des messages à la session.
+	 *
+	 * @param key
+	 * @param message
+	 * @param session
+	 */
+	@SuppressWarnings("unchecked")
+	protected void ajouterMessageSession(final String key, final String message, final HttpSession session) {
+		final boolean isParametersValid = Objects.nonNull(key) && Objects.nonNull(message) && Objects.nonNull(session);
 
 		if (isParametersValid) {
-			final HttpSession session = request.getSession();
 			final List<String> messageList = (List<String>) session.getAttribute(key);
 
-			final List<String> nouvelleMessageList = Objects.isNull(messageList)
-					? new ArrayList<>()
+			final List<String> nouvelleMessageList = Objects.isNull(messageList) ? new ArrayList<>()
 					: new ArrayList<>(messageList);
 
 			nouvelleMessageList.add(message);
