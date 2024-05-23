@@ -247,10 +247,26 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 
 		return articles;
 	}
+	public List<Article> findFrequentlyOrderedNoLimit(final Utilisateur utilisateur) {
+		List<Article> articles = new ArrayList<>();
+
+		if (utilisateur != null) {
+			final String query = "SELECT a " + "FROM Article a, Composer c, Panier p, Utilisateur u "
+					+ "WHERE a = c.articleComposer " + " AND c.panierComposer = p " + " AND p.utilisateur = :userId "
+					+ "GROUP BY a.idArticle " + "ORDER BY SUM(c.qte) DESC ";
+
+			final Map<String, Object> mappedValues = new HashMap<>();
+			mappedValues.put("userId", utilisateur.getId());
+
+			articles = getQueryResults(query, mappedValues);
+		}
+
+		return articles;
+	}
 
 	public List<Article> articlesCroissants() {
 		List<Article> articles = new ArrayList<>();
-		final String query = "SELECT a " + "FROM Article a " + "ORDER BY a.prixUnitaire ASC ";
+		final String query = "SELECT a " + "FROM Article a " + "ORDER BY a.prixUnitaire*1000/a.poids ASC ";
 
 		final Map<String, Object> mappedValues = new HashMap<>();
 
@@ -260,7 +276,7 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 	
 	public List<Article> articlesDecroissants() {
 		List<Article> articles = new ArrayList<>();
-		final String query = "SELECT a " + "FROM Article a " + "ORDER BY a.prixUnitaire DESC ";
+		final String query = "SELECT a " + "FROM Article a " + "ORDER BY a.prixUnitaire*1000/a.poids DESC ";
 
 		final Map<String, Object> mappedValues = new HashMap<>();
 
