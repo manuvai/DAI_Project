@@ -109,6 +109,26 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>modificationCreneau</display-name>
+    <servlet-name>modificationCreneau</servlet-name>
+    <jsp-file>/WEB-INF/content/modificationCreneau.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>modificationCreneau</servlet-name>
+    <url-pattern>/modificationCreneau</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>confirmationCreneau</display-name>
+    <servlet-name>confirmationCreneau</servlet-name>
+    <jsp-file>/WEB-INF/content/confirmationCreneau.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>confirmationCreneau</servlet-name>
+    <url-pattern>/confirmationCreneau</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>panierEnregistrer</display-name>
     <servlet-name>panierEnregistrer</servlet-name>
     <jsp-file>/WEB-INF/content/panierEnregistrer.jsp</jsp-file>
