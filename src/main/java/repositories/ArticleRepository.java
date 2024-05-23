@@ -14,10 +14,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import dtos.ArticleStockDto;
 import mappers.ArticleMapper;
 import models.Article;
+import models.Categorie;
 import models.Commande;
 import models.Creneau;
 import models.Magasin;
@@ -29,6 +31,100 @@ public class ArticleRepository extends AbstractRepository<Article, Integer> {
 
 	public ArticleRepository() {
 		super(Article.class);
+	}
+
+	/**
+	 * Récupération du nombre d'articles.
+	 *
+	 * @return
+	 */
+	public long findNombreArticlesDiff() {
+
+		final Session session = getSession();
+		session.beginTransaction();
+
+		final String queryString = "SELECT COUNT(*) FROM Composer c";
+
+		final Query<?> query = session.createQuery(queryString);
+
+		final Long nbrArticle = (Long) query.uniqueResult();
+
+		session.close();
+		return nbrArticle;
+	}
+
+	/**
+	 * Récupération du nombre d'articles bio
+	 *
+	 * @return
+	 */
+	public long findNombreArticlesBio() {
+
+		final Session session = getSession();
+		session.beginTransaction();
+
+		final String queryString = "SELECT count(*) "
+				+ "FROM Panier p, Composer c, Article a  "
+				+ "WHERE p = c.panierComposer and c.articleComposer = a  "
+				+ "	AND a.bio = true";
+
+		final Query<?> query = session.createQuery(queryString);
+
+		final Long nbrArticle = (Long) query.uniqueResult();
+
+		session.close();
+		return nbrArticle;
+	}
+
+	/**
+	 * Récupération du nombre d'articles ayant le nutriscore donné
+	 *
+	 * @param nutri
+	 * @return
+	 */
+	public long findNombreArticlesNutriscoreDiff(final String nutri) {
+
+		final Session session = getSession();
+		session.beginTransaction();
+
+		final String queryString = "SELECT count(*) "
+				+ "FROM Panier p, Composer c, Article a  "
+				+ "WHERE p = c.panierComposer and c.articleComposer = a  "
+				+ " AND a.nutriscore = :nutri";
+
+		final Query<?> query = session.createQuery(queryString);
+		query.setParameter("nutri", nutri);
+
+		final Long nbrArticle = (Long) query.uniqueResult();
+
+		session.close();
+		return nbrArticle;
+	}
+
+	/**
+	 * Récupération du nombre d'articles contenus dans la catégorie donnée.
+	 *
+	 * @param categorie
+	 * @return
+	 */
+	public long findNombreArticlesCategorie(final Categorie categorie) {
+
+		final Session session = getSession();
+		session.beginTransaction();
+
+		final String queryString = "SELECT count(*) "
+				+ "FROM Panier p, Composer c, Article a, Categorie ca, SousCategorie s "
+				+ "WHERE p = c.panierComposer and c.articleComposer = a  "
+				+ "and a.sousCategorie = s and s.categorie = ca "
+				+ "and ca = :categorie";
+
+		final Query<?> query = session.createQuery(queryString);
+		query.setParameter("categorie", categorie);
+
+		final Long nbrArticle = (Long) query.uniqueResult();
+
+		session.close();
+		return nbrArticle;
 	}
 
 	/**
