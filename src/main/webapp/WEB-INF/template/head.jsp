@@ -91,3 +91,5 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
         <% } %>
     </div>
 </nav>
+
+    <div id="searchResults" class="row"></div>

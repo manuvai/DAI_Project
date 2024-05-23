@@ -245,3 +245,22 @@ h2{
 #rayonCarousel{
 	margin-bottom:5%;
 }
+
+
+#searchResults {
+    display: none; /* initialement caché */
+    flex-direction: row; /* alignement en ligne */
+    flex-wrap: wrap; /* permettre le retour à la ligne si nécessaire */
+    gap: 10px; /* espace entre les éléments */
+}
+
+#searchResults .cde {
+    background-color: #add8e6; /* bleu clair */
+    border-radius: 10px; /* bords arrondis */
+    padding: 10px; /* espace intérieur */
+    margin: 5px; /* marge extérieure */
+    display: flex; /* flexbox pour les éléments internes */
+    align-items: center; /* alignement vertical */
+    justify-content: center; /* alignement horizontal */
+    min-width: 100px; /* largeur minimale */
+}
