@@ -110,6 +110,13 @@ Integer addedArticleId = (Integer) request.getAttribute("addedArticleId");
 							value="<%= article.getId() %>" />
 						<button type="submit" class="btn btn-primary">Modifier quantité</button>
 					</form>
+					<form method="post"
+						action="<%= request.getContextPath() %>/listes_courses/show?action=editQtyArticle&id=<%= liste.getId() %>">
+						<input type="hidden" name="qty" value="0" />
+						<input type="hidden" name="article-id"
+							value="<%= article.getId() %>" />
+						<button type="submit" class="btn btn-danger">Supprimer</button>
+					</form>
 				</td>
 			</tr>
 
