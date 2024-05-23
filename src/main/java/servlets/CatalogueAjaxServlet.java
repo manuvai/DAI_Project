@@ -86,7 +86,6 @@ public class CatalogueAjaxServlet extends HttpServlet {
 			}
 			
 			for(SousCategorie souscat : listeSousCat) {
-				System.out.println("OUAIS : "+souscat.getNomSousCategorie());
 				out.println("<sousCategorie>");
 					out.println("<nomCategorie>"+souscat.getNomSousCategorie()+"</nomCategorie>");
 				out.println("</sousCategorie>");
