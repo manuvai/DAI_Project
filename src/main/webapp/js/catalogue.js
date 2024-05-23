@@ -6,6 +6,7 @@
 4 : bio
 5 : promotion
 6 : id
+7 : nbrArticlePanier
 */
 
 $("#categories").change(function() {
@@ -107,20 +108,20 @@ function refreshCatalogue(res){
 			
 				let quantitePanier = document.createElement("span");
 				quantitePanier.id="article"+article.children[6].textContent;
-				quantitePanier.textContent=" 0 ";
+				quantitePanier.textContent=article.children[7].textContent;
 				divPanier.append(quantitePanier);
 				
 				let boutonEnlever = document.createElement("i");
 				boutonEnlever.className="boutonPanier fas fa-arrow-alt-circle-left ison";
 				boutonEnlever.id = "enleverButton";
-				boutonEnlever.onclick=enleverAuPanier(article.children[6].textContent);
+				boutonEnlever.onclick=function(){enleverAuPanier(article.children[6].textContent)};
 				boutonEnlever.title="moins";
 				divPanier.prepend(boutonEnlever);
 					
 				let boutonAjouter = document.createElement("i");
 				boutonAjouter.id = "ajouterButton";
 				boutonAjouter.className="boutonPanier fas fa-arrow-alt-circle-right icon";
-				boutonAjouter.onclick=ajouterAuPanier(article.children[6].textContent);
+				boutonAjouter.onclick=function(){ajouterAuPanier(article.children[6].textContent)};
 				boutonAjouter.title="plus";
 				divPanier.append(boutonAjouter);
 			

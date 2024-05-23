@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import models.Article;
 import repositories.ArticleRepository;
@@ -61,7 +62,7 @@ public class CatalogueAjaxServlet extends HttpServlet {
 			}
 			
 			else listeArticles = new ArrayList<Article>();
-			
+			HttpSession session = request.getSession();
 			for(Article article : listeArticles) {
 				
 				System.out.println(article.getLib());
@@ -73,6 +74,7 @@ public class CatalogueAjaxServlet extends HttpServlet {
 					out.println("<isBioArticle>"+article.getBio()+"</isBioArticle>");
 					out.println("<promotionArticle>"+article.getPrixApresPromotion()+"</promotionArticle>");
 					out.println("<idArticle>"+article.getId()+"</idArticle>");
+					out.println("<nbArticlePanier>"+(session.getAttribute(article.getId().toString())!=null?session.getAttribute(article.getId().toString()):"0")+"</nbArticlePanier>");
 				out.println("</article>");
 			}
 			out.println("</liste_articles>");
