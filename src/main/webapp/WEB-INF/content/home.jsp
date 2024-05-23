@@ -30,9 +30,11 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
                 %>
                 <div class="flex-item">
                     <button onclick="window.location.href='Catalogue?nomRayon=<%=rayon.getNomRayon() %>';" 
-                            class="btn btn-primary btn-rayon" id="<%= rayon.getId() %>">
-                           
-                        <%= rayon.getNomRayon() %>
+                            class="btn-rayon" id="<%= rayon.getId() %>">
+                           <img class="img-rayon"
+											src="<%= request.getContextPath() %>/<%= rayon.getCheminImageRayon() %>" 
+											alt="rayon">
+                       <p><%= rayon.getNomRayon() %></p>
                     </button>
                 </div>
                 <% 
