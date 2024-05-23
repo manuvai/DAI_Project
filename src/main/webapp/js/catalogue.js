@@ -9,7 +9,6 @@
 7 : nbrArticlePanier
 */
 $("#sousCategories").change(function() {
-	console.log("test");
 	$.ajax({
         url: "CatalogueAjaxServlet?sousCategorie="+document.getElementById('sousCategories').value,
         type: 'GET',
