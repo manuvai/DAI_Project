@@ -217,7 +217,7 @@ public class Panier {
 	}
 
 	public enum Etat {
-		ATTENTE, VALIDEE, PRETE, LIVRE
+		ENREGISTRE,ATTENTE, VALIDEE, PRETE, LIVRE
 	}
 
 }

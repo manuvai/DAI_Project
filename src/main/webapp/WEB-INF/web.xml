@@ -137,6 +137,16 @@
     <servlet-name>panierEnregistrer</servlet-name>
     <url-pattern>/panierEnregistrer</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>confirmationEnregistrerPanier</display-name>
+    <servlet-name>confirmationEnregistrerPanier</servlet-name>
+    <jsp-file>/WEB-INF/content/confirmationEnregistrerPanier.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>confirmationEnregistrerPanier</servlet-name>
+    <url-pattern>/confirmationEnregistrerPanier</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>preparationdetail</display-name>
