@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import models.Panier;
 import models.Panier.Etat;
@@ -43,7 +44,10 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 		final String idPanier = request.getParameter("idPanier");
 		final String dateJs = request.getParameter("DateFin");
 
-		final Panier panier = pr.findById(Integer.parseInt(idPanier));
+		final Session session = pr.getSession();
+		final Transaction transaction = session.beginTransaction();
+
+		final Panier panier = pr.findById(Integer.parseInt(idPanier), session);
 		Date date;
 
 
@@ -57,7 +61,7 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 			panier.setEtat(Etat.PRETE);
 		}
 
-		pr.update(panier);
+		pr.update(panier, session);
 
 		if (Etat.PRETE.equals(panier.getEtat())) {
 			try {
@@ -67,6 +71,9 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 			}
 		}
 
+		transaction.commit();
+
+		request.setAttribute("panier", panier);
 		rd = request.getRequestDispatcher("preparationdetail");
 		rd.forward(request,response);
 	}
@@ -80,12 +87,9 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 	 */
 	private void sendNotification(final Panier panier) throws AddressException, MessagingException {
 
-		final Session session = pr.getSession();
-		session.beginTransaction();
 		final CommandePreteNotification notification = new CommandePreteNotification(panier.getUtilisateur(),
 				panier.getCreneau(), panier);
 
-		session.close();
 		emailSender.send(panier.getUtilisateur().getEmail(), notification);
 	}
 
