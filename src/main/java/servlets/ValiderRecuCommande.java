@@ -50,8 +50,6 @@ public class ValiderRecuCommande extends HttpServlet {
         Session session = cr.getSession();
         Transaction t =  session.beginTransaction();
         Commande commande = cr.findById(id, session);
-       System.out.println("ccmdmdm");
-       System.out.println(commande.getId());
         
         //articles de la commande
         Map<Article, Approvisionner> articlesAdd = commande.getArticleApprovisionner();
