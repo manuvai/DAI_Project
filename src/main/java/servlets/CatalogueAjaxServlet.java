@@ -72,6 +72,7 @@ public class CatalogueAjaxServlet extends HttpServlet {
 					out.println("<poidsArticle>"+article.getPoids()+"</poidsArticle>");
 					out.println("<isBioArticle>"+article.getBio()+"</isBioArticle>");
 					out.println("<promotionArticle>"+article.getPrixApresPromotion()+"</promotionArticle>");
+					out.println("<idArticle>"+article.getId()+"</idArticle>");
 				out.println("</article>");
 			}
 			out.println("</liste_articles>");

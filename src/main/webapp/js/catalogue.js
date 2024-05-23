@@ -5,6 +5,7 @@
 3 : poids
 4 : bio
 5 : promotion
+6 : id
 */
 
 $("#categories").change(function() {
@@ -26,31 +27,39 @@ function refreshCatalogue(res){
 	
 	for(i=0; i<articles.length; i++){
 		
+		let article = articles[i];
+		
+		//div article
 		let divArticle = document.createElement("div");
 		divArticle.className="article";
 		catalogue.append(divArticle);
 		divArticle = document.querySelectorAll(".article")[document.querySelectorAll(".article").length-1];
-		console.log(divArticle);
-		let article = articles[i];
 		
+		//Lien
+		let lienArticle = document.createElement("a");
+		lienArticle.className = "lienArticle";
+		lienArticle.href = "Article?idArticle="+article.children[6].textContent;
+		divArticle.append(lienArticle);
+		lienArticle = document.querySelectorAll(".lienArticle")[document.querySelectorAll(".lienArticle").length-1];
+				
 		//Bio
 		if(article.children[4]){
 			let imgBio = document.createElement("img");
 			imgBio.className = "img-bio-catalogue";
 			imgBio.src = "images/bio.png";
-			divArticle.append(imgBio);
+			lienArticle.append(imgBio);
 		}
 		
 		//Image
 		let imgArticle = document.createElement("img");
 		imgArticle.className="imgArticle";
 		imgArticle.src = article.children[1].textContent;
-		divArticle.append(imgArticle);
+		lienArticle.append(imgArticle);
 		
 		//Détails
 		let detailsArticle = document.createElement("div");
 		detailsArticle.className="articleDetails";
-		divArticle.append(detailsArticle);
+		lienArticle.append(detailsArticle);
 		detailsArticle = document.querySelectorAll(".articleDetails")[document.querySelectorAll(".articleDetails").length-1];
 			//Nom
 			let spanNomArticle = document.createElement("span");
@@ -83,10 +92,37 @@ function refreshCatalogue(res){
 					prixContainer.append(prix);
 				}
 			detailsArticle.append(prixContainer);
+			
 			//Poids
 			let spanPoids = document.createElement("span");
 			spanPoids.className="poidsArticle";
 			spanPoids.textContent = article.children[3].textContent+"g";
 			detailsArticle.append(spanPoids);
+			
+			//Panier
+			let divPanier = document.createElement("div");
+			divPanier.className="gestionPanier";
+			divArticle.append(divPanier)
+			divPanier = document.querySelectorAll(".gestionPanier")[document.querySelectorAll(".gestionPanier").length-1];
+			
+				let quantitePanier = document.createElement("span");
+				quantitePanier.id="article"+article.children[6].textContent;
+				quantitePanier.textContent=" 0 ";
+				divPanier.append(quantitePanier);
+				
+				let boutonEnlever = document.createElement("i");
+				boutonEnlever.className="boutonPanier fas fa-arrow-alt-circle-left ison";
+				boutonEnlever.id = "enleverButton";
+				boutonEnlever.onclick=enleverAuPanier(article.children[6].textContent);
+				boutonEnlever.title="moins";
+				divPanier.prepend(boutonEnlever);
+					
+				let boutonAjouter = document.createElement("i");
+				boutonAjouter.id = "ajouterButton";
+				boutonAjouter.className="boutonPanier fas fa-arrow-alt-circle-right icon";
+				boutonAjouter.onclick=ajouterAuPanier(article.children[6].textContent);
+				boutonAjouter.title="plus";
+				divPanier.append(boutonAjouter);
+			
 			}
 }
