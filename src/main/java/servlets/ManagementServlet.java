@@ -60,7 +60,9 @@ public class ManagementServlet extends AbstractServlet {
 
 		final List<Article> articles = articleRepository.findAll();
 		Collections.reverse(articles);
+
 		request.setAttribute("articles", articles);
+
 		view("management/index", request, response);
 
 	}

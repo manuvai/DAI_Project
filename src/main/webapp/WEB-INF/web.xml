@@ -109,6 +109,26 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>modificationCreneau</display-name>
+    <servlet-name>modificationCreneau</servlet-name>
+    <jsp-file>/WEB-INF/content/modificationCreneau.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>modificationCreneau</servlet-name>
+    <url-pattern>/modificationCreneau</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>confirmationCreneau</display-name>
+    <servlet-name>confirmationCreneau</servlet-name>
+    <jsp-file>/WEB-INF/content/confirmationCreneau.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>confirmationCreneau</servlet-name>
+    <url-pattern>/confirmationCreneau</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>panierEnregistrer</display-name>
     <servlet-name>panierEnregistrer</servlet-name>
     <jsp-file>/WEB-INF/content/panierEnregistrer.jsp</jsp-file>
@@ -186,5 +206,35 @@
   <servlet-mapping>
     <servlet-name>detailsCommandeFournisseur</servlet-name>
     <url-pattern>/detailsCommandeFournisseur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>etapeFinale</display-name>
+    <servlet-name>etapeFinale</servlet-name>
+    <jsp-file>/WEB-INF/content/etapeFinale.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>etapeFinale</servlet-name>
+    <url-pattern>/etapeFinale</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>articlesCroissants</display-name>
+    <servlet-name>articlesCroissants</servlet-name>
+    <jsp-file>/WEB-INF/content/articlesCroissants.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>articlesCroissants</servlet-name>
+    <url-pattern>/articlesCroissants</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>articlesDecroissants</display-name>
+    <servlet-name>articlesDecroissants</servlet-name>
+    <jsp-file>/WEB-INF/content/articlesDecroissants.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>articlesDecroissants</servlet-name>
+    <url-pattern>/articlesDecroissants</url-pattern>
   </servlet-mapping>
 </web-app>

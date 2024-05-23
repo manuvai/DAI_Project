@@ -103,7 +103,7 @@ public class Contenir {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(article, key, listeCourse, qte);
+		return Objects.hash(key);
 	}
 
 	@Override
@@ -111,12 +111,11 @@ public class Contenir {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 		final Contenir other = (Contenir) obj;
-		return Objects.equals(article, other.article) && Objects.equals(key, other.key)
-				&& Objects.equals(listeCourse, other.listeCourse) && Objects.equals(qte, other.qte);
+		return Objects.equals(key, other.key);
 	}
 
 }

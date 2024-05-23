@@ -37,7 +37,6 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
             <tr>
                 <th>ID</th>
                 <th>État de la commande</th>
-                <th>Date de la commande</th>
                 <th>Informations de retrait </th>
                 <th></th>
                 
@@ -77,16 +76,35 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
                             %>
                             <span class="<%= badgeClass %>"><%= etat.name() %></span>
                         </td>
-                        <td><%= commande.getDateDebutPreparation() %>
-                        </td>
                         <td><%= commande.getCreneau().getMagasin().getNomMagasin() %>
                         <br><%= commande.getCreneau().getMagasin().getAdresseMagasin() %>
                         <br><%= commande.getCreneau().getDateCreneau().toString() %> <%= commande.getCreneau().getHeureCreneau().name().substring(1).replace("_", " à ") %></td>
                        <td>
 						    <form action="./DetailsCommandeClientServlet" method="get">
 						        <input type="hidden" name="idCommande" value="<%= commande.getId() %>">
-						        <button type="submit" class="btn btn-primary">Voir les articles</button>
+						        <button type="submit" class="btn btn-primary"> 
+							        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+									    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z">
+									    </path>
+									    <circle cx="12" cy="12" r="3"></circle>
+									 </svg> Voir les articles
+								 </button>
 						    </form>
+						 	<br>
+						 	<% if (commande.getEtat() != Panier.Etat.LIVRE){ %>
+						 	<form action="./CreneauClientServlet" method="get">
+						 	 	<input type="hidden" name="idCommande" value="<%= commande.getId() %>">
+						 		<button type="submit" class="btn btn-primary">
+							    	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+										  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+										  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L7 20.5l-4 1 1-4L18.5 2.5z"></path>
+									</svg> Modifier créneau
+						        </button>
+						 	</form>
+						 	<%} %>
+						 	
+						   
+						    	
 						</td>
 
                         

@@ -58,17 +58,20 @@ if (creneauRetrait == null) {
 <%
 }
 %>
-	<form action="PayerServlet" method="post">
+	<form action="VerifierDispo" method="post">
 	    <label for="creneau">Choisir un creneau :</label>
 	    <select name="creneau" id="creneau">
 	        <% 
 	            List<Creneau> tousCreneaux = (List<Creneau>) session.getAttribute("creneaux");
-	            for (Creneau creneau: tousCreneaux) { 
+	            for (Creneau creneau: tousCreneaux) {
+	            	int nbPlaces = cr.findDisposParCreneau(creneau);
+	            	if (nbPlaces > 0) {
 	        %>
 	                <option value="<%= creneau.getCodeCreneau() %>">
-	                	<%= creneau.getHeureCreneau().toString().replace("_","-").substring(1) %> le <%= creneau.getDateCreneau() %> (<%= cr.findDisposParCreneau(creneau) %> places disponibles)
+	                	<%= creneau.getHeureCreneau().toString().replace("_","-").substring(1) %> le <%= creneau.getDateCreneau() %> (<%= cr.findDisposParCreneau(creneau) %> place(s) disponible(s))
 	               	</option>
-	        <% 
+	        <%
+	            	}
 	            } 
 	        %>
 	    </select>

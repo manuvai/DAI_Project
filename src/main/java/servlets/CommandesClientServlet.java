@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,11 +29,10 @@ public class CommandesClientServlet extends AbstractServlet {
 		final Utilisateur utilisateur = (Utilisateur) session.getAttribute("user");
         
 		if (utilisateur == null) {
-	        try {
-	        	view("home", request, response);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+	       
+	        RequestDispatcher rd = request.getRequestDispatcher("home");
+	    	rd.forward(request, response);
+	       
 	        return;
 	    }
 		
