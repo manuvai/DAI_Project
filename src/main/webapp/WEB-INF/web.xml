@@ -137,7 +137,7 @@
     <servlet-name>panierEnregistrer</servlet-name>
     <url-pattern>/panierEnregistrer</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <description></description>
     <display-name>confirmationEnregistrerPanier</display-name>
     <servlet-name>confirmationEnregistrerPanier</servlet-name>
@@ -246,5 +246,15 @@
   <servlet-mapping>
     <servlet-name>articlesDecroissants</servlet-name>
     <url-pattern>/articlesDecroissants</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>articlesClasses</display-name>
+    <servlet-name>articlesClasses</servlet-name>
+    <jsp-file>/WEB-INF/content/articlesClasses.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>articlesClasses</servlet-name>
+    <url-pattern>/articlesClasses</url-pattern>
   </servlet-mapping>
 </web-app>
