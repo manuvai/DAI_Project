@@ -3,19 +3,18 @@
 <%@page import="models.Magasin"%>
 <%@page import="models.Article"%>
 <%@ page import="java.util.List"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Faire Une Commande</title>
-</head>
 <%
 List<String> cssFiles = new ArrayList<>();
 cssFiles.add("css/commandePourMagasin.css");
 request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
+List<String> jsFiles = (List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY);
+
+jsFiles = jsFiles == null ? new ArrayList<>() : jsFiles;
+jsFiles.add("js/commandePourFournisseur.js");
+request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 %>
 <%@ include file="../template/start.jsp"%>
-<body>
+
 	<form action="ValidationCommandeServlet" method="post">
 		<button id="submit-button" class="btn-rayon" type="submit">Commander
 		</button>
@@ -77,12 +76,4 @@ request.setAttribute(AbstractServlet.CSS_FILES_KEY, cssFiles);
 
 
 	</form>
-	<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const dateInput = document.getElementById('date');
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.setAttribute('min', today);
-    });
-</script>
-</body>
-</html>
+	<%@ include file="../template/end.jsp" %>

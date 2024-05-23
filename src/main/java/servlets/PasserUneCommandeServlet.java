@@ -13,9 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import models.Article;
 import models.Magasin;
-import repositories.ApprivisionnerRepository;
 import repositories.ArticleRepository;
-import repositories.CommandeRepository;
 import repositories.MagasinRepository;
 
 /**
