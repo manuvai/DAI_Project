@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.Creneau;
+import models.Panier;
 import models.Utilisateur;
 import repositories.CreneauRepository;
 import repositories.MagasinRepository;
@@ -55,6 +58,21 @@ public class ChoisirCreneauServlet extends HttpServlet {
 		String magasin = request.getParameter("magasin");
 
 		List<Creneau> cx = cr.findCreneauByMagasin(Integer.parseInt(magasin));
+		
+		//Tri des créneaux par date/heure
+        Collections.sort(cx, new Comparator<Creneau>() {
+            @Override
+            public int compare(Creneau creneau1, Creneau creneau2) {
+                int dateComparison = creneau1.getDateCreneau().compareTo(creneau2.getDateCreneau());
+                if (dateComparison != 0) {
+                    return dateComparison; // Si les dates sont différentes, retourne la comparaison de dates
+                } else {
+                    // Si les dates sont les mêmes, compare les heures des créneaux
+                    return creneau1.getHeureCreneau().compareTo(creneau2.getHeureCreneau());
+                }
+            }
+        });
+        
 		HttpSession session = request.getSession();
 		session.setAttribute("creneaux", cx);
 		session.setAttribute("magasinRetrait", magasin);
