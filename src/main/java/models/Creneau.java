@@ -53,22 +53,32 @@ public class Creneau {
 	 * Enumération des créneaux horaires disponibles.
 	 */
 	public enum HeureCreneau {
-		_08h00_08h30,
-		_08h30_09h00,
-		_09h00_09h30,
-		_09h30_10h00,
-		_10h00_10h30,
-		_10h30_11h00,
-		_11h00_11h30,
-		_11h30_12h00,
-		_12h00_12h30,
-		_14h30_15h00,
-		_15h00_15h30,
-		_15h30_16h00,
-		_16h00_16h30,
-		_16h30_17h00,
-		_17h00_17h30,
-		_17h30_18h00;
+		_08h00_08h30("08h00 &agrave; 08h30"),
+		_08h30_09h00("08h30 &agrave; 09h00"),
+		_09h00_09h30("09h00 &agrave; 09h30"),
+		_09h30_10h00("09h30 &agrave; 10h00"),
+		_10h00_10h30("10h00 &agrave; 10h30"),
+		_10h30_11h00("10h30 &agrave; 11h00"),
+		_11h00_11h30("11h00 &agrave; 11h30"),
+		_11h30_12h00("11h30 &agrave; 12h00"),
+		_12h00_12h30("12h00 &agrave; 12h30"),
+		_14h30_15h00("14h30 &agrave; 15h00"),
+		_15h00_15h30("15h00 &agrave; 15h30"),
+		_15h30_16h00("15h30 &agrave; 16h00"),
+		_16h00_16h30("16h00 &agrave; 16h30"),
+		_16h30_17h00("16h30 &agrave; 17h00"),
+		_17h00_17h30("17h00 &agrave; 17h30"),
+		_17h30_18h00("17h30 &agrave; 18h00");
+
+		private String value;
+
+		HeureCreneau(final String inValue) {
+			value = inValue;
+		}
+
+		public String getValue() {
+			return value;
+		}
 	}
 
 

@@ -31,6 +31,61 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	protected HttpServletRequest request;
 
+	protected Properties properties;
+
+	/**
+	 * Récupération des propriétés.
+	 *
+	 * @return
+	 */
+	public Properties getProperties() {
+
+		if (properties == null) {
+			final Properties prop = new Properties();
+			InputStream input = null;
+			try {
+				input = getClass().getClassLoader().getResourceAsStream("config.properties");
+
+				// load a properties file
+				prop.load(input);
+
+				properties = prop;
+
+			} catch (final IOException ex) {
+				ex.printStackTrace();
+			} finally {
+				if (input != null) {
+					try {
+						input.close();
+					} catch (final IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		return properties;
+	}
+
+	/**
+	 * Récupération d'une information du fichier de propriétés.
+	 *
+	 * @param inKey
+	 * @return
+	 */
+	public String getProperty(final String inKey) {
+		String property = null;
+
+		if (inKey != null) {
+			final Properties prop = getProperties();
+
+			if (prop != null) {
+				property = prop.getProperty(inKey);
+			}
+		}
+
+		return property;
+	}
 	@Override
 	protected void doGet(
 			final HttpServletRequest request,
@@ -298,43 +353,6 @@ public abstract class AbstractServlet extends HttpServlet {
 
 			keys.forEach(key -> session.setAttribute(key, Collections.emptyList()));
 		}
-	}
-
-	/**
-	 * Récupération d'une information du fichier de propriétés.
-	 *
-	 * @param inKey
-	 * @return
-	 */
-	protected String getProperty(final String inKey) {
-		String property = null;
-
-		if (inKey != null) {
-			final Properties prop = new Properties();
-			InputStream input = null;
-			try {
-				input = getClass().getClassLoader().getResourceAsStream("config.properties");
-
-				// load a properties file
-				prop.load(input);
-
-				// get the property value and print it out
-				property = prop.getProperty(inKey);
-
-			} catch (final IOException ex) {
-				ex.printStackTrace();
-			} finally {
-				if (input != null) {
-					try {
-						input.close();
-					} catch (final IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-
-		return property;
 	}
 
 	@SuppressWarnings("unchecked")
