@@ -19,7 +19,7 @@ request.setAttribute(AbstractServlet.JS_LIBS_KEY, jsFiles);
 
 
 <h2>Confirmation enregistrement</h2>
-<p>Votre panier a bien été enregistrer. Vous pouvez reprendre votre panier en cours en allant vers la liste de <a  href="<%= request.getContextPath() %>/CommandesClientServlet">vos commandes</a> . </p>
+<p>Votre panier a bien été enregistré. Vous pouvez reprendre votre panier en cours en allant vers la liste de <a  href="<%= request.getContextPath() %>/CommandesClientServlet">vos commandes</a> . </p>
 
  
 
