@@ -83,7 +83,7 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
 	                <i class="fas fa-user"></i>
 	            </a>
 	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-	                <a class="dropdown-item" href="<%= request.getContextPath() %>/PreparationCommandesServlet">Pr�paration des commandes</a>
+	                <a class="dropdown-item" href="<%= request.getContextPath() %>/PreparationCommandesServlet">Préparation des commandes</a>
 	                <a class="dropdown-item" href="<%= request.getContextPath() %>/PreparationCommandesHistoriqueServlet">Historique des commandes</a>
 	        	</div>
         <% } %>
