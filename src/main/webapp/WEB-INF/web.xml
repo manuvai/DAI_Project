@@ -257,4 +257,24 @@
     <servlet-name>articlesClasses</servlet-name>
     <url-pattern>/articlesClasses</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>index</display-name>
+    <servlet-name>index</servlet-name>
+    <jsp-file>/WEB-INF/content/recettes/index.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>index</servlet-name>
+    <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>show</display-name>
+    <servlet-name>show</servlet-name>
+    <jsp-file>/WEB-INF/content/recettes/show.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>show</servlet-name>
+    <url-pattern>/show</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -28,6 +28,9 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
     <a class="navbar-brand" href="articlesDecroissants">
        <i class=" fas fa-angle-double-down"></i>
     </a>
+    <a class="navbar-brand" href="RecettesServlet">
+    	<i class="fas fa-cheese"></i>
+    </a>
     <div class="navbar-nav ml-auto">
     
     	<% if (role != Role.PREPARATEUR) { %>
