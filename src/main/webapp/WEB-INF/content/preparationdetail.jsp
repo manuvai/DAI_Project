@@ -80,7 +80,7 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 			        		<% } %>
 			        	</div>
 			        </td>
-			        <td><%= quantite %></td><td><%= String.format("%.2f", article.getPrixUnitaire() * quantite * (1 + article.getPromotion() / 100.0)) %>€</td>
+					<td><%= String.format("%.2f", article.getPrixUnitaire() * quantite * (1 + article.getPromotion() / 100.0)) %>€</td>
 			    </tr>
 			<%
 			        }
