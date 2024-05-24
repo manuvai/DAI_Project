@@ -20,7 +20,7 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
 <nav class="navbar navbar-expand-lg navbar-light bg-light main-header">
 	<input type="hidden" value="<%= request.getContextPath() %>" id="headerRootPath" />
     <a class="navbar-brand" href="<%= request.getContextPath() %>/home">
-        <img src="<%= request.getContextPath() %>/images/logo-supermarket.png" class="logo" alt="Supermarché Logo">
+        <img src="<%= request.getContextPath() %>/images/logo-supermarket.png" class="logo" alt="Supermarchï¿½ Logo">
     </a>
     <a class="navbar-brand" href="articlesCroissants">
        <i class=" fas fa-angle-double-up"></i>
@@ -77,14 +77,13 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
                 <a class="dropdown-item" href="<%= request.getContextPath() %>/dashboard">Tableau de bord</a>
                 <a class="dropdown-item" href="<%= request.getContextPath() %>/CommandesClientServlet">Mes commandes</a>
                 <a class="dropdown-item" href="<%= request.getContextPath() %>/listes_courses">Mes listes de course</a>
-                <a class="dropdown-item" href="#">Paramètres</a>
             </div>
         <% } else {%>
 	        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                <i class="fas fa-user"></i>
 	            </a>
 	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-	                <a class="dropdown-item" href="<%= request.getContextPath() %>/PreparationCommandesServlet">Préparation des commandes</a>
+	                <a class="dropdown-item" href="<%= request.getContextPath() %>/PreparationCommandesServlet">Prï¿½paration des commandes</a>
 	                <a class="dropdown-item" href="<%= request.getContextPath() %>/PreparationCommandesHistoriqueServlet">Historique des commandes</a>
 	        	</div>
         <% } %>
