@@ -11,16 +11,15 @@
 </head>
  <div id="rayonCarousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
+          <div class="flexANTIBOOTSTRAP">
+
         <% 
         List<Rayon> rayons = (List<Rayon>) request.getAttribute("rayons");
         if (rayons != null) {
-            for (int i = 0; i < rayons.size(); i += 5) {
+            for (int i = 0; i < rayons.size(); i ++) {
         %>
-        <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
-            <div class="d-flex justify-content-center flex-wrap">
                 <% 
-                for (int j = i; j < Math.min(i + 5, rayons.size()); j++) {
-                    Rayon rayon = rayons.get(j);
+                    Rayon rayon = rayons.get(i);
                 %>
                 <div class="flex-item">
                     <button onclick="window.location.href='Catalogue?nomRayon=<%=rayon.getNomRayon() %>';" 
@@ -35,15 +34,15 @@
                 }
                 %>
             </div>
-        </div>
         <% 
             }
-        } 
         %> 
+        </div>
 
 	</div>
 </div>
 <main>
+    <button id="sidebarToggle">Catégories</button>
 	<div id="sidebar">
 		<div id="contentSidebar">
 			<select name="categories" id="categories">

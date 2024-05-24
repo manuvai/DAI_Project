@@ -285,3 +285,9 @@ h2{
 .barre{
 	width: 400px !important;
 }
+
+@media (max-width: 480px) {
+    #rayonCarousel p{
+        font-size: 0px;
+    }
+}

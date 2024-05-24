@@ -75,7 +75,7 @@ function refreshCatalogue(res){
 		lienArticle = document.querySelectorAll(".lienArticle")[document.querySelectorAll(".lienArticle").length-1];
 				
 		//Bio
-		if(article.children[4]){
+		if(article.children[4].textContent==="true"){
 			let imgBio = document.createElement("img");
 			imgBio.className = "img-bio-catalogue";
 			imgBio.src = "images/bio.png";
