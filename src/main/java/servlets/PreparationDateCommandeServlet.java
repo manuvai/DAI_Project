@@ -7,7 +7,6 @@ import java.util.Date;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +38,6 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 	@Override
 	protected void responseGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher rd;
 
 		final String idPanier = request.getParameter("idPanier");
 		final String dateJs = request.getParameter("DateFin");
@@ -49,8 +47,6 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 
 		final Panier panier = pr.findById(Integer.parseInt(idPanier), session);
 		Date date;
-
-
 
 		if (dateJs == null) {
 			date = new Date(Long.parseLong(request.getParameter("DateDebut")));
@@ -72,10 +68,6 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 		}
 
 		transaction.commit();
-
-		request.setAttribute("panier", panier);
-		rd = request.getRequestDispatcher("preparationdetail");
-		rd.forward(request,response);
 	}
 
 	/**
@@ -84,7 +76,6 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 	@Override
 	protected void responsePost(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
