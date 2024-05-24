@@ -20,7 +20,7 @@ if ((List<String>) request.getAttribute(AbstractServlet.JS_FILES_KEY) == null) {
 <nav class="navbar navbar-expand-lg navbar-light bg-light main-header">
 	<input type="hidden" value="<%= request.getContextPath() %>" id="headerRootPath" />
     <a class="navbar-brand" href="<%= request.getContextPath() %>/home">
-        <img src="<%= request.getContextPath() %>/images/logo-supermarket.png" class="logo" alt="Supermarch� Logo">
+        <img src="<%= request.getContextPath() %>/images/logo-supermarket.png" class="logo" alt="Supermarché Logo">
     </a>
     <a class="navbar-brand" href="articlesCroissants">
        <i class=" fas fa-angle-double-up"></i>
