@@ -104,11 +104,7 @@ public class PayerServlet extends AbstractServlet {
 
 		pr.update(p);
 
-		try {
-			sendNotification(p);
-		} catch (final MessagingException e) {
-			e.printStackTrace();
-		}
+		sendNotification(p);
 
 		final RequestDispatcher rd = request.getRequestDispatcher("panierEnregistrer");
 		rd.forward(request, response);
@@ -121,7 +117,7 @@ public class PayerServlet extends AbstractServlet {
 	 * @throws MessagingException
 	 * @throws AddressException
 	 */
-	private void sendNotification(final Panier p) throws AddressException, MessagingException {
+	private void sendNotification(final Panier p) {
 		if (p == null) {
 			return;
 		}
@@ -133,7 +129,11 @@ public class PayerServlet extends AbstractServlet {
 
 		final CommandeCreeNotification notification = new CommandeCreeNotification(panier.getUtilisateur(),
 				panier.getCreneau(), panier);
-		emailSender.send(p.getUtilisateur().getEmail(), notification);
+		try {
+			emailSender.send(p.getUtilisateur().getEmail(), notification);
+		} catch (final MessagingException e) {
+			e.printStackTrace();
+		}
 
 		session.close();
 	}
