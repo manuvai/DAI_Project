@@ -23,6 +23,8 @@ img{
 	max-width:500px;
 }
 
+
+
 .descArticle{
 	margin-bottom:5px;
 }
@@ -52,3 +54,28 @@ img{
 #gestionPanier{
 	display:inline;
 }
+
+@media (max-width: 480px) {
+	img{
+		max-height:150px;
+		max-width:150px;
+	}
+	
+	.img-nutriscore{
+		max-width:20px;
+	}
+	
+	.articleDetails{
+	margin-left:5px;
+	width:200px;
+	display:flex;
+	flex-direction:column;
+}
+
+.img-article-detail{
+	max-height:20px;
+	max-width:20px;
+}
+	
+}
+

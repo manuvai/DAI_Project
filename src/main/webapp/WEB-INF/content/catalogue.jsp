@@ -1,34 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" type="text/css" href="css/catalogue.css">
     <%@ page import="models.*" %>
     <%@ page import="java.util.List" %>
     <!DOCTYPE html>
-<html>
-<head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
-<link rel="stylesheet" type="text/css" href="css/header.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" type="text/css" href="css/superMarket.css">
 <title>Online Shop</title>
 <script src="js/home.js"></script>
-<%@ include file="../template/head.jsp" %>
-
+<%@ include file="../template/start.jsp" %>
+<link rel="stylesheet" type="text/css" href="css/catalogue.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
- <body>
  <div id="rayonCarousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
+          <div class="flexANTIBOOTSTRAP">
+
         <% 
         List<Rayon> rayons = (List<Rayon>) request.getAttribute("rayons");
         if (rayons != null) {
-            for (int i = 0; i < rayons.size(); i += 5) {
+            for (int i = 0; i < rayons.size(); i ++) {
         %>
-        <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
-            <div class="d-flex justify-content-center flex-wrap">
                 <% 
-                for (int j = i; j < Math.min(i + 5, rayons.size()); j++) {
-                    Rayon rayon = rayons.get(j);
+                    Rayon rayon = rayons.get(i);
                 %>
                 <div class="flex-item">
                     <button onclick="window.location.href='Catalogue?nomRayon=<%=rayon.getNomRayon() %>';" 
@@ -43,15 +34,15 @@
                 }
                 %>
             </div>
-        </div>
         <% 
             }
-        } 
         %> 
+        </div>
 
 	</div>
 </div>
 <main>
+    <button id="sidebarToggle">Catégories</button>
 	<div id="sidebar">
 		<div id="contentSidebar">
 			<select name="categories" id="categories">
@@ -119,4 +110,5 @@
 </main>
 </body>
 <script src="js/catalogue.js"></script>
+<script src="js/header.js"></script>
 <%@ include file="../template/footer.jsp" %>
