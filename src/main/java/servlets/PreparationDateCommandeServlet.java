@@ -19,6 +19,7 @@ import org.hibernate.Transaction;
 
 import models.Panier;
 import models.Panier.Etat;
+import repositories.MagasinRepository;
 import repositories.PanierRepository;
 import servlets.mailing.EmailSender;
 import servlets.mailing.notifications.CommandePreteNotification;
@@ -31,6 +32,9 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
 	PanierRepository pr = new PanierRepository();
+
+	MagasinRepository mr = new MagasinRepository();
+
 	EmailSender emailSender = new EmailSender(getProperties());
 
 	/**
@@ -50,8 +54,6 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 		final Panier panier = pr.findById(Integer.parseInt(idPanier), session);
 		Date date;
 
-
-
 		if (dateJs == null) {
 			date = new Date(Long.parseLong(request.getParameter("DateDebut")));
 			panier.setDateDebutPreparation(date);
@@ -63,6 +65,7 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 
 		pr.update(panier, session);
 
+
 		if (Etat.PRETE.equals(panier.getEtat())) {
 			try {
 				sendNotification(panier);
@@ -70,6 +73,8 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 				e.printStackTrace();
 			}
 		}
+
+		mr.updateStock(panier, session);
 
 		transaction.commit();
 
