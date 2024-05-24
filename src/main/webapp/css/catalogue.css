@@ -4,6 +4,9 @@
 	margin-bottom:0px !important;
 }
 
+
+
+
 body{
 	font-family:sans-serif;
 	background-color:#f5f4f2;
@@ -62,6 +65,7 @@ main{
 	background-size:120px;
 	background-repeat: no-repeat;
 	position:relative;
+	box-sizing:unset;
 }
 
 .articleDetails{
@@ -156,6 +160,18 @@ select:hover{
 	margin-top:5px;
 }
 
-.rayonCarousel, .carousel-inner{
-	margin:auto;
+@media (max-width: 768px) {
+    #sidebar, #catalogue {
+        width: 100%;
+    }
+
+    .article {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .article {
+        width: calc(100% - 20px);
+    }
 }

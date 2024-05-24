@@ -1,22 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" type="text/css" href="css/catalogue.css">
     <%@ page import="models.*" %>
     <%@ page import="java.util.List" %>
     <!DOCTYPE html>
-<html>
-<head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="icon" href="images/logo-supermarket.png" type="image/x-icon"> 
-<link rel="stylesheet" type="text/css" href="css/header.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" type="text/css" href="css/superMarket.css">
 <title>Online Shop</title>
 <script src="js/home.js"></script>
-<%@ include file="../template/head.jsp" %>
-
+<%@ include file="../template/start.jsp" %>
+<link rel="stylesheet" type="text/css" href="css/catalogue.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
- <body>
  <div id="rayonCarousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <% 

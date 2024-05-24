@@ -8,6 +8,12 @@
 6 : id
 7 : nbrArticlePanier
 */
+
+$(document).ready(function() {
+	let cnt = $(".container").contents();
+	$(".container").replaceWith(cnt);
+});
+
 $("#sousCategories").change(function() {
 	$.ajax({
         url: "CatalogueAjaxServlet?sousCategorie="+document.getElementById('sousCategories').value,
