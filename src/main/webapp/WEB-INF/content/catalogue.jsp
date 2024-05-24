@@ -110,4 +110,5 @@
 </main>
 </body>
 <script src="js/catalogue.js"></script>
+<script src="js/header.js"></script>
 <%@ include file="../template/footer.jsp" %>
