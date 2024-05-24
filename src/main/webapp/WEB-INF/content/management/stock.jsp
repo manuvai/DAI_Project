@@ -22,19 +22,29 @@ request.setAttribute(AbstractServlet.JS_FILES_KEY, jsFiles);
 <%@ include file="../../template/start.jsp" %>
 
 <h1>Visualisation des stocks</h1>
-
-<select name="magasin-id" id="magasin-id">
-  <option value="" <%= request.getParameter("magasin-id") != null ? "" : "selected" %>> choisir un magasin</option>
-  <% if (request.getAttribute("magasins") != null) {
-        for (Magasin magasin : (List<Magasin>) request.getAttribute("magasins"))  {
-        	boolean isSelected = Integer.toString(magasin.getCodeMagasin()).equals(request.getParameter("magasin-id"));
-  %>
-    <option value="<%= magasin.getCodeMagasin()%>" <%= isSelected ? "selected" : "" %>><%= magasin.getNomMagasin() %></option>
-  <%
-        }
-  }
-  %>
-</select>
+<a href="<%= request.getContextPath() %>/management/">Retour à la page d'accueil</a>
+<div class="container">
+    <div class="form-group">
+        <label for="magasin-id">Chosissez un magasin :</label>
+        <select class="form-control" id="magasin-id" name="magasin-id">
+            <option value="" <%= request.getParameter("magasin-id") != null ? "" : "selected" %>>
+                Choisir un magasin
+            </option>
+            <% 
+            if (request.getAttribute("magasins") != null) {
+                for (Magasin magasin : (List<Magasin>) request.getAttribute("magasins"))  {
+                    boolean isSelected = Integer.toString(magasin.getCodeMagasin()).equals(request.getParameter("magasin-id"));
+            %>
+            <option value="<%= magasin.getCodeMagasin()%>" <%= isSelected ? "selected" : "" %>>
+                <%= magasin.getNomMagasin() %>
+            </option>
+            <%
+                }
+            }
+            %>
+        </select>
+    </div>
+</div>
 
 <% if (request.getAttribute("articles") != null && ((List<ArticleStockDto>) request.getAttribute("articles")).size() > 0) { %>
 	
