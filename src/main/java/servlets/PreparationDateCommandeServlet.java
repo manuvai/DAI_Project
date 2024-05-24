@@ -79,21 +79,6 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 	}
 
 	/**
-	 * Envoi de la notification à l'utilisateur.
-	 *
-	 * @param panier
-	 * @throws AddressException
-	 * @throws MessagingException
-	 */
-	private void sendNotification(final Panier panier) throws AddressException, MessagingException {
-
-		final CommandePreteNotification notification = new CommandePreteNotification(panier.getUtilisateur(),
-				panier.getCreneau(), panier);
-
-		emailSender.send(panier.getUtilisateur().getEmail(), notification);
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
@@ -101,5 +86,23 @@ public class PreparationDateCommandeServlet extends AbstractServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+
+	/**
+	 * Envoi de la notification à l'utilisateur.
+	 *
+	 * @param panier
+	 * @throws AddressException
+	 * @throws MessagingException
+	 */
+	private void sendNotification(final Panier panier) throws AddressException, MessagingException {
+		if (panier == null) {
+			return;
+		}
+
+		final CommandePreteNotification notification = new CommandePreteNotification(panier.getUtilisateur(),
+				panier.getCreneau(), panier);
+
+		emailSender.send(panier.getUtilisateur().getEmail(), notification);
 	}
 }
